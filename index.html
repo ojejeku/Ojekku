@@ -145,7 +145,6 @@
             100% { transform: translate(16px, -28px) rotate(-6deg); }
         }
 
-        /* Animasi Masuk Bertahap */
         @keyframes fadeUpSmooth {
             0% {
                 opacity: 0;
@@ -188,7 +187,6 @@
             }
         }
 
-        /* Animasi Rute Berjalan (Pickup -> Dropoff) */
         @keyframes dashFlow {
             to {
                 stroke-dashoffset: -40;
@@ -205,7 +203,6 @@
             }
         }
 
-        /* Kilau Berjalan pada Progress Bar & Kartu Utama */
         @keyframes shimmerSweep {
             0% {
                 transform: translateX(-120%) skewX(-18deg);
@@ -240,7 +237,6 @@
             animation: modalPop 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Kartu Interaktif dengan Hover & Spotlight Halus */
         .glass-card {
             position: relative;
             transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
@@ -321,6 +317,32 @@
             animation: floatGentle 3.6s ease-in-out infinite;
         }
 
+        /* 1 Lingkaran Merah & Hijau Menyatu */
+        .combined-circle-ring {
+            width: 68px;
+            height: 68px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: conic-gradient(#10b981 0deg 180deg, #ef4444 180deg 360deg);
+            box-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.22);
+            transition: transform 0.25s ease;
+        }
+        .combined-circle-ring:hover {
+            transform: scale(1.05);
+        }
+        .combined-circle-core {
+            width: 52px;
+            height: 52px;
+            border-radius: 9999px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
         @keyframes slideUp {
             from { transform: translateY(18px) scale(0.96); opacity: 0; }
             to { transform: translateY(0) scale(1); opacity: 1; }
@@ -352,7 +374,6 @@
         <div class="anim-enter w-full max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xl p-6 sm:p-8">
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
-                    <!-- Brand Emblem Geometris Presisi -->
                     <div class="brand-mark-ring w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white shadow-md">
                         <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <circle cx="8.5" cy="22.5" r="4.2"/>
@@ -417,7 +438,6 @@
         <!-- Navbar / Header -->
         <header class="sticky top-0 z-30 bg-white/85 dark:bg-slate-900/85 backdrop-blur-lg border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
-                <!-- Brand Logo -->
                 <div class="flex items-center gap-3 shrink-0">
                     <div class="brand-mark-ring w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white shadow-md">
                         <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -436,7 +456,6 @@
                     </div>
                 </div>
 
-                <!-- Kontrol Periode, Tema & Logout -->
                 <div class="flex items-center gap-2">
                     <div class="bg-slate-100 dark:bg-slate-800 p-1 rounded-xl flex items-center text-xs sm:text-sm font-medium">
                         <button onclick="setPeriod('today')" id="btn-period-today" class="px-2.5 sm:px-3 py-1.5 rounded-lg transition-all duration-200 bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm">
@@ -463,7 +482,7 @@
         <!-- Konten Utama -->
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
 
-            <!-- Banner Sambutan & Ilustrasi Peta Rute Operasional Berjalan -->
+            <!-- Banner Sambutan + 1 Lingkaran Merah & Hijau Terpadu + Rute Berjalan -->
             <section class="anim-enter glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 sm:p-6 shadow-sm overflow-hidden">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
                     <div class="space-y-1.5">
@@ -478,9 +497,29 @@
                         <p class="text-sm text-slate-500 dark:text-slate-400" id="current-date-display">Memuat tanggal...</p>
                     </div>
 
-                    <!-- Ilustrasi Garis Rute Berjalan & Indikator Perjalanan -->
+                    <!-- 1 Lingkaran Merah & Hijau Menyatu + Ilustrasi Rute Berjalan -->
                     <div class="flex items-center justify-between sm:justify-end gap-4">
-                        <div class="hidden sm:block w-56 h-16 rounded-xl bg-slate-50/90 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 px-3 py-2">
+                        <div class="flex items-center gap-3 bg-slate-50/90 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 rounded-2xl px-3.5 py-2.5">
+                            <div id="combined-circle-ring" class="combined-circle-ring shrink-0" title="Proporsi Masuk (Hijau) vs Keluar (Merah) dalam 1 lingkaran">
+                                <div class="combined-circle-core bg-white dark:bg-slate-900">
+                                    <span id="combined-circle-pct" class="text-[11px] font-extrabold text-slate-900 dark:text-white leading-none">0%</span>
+                                    <span class="text-[8px] font-bold uppercase tracking-tight text-slate-400 mt-0.5">Net</span>
+                                </div>
+                            </div>
+                            <div class="text-xs leading-snug">
+                                <div class="font-bold text-slate-800 dark:text-slate-100">Keseimbangan Kas</div>
+                                <div class="flex items-center gap-2 mt-1 text-[11px]">
+                                    <span class="inline-flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>Masuk
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 font-semibold text-rose-600 dark:text-rose-400">
+                                        <span class="w-2 h-2 rounded-full bg-rose-500"></span>Keluar
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hidden sm:block w-52 h-16 rounded-xl bg-slate-50/90 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 px-3 py-2">
                             <svg class="w-full h-full" viewBox="0 0 220 56" fill="none" aria-hidden="true">
                                 <rect x="4" y="8" width="46" height="14" rx="4" class="fill-emerald-100 dark:fill-emerald-950 stroke-emerald-600/40" stroke-width="1"/>
                                 <text x="27" y="18" text-anchor="middle" class="fill-emerald-700 dark:fill-emerald-300" font-size="8.5" font-weight="700">PICKUP</text>
@@ -494,11 +533,10 @@
                                 <circle cx="116" cy="15" r="6" class="fill-emerald-500/25 route-pulse-ring"/>
                                 <circle cx="116" cy="15" r="3.2" class="fill-emerald-600 dark:fill-emerald-400"/>
 
-                                <circle cx="136" cy="41" r="6" class="fill-amber-500/25 route-pulse-ring"/>
-                                <circle cx="136" cy="41" r="3.2" class="fill-amber-500"/>
+                                <circle cx="136" cy="41" r="6" class="fill-rose-500/25 route-pulse-ring"/>
+                                <circle cx="136" cy="41" r="3.2" class="fill-rose-500"/>
                             </svg>
                         </div>
-
                     </div>
                 </div>
             </section>
@@ -508,7 +546,7 @@
                 <div class="anim-enter anim-delay-1 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Pendapatan Kotor</span>
-                        <div class="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 transition-transform duration-300 group-hover:scale-110">
+                        <div class="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
                             <i data-lucide="trending-up" class="w-5 h-5"></i>
                         </div>
                     </div>
@@ -570,7 +608,7 @@
                 </div>
             </section>
 
-            <!-- GRID UTAMA: FORM INPUT CEPAT + ALOKASI & GRAFIK -->
+            <!-- GRID UTAMA: FORM INPUT CEPAT + ALOKASI & GRAFIK 1 LINGKARAN -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 <!-- KOLOM KIRI -->
                 <div class="lg:col-span-5 space-y-6">
@@ -612,8 +650,15 @@
 
                             <div>
                                 <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">Kategori</label>
-                                <select id="tx-category" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                                <select id="tx-category" onchange="handleCategoryChange()" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                                 </select>
+                            </div>
+
+                            <!-- Input Teks Ketik Sendiri untuk Kategori Lainnya (Pemasukan & Pengeluaran) -->
+                            <div id="tx-custom-category-wrapper" class="hidden">
+                                <label id="tx-custom-category-label" class="block text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1.5">Nama Kategori Lainnya (Ketik)</label>
+                                <input type="text" id="tx-custom-category" placeholder="Misal: Cashback / Tambal Ban"
+                                    class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-emerald-300 dark:border-emerald-700 text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                             </div>
 
                             <div id="platform-field-wrapper">
@@ -708,30 +753,46 @@
                         </div>
                     </div>
 
+                    <!-- GRAFIK 1 LINGKARAN TERPADU (MERAH & HIJAU MENYATU) -->
                     <div class="anim-enter anim-delay-4 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                             <div class="flex items-center gap-2.5">
                                 <div class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                                     <i data-lucide="pie-chart" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">Analisis Pengeluaran Operasional</h3>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Pantau pos biaya terbesar agar tidak boncos di jalan</p>
+                                    <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">Grafik 1 Lingkaran Kas & Kategori</h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Pemasukan (hijau) & pengeluaran (merah) dalam satu lingkaran utuh</p>
                                 </div>
                             </div>
-                            <div id="expense-ratio-badge" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                                Rasio Biaya: 0%
+                            <div id="expense-ratio-badge" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 self-start sm:self-center">
+                                Rasio Biaya: 0% dari Kotor
                             </div>
                         </div>
 
+                        <!-- Filter Fokus pada 1 Lingkaran -->
+                        <div class="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl mb-5">
+                            <button type="button" id="chart-mode-all" onclick="setCategoryChartMode('all')" class="py-2 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">
+                                Gabungan
+                            </button>
+                            <button type="button" id="chart-mode-income" onclick="setCategoryChartMode('income')" class="py-2 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                Pemasukan
+                            </button>
+                            <button type="button" id="chart-mode-expense" onclick="setCategoryChartMode('expense')" class="py-2 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                                Pengeluaran
+                            </button>
+                        </div>
+
                         <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-                            <div class="sm:col-span-6 h-52 relative flex items-center justify-center">
-                                <canvas id="expenseChart"></canvas>
+                            <div class="sm:col-span-6 h-56 relative flex items-center justify-center">
+                                <canvas id="categoryChart"></canvas>
                                 <div id="empty-chart-msg" class="hidden text-center text-xs text-slate-400 absolute">
-                                    Belum ada data pengeluaran<br>pada periode ini
+                                    Belum ada data transaksi<br>pada periode ini
                                 </div>
                             </div>
-                            <div class="sm:col-span-6 space-y-2.5" id="expense-breakdown-list"></div>
+                            <div class="sm:col-span-6 space-y-2.5" id="category-breakdown-list"></div>
                         </div>
                     </div>
                 </div>
@@ -790,10 +851,6 @@
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-xs sm:max-w-sm"></div>
 
     <script>
-        // ==========================================
-        // 1. KONFIGURASI SUPABASE
-        // Ganti nilai di bawah ini dengan Project URL & Anon Key Anda
-        // ==========================================
         const SUPABASE_URL = 'https://twvmodivxmpyxvsuyhvz.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_9zVqwyMGLZz9ERqNXVoOUg_N5lB-U6L';
         const THEME_KEY = 'ojolku_finance_theme_v1';
@@ -804,7 +861,8 @@
             income: [
                 { value: 'Orderan Reguler', label: 'Orderan Reguler (Ride/Food/Send)' },
                 { value: 'Tip Pelanggan', label: 'Tip Pelanggan' },
-                { value: 'Bonus / Insentif Harian', label: 'Bonus / Insentif Harian' }
+                { value: 'Bonus / Insentif Harian', label: 'Bonus / Insentif Harian' },
+                { value: 'Lainnya', label: 'Pemasukan Lainnya' }
             ],
             expense: [
                 { value: 'Bensin / BBM', label: 'Bensin / BBM' },
@@ -816,27 +874,54 @@
             ]
         };
 
+        const INCOME_COLORS = {
+            'Orderan Reguler': '#10b981',
+            'Tip Pelanggan': '#059669',
+            'Bonus / Insentif Harian': '#34d399',
+            'Lainnya': '#047857'
+        };
+
+        const CUSTOM_INCOME_PALETTE = ['#10b981', '#059669', '#34d399', '#047857', '#6ee7b7', '#0d9488'];
+
+        function getIncomeCategoryColor(categoryName) {
+            if (INCOME_COLORS[categoryName]) return INCOME_COLORS[categoryName];
+            let hash = 0;
+            for (let i = 0; i < categoryName.length; i++) {
+                hash = categoryName.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return CUSTOM_INCOME_PALETTE[Math.abs(hash) % CUSTOM_INCOME_PALETTE.length];
+        }
+
         const EXPENSE_COLORS = {
             'Bensin / BBM': '#ef4444',
-            'Makan & Minum': '#f59e0b',
-            'Parkir': '#3b82f6',
-            'Kuota / Pulsa': '#8b5cf6',
-            'Servis / Ganti Oli': '#10b981',
-            'Lainnya': '#64748b'
+            'Makan & Minum': '#f43f5e',
+            'Parkir': '#dc2626',
+            'Kuota / Pulsa': '#e11d48',
+            'Servis / Ganti Oli': '#b91c1c',
+            'Lainnya': '#fb7185'
         };
+
+        const CUSTOM_EXPENSE_PALETTE = ['#ef4444', '#f43f5e', '#dc2626', '#e11d48', '#fb7185', '#b91c1c'];
+
+        function getExpenseCategoryColor(categoryName) {
+            if (EXPENSE_COLORS[categoryName]) return EXPENSE_COLORS[categoryName];
+            let hash = 0;
+            for (let i = 0; i < categoryName.length; i++) {
+                hash = categoryName.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return CUSTOM_EXPENSE_PALETTE[Math.abs(hash) % CUSTOM_EXPENSE_PALETTE.length];
+        }
 
         let currentUser = null;
         let transactions = [];
         let dailyTarget = 150000;
         let currentPeriod = 'today';
-        let authMode = 'login'; // 'login' | 'register'
-        let expenseChartInstance = null;
+        let authMode = 'login';
+        let categoryChartMode = 'all';
+        let categoryChartInstance = null;
         const displayedNumbers = {};
         const activeAnimFrames = {};
 
-        // ==========================================
-        // 2. HELPER TANGGAL, FORMAT RUPIAH & ANIMASI ANGKA
-        // ==========================================
         function getTodayStr() {
             const now = new Date();
             const year = now.getFullYear();
@@ -923,9 +1008,6 @@
             return msg || fallback;
         }
 
-        // ==========================================
-        // 3. AUTENTIKASI SUPABASE (LOGIN / DAFTAR / KELUAR)
-        // ==========================================
         function switchAuthMode(mode) {
             authMode = mode;
             const tabLogin = document.getElementById('tab-login');
@@ -985,9 +1067,6 @@
             showToast('Anda telah keluar', 'info');
         }
 
-        // ==========================================
-        // 4. OPERASI DATABASE SUPABASE
-        // ==========================================
         async function fetchUserSettings() {
             if (!currentUser) return;
             const { data, error } = await supabaseClient
@@ -1100,9 +1179,34 @@
             }
         }
 
-        // ==========================================
-        // 5. KONTROL FORM TRANSAKSI CEPAT
-        // ==========================================
+        function handleCategoryChange() {
+            const type = document.getElementById('tx-type').value;
+            const category = document.getElementById('tx-category').value;
+            const customWrapper = document.getElementById('tx-custom-category-wrapper');
+            const customLabel = document.getElementById('tx-custom-category-label');
+            const customInput = document.getElementById('tx-custom-category');
+
+            if (category === 'Lainnya') {
+                customWrapper.classList.remove('hidden');
+                customInput.required = true;
+                if (type === 'income') {
+                    customLabel.textContent = 'Nama Pemasukan Lainnya (Ketik)';
+                    customLabel.className = 'block text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1.5';
+                    customInput.placeholder = 'Misal: Cashback, Sewa Atribut, Komisi';
+                    customInput.className = 'w-full px-3.5 py-2.5 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/25 border border-emerald-300 dark:border-emerald-700 text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition';
+                } else {
+                    customLabel.textContent = 'Nama Pengeluaran Lainnya (Ketik)';
+                    customLabel.className = 'block text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider mb-1.5';
+                    customInput.placeholder = 'Misal: Tambal Ban, Jas Hujan, Cuci Motor';
+                    customInput.className = 'w-full px-3.5 py-2.5 rounded-xl bg-rose-50/50 dark:bg-rose-950/25 border border-rose-300 dark:border-rose-800 text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition';
+                }
+            } else {
+                customWrapper.classList.add('hidden');
+                customInput.required = false;
+                customInput.value = '';
+            }
+        }
+
         function setTransactionType(type) {
             document.getElementById('tx-type').value = type;
             const incomeBtn = document.getElementById('type-income-btn');
@@ -1123,6 +1227,8 @@
             categorySelect.innerHTML = CATEGORIES[type].map(cat =>
                 `<option value="${cat.value}">${cat.label}</option>`
             ).join('');
+
+            handleCategoryChange();
         }
 
         function selectPlatform(platformName) {
@@ -1155,7 +1261,19 @@
 
             const type = document.getElementById('tx-type').value;
             const amount = parseInt(document.getElementById('tx-amount').value, 10);
-            const category = document.getElementById('tx-category').value;
+            const selectedCategory = document.getElementById('tx-category').value;
+            const customCategoryInput = document.getElementById('tx-custom-category').value.trim();
+
+            let category = selectedCategory;
+            if (selectedCategory === 'Lainnya') {
+                if (!customCategoryInput) {
+                    showToast(type === 'income' ? 'Ketik nama pemasukan lainnya terlebih dahulu!' : 'Ketik nama pengeluaran lainnya terlebih dahulu!', 'error');
+                    document.getElementById('tx-custom-category').focus();
+                    return;
+                }
+                category = customCategoryInput;
+            }
+
             const platform = type === 'income' ? document.getElementById('tx-platform').value : '';
             const date = document.getElementById('tx-date').value || getTodayStr();
             const note = document.getElementById('tx-note').value.trim() || category;
@@ -1197,6 +1315,8 @@
 
                 document.getElementById('tx-amount').value = '';
                 document.getElementById('tx-note').value = '';
+                document.getElementById('tx-custom-category').value = '';
+                handleCategoryChange();
 
                 refreshDashboard();
                 showToast(type === 'income' ? 'Pemasukan tersimpan' : 'Pengeluaran tersimpan', 'success');
@@ -1208,9 +1328,6 @@
             }
         });
 
-        // ==========================================
-        // 6. KALKULASI RINGKASAN, TARGET & ALOKASI
-        // ==========================================
         function setPeriod(period) {
             currentPeriod = period;
             const btnToday = document.getElementById('btn-period-today');
@@ -1238,6 +1355,25 @@
             });
         }
 
+        function updateCombinedCircle(totalIncome, totalExpense) {
+            const ringEl = document.getElementById('combined-circle-ring');
+            const pctEl = document.getElementById('combined-circle-pct');
+            if (!ringEl || !pctEl) return;
+
+            const grossFlow = totalIncome + totalExpense;
+            if (grossFlow <= 0) {
+                ringEl.style.background = 'conic-gradient(#10b981 0deg 180deg, #ef4444 180deg 360deg)';
+                pctEl.textContent = '0%';
+                return;
+            }
+
+            const greenDeg = Math.round((totalIncome / grossFlow) * 360);
+            ringEl.style.background = `conic-gradient(#10b981 0deg ${greenDeg}deg, #ef4444 ${greenDeg}deg 360deg)`;
+
+            const netPct = Math.round(((totalIncome - totalExpense) / totalIncome || 0) * 100);
+            pctEl.textContent = `${totalIncome > 0 ? Math.max(-99, netPct) : 0}%`;
+        }
+
         function updateSummaryAndAllocations() {
             const periodTx = getFilteredTransactionsByPeriod();
             const todayStr = getTodayStr();
@@ -1261,6 +1397,7 @@
             document.getElementById('stat-order-count').textContent = incomeCount;
             animateRupiahText('stat-expense', totalExpense);
             animateRupiahText('stat-net', netIncome);
+            updateCombinedCircle(totalIncome, totalExpense);
 
             const todayTx = transactions.filter(t => t.date === todayStr);
             const todayIncome = todayTx.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
@@ -1282,7 +1419,7 @@
                 statusText.className = 'text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 mt-1.5';
             } else {
                 const remaining = dailyTarget - Math.max(0, todayNet);
-                progressBar.className = 'progress-shimmer h-full bg-amber-500 rounded-full transition-all duration-700 ease-out';
+                progressBar.className = 'progress-shimmer h-full bg-rose-500 rounded-full transition-all duration-700 ease-out';
                 statusText.textContent = `Kurang ${formatRupiah(remaining)} lagi untuk target hari ini`;
                 statusText.className = 'text-[11px] text-slate-500 dark:text-slate-400 mt-1.5';
             }
@@ -1301,45 +1438,94 @@
                 ? 'text-xs font-semibold px-2.5 py-1 rounded-lg bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 transition-colors'
                 : 'text-xs font-semibold px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 transition-colors';
 
-            updateExpenseChart(periodTx, totalExpense);
+            updateCategoryChart(periodTx, totalIncome, totalExpense);
         }
 
-        // ==========================================
-        // 7. GRAFIK CHART.JS PENGELUARAN
-        // ==========================================
-        function updateExpenseChart(periodTx, totalExpense) {
+        function setCategoryChartMode(mode) {
+            categoryChartMode = mode;
+            const btnAll = document.getElementById('chart-mode-all');
+            const btnIncome = document.getElementById('chart-mode-income');
+            const btnExpense = document.getElementById('chart-mode-expense');
+
+            const inactiveClass = 'py-2 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+
+            btnAll.className = mode === 'all'
+                ? 'py-2 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
+                : inactiveClass;
+
+            btnIncome.className = mode === 'income'
+                ? 'py-2 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                : inactiveClass;
+
+            btnExpense.className = mode === 'expense'
+                ? 'py-2 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 bg-white dark:bg-slate-700 text-rose-600 dark:text-rose-400 shadow-sm'
+                : inactiveClass;
+
+            if (currentUser) {
+                const periodTx = getFilteredTransactionsByPeriod();
+                const totalIncome = periodTx.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
+                const totalExpense = periodTx.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+                updateCategoryChart(periodTx, totalIncome, totalExpense);
+            }
+        }
+
+        function updateCategoryChart(periodTx, totalIncome, totalExpense) {
             if (typeof Chart === 'undefined') return;
-            const expenseTx = periodTx.filter(t => t.type === 'expense');
-            const categoryTotals = {};
-
-            expenseTx.forEach(t => {
-                categoryTotals[t.category] = (categoryTotals[t.category] || 0) + t.amount;
-            });
-
-            const labels = Object.keys(categoryTotals);
-            const dataValues = Object.values(categoryTotals);
-            const bgColors = labels.map(label => EXPENSE_COLORS[label] || '#64748b');
 
             const emptyMsg = document.getElementById('empty-chart-msg');
-            const breakdownList = document.getElementById('expense-breakdown-list');
+            const breakdownList = document.getElementById('category-breakdown-list');
 
-            if (labels.length === 0) {
+            const entries = [];
+
+            if (categoryChartMode === 'all' || categoryChartMode === 'income') {
+                const incMap = {};
+                periodTx.filter(t => t.type === 'income').forEach(t => {
+                    incMap[t.category] = (incMap[t.category] || 0) + t.amount;
+                });
+                Object.entries(incMap).forEach(([cat, val]) => {
+                    entries.push({
+                        label: `${cat} (Masuk)`,
+                        value: val,
+                        color: getIncomeCategoryColor(cat),
+                        tone: 'income'
+                    });
+                });
+            }
+
+            if (categoryChartMode === 'all' || categoryChartMode === 'expense') {
+                const expMap = {};
+                periodTx.filter(t => t.type === 'expense').forEach(t => {
+                    expMap[t.category] = (expMap[t.category] || 0) + t.amount;
+                });
+                Object.entries(expMap).forEach(([cat, val]) => {
+                    entries.push({
+                        label: `${cat} (Keluar)`,
+                        value: val,
+                        color: getExpenseCategoryColor(cat),
+                        tone: 'expense'
+                    });
+                });
+            }
+
+            const totalAmount = entries.reduce((sum, item) => sum + item.value, 0);
+
+            if (entries.length === 0) {
+                emptyMsg.innerHTML = 'Belum ada data transaksi<br>pada periode ini';
                 emptyMsg.classList.remove('hidden');
-                breakdownList.innerHTML = `<div class="text-xs text-slate-400 italic">Catat pengeluaran seperti bensin atau makan untuk melihat analisis persentase di sini.</div>`;
+                breakdownList.innerHTML = `<div class="text-xs text-slate-400 italic">Catat pemasukan (hijau) dan pengeluaran (merah) untuk melihat perbandingannya dalam satu lingkaran.</div>`;
             } else {
                 emptyMsg.classList.add('hidden');
-                const sortedEntries = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1]);
-                breakdownList.innerHTML = sortedEntries.map(([cat, val], idx) => {
-                    const pct = totalExpense > 0 ? Math.round((val / totalExpense) * 100) : 0;
-                    const color = EXPENSE_COLORS[cat] || '#64748b';
+                const sorted = [...entries].sort((a, b) => b.value - a.value);
+                breakdownList.innerHTML = sorted.map((item, idx) => {
+                    const pct = totalAmount > 0 ? Math.round((item.value / totalAmount) * 100) : 0;
                     return `
                         <div class="tx-row-anim flex items-center justify-between text-xs p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:translate-x-1 transition-transform" style="animation-delay: ${idx * 45}ms">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${color}"></span>
-                                <span class="font-medium text-slate-700 dark:text-slate-200">${cat}</span>
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${item.color}"></span>
+                                <span class="font-medium text-slate-700 dark:text-slate-200 truncate">${item.label}</span>
                             </div>
-                            <div class="text-right">
-                                <span class="font-bold text-slate-900 dark:text-white">${formatRupiah(val)}</span>
+                            <div class="text-right shrink-0 ml-2">
+                                <span class="font-bold text-slate-900 dark:text-white">${formatRupiah(item.value)}</span>
                                 <span class="text-slate-400 ml-1">(${pct}%)</span>
                             </div>
                         </div>
@@ -1347,20 +1533,20 @@
                 }).join('');
             }
 
-            const ctx = document.getElementById('expenseChart').getContext('2d');
-            if (expenseChartInstance) {
-                expenseChartInstance.destroy();
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            if (categoryChartInstance) {
+                categoryChartInstance.destroy();
             }
 
             const isDark = document.documentElement.classList.contains('dark');
 
-            expenseChartInstance = new Chart(ctx, {
+            categoryChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels,
+                    labels: entries.map(e => e.label),
                     datasets: [{
-                        data: dataValues,
-                        backgroundColor: bgColors,
+                        data: entries.map(e => e.value),
+                        backgroundColor: entries.map(e => e.color),
                         borderWidth: 2,
                         borderColor: isDark ? '#0f172a' : '#ffffff',
                         hoverOffset: 7
@@ -1369,7 +1555,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '68%',
+                    cutout: '66%',
                     animation: {
                         duration: 650,
                         easing: 'easeOutQuart'
@@ -1388,27 +1574,23 @@
             });
         }
 
-        // ==========================================
-        // 8. RIWAYAT TRANSAKSI & FILTER
-        // ==========================================
         function getPlatformBadge(platform) {
             if (!platform) return '';
-            const styles = {
+            const map = {
                 'Gojek': 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300',
                 'Grab': 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300',
                 'Maxim': 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300',
                 'ShopeeFood': 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300',
                 'Lainnya': 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
             };
-            const cls = styles[platform] || styles['Lainnya'];
-            return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${cls}">${platform}</span>`;
+            const style = map[platform] || map['Lainnya'];
+            return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${style}">${platform}</span>`;
         }
 
         function renderHistory() {
+            const listContainer = document.getElementById('transaction-list');
             const timeFilter = document.getElementById('filter-time').value;
             const typeFilter = document.getElementById('filter-type').value;
-            const listContainer = document.getElementById('transaction-list');
-
             const todayStr = getTodayStr();
             const sevenDaysAgoStr = getOffsetDateStr(-7);
 
@@ -1477,9 +1659,6 @@
             if (window.lucide) lucide.createIcons();
         }
 
-        // ==========================================
-        // 9. MODAL & TEMA
-        // ==========================================
         function openTargetModal() {
             document.getElementById('input-daily-target').value = dailyTarget;
             const modal = document.getElementById('target-modal');
