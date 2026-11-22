@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Panduan & Tata Cara Pakai — OjolKu Finance</title>
+    <meta name="description" content="Aturan yang wajib dipatuhi dan tata cara penggunaan aplikasi OjolKu Finance bagi mitra driver.">
+
+    <meta name="theme-color" content="#059669" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23047857'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='%2334d399' stroke-width='1.5' stroke-opacity='0.45'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='19' cy='43' r='7.5'/%3E%3Ccircle cx='45' cy='43' r='7.5'/%3E%3Cpath d='M19 43h12l8-14h7'/%3E%3Cpath d='M31 43l-4-11h11'/%3E%3Cpath d='M37 22h11'/%3E%3C/g%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        }
+        @keyframes fadeUpSmooth {
+            0% { opacity: 0; transform: translateY(14px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .anim-enter {
+            animation: fadeUpSmooth 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-300 py-8 px-4 sm:px-6">
+
+    <div class="anim-enter max-w-3xl mx-auto bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xl p-6 sm:p-8 space-y-6">
+        <!-- Header Halaman Panduan -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-slate-200/80 dark:border-slate-800">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white shadow-md">
+                    <i data-lucide="megaphone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-white">
+                        Panduan & Tata Cara Pakai
+                    </h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">OjolKu Finance — Ketentuan Wajib Dipatuhi Mitra Driver</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                    <i data-lucide="moon" id="ann-icon-moon" class="w-4 h-4"></i>
+                    <i data-lucide="sun" id="ann-icon-sun" class="w-4 h-4 hidden text-amber-400"></i>
+                </button>
+                <a href="index.html" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-emerald-600/20 transition">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Kembali ke Login</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Bagian 1: Wajib Dipatuhi -->
+        <section class="p-5 rounded-2xl bg-rose-50/85 dark:bg-rose-950/25 border border-rose-200/90 dark:border-rose-800/60 space-y-3">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0">
+                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-600 text-white">Wajib Dipatuhi</span>
+                    <h2 class="font-bold text-base sm:text-lg text-rose-950 dark:text-rose-100 mt-0.5">Aturan & Ketentuan Penggunaan</h2>
+                </div>
+            </div>
+
+            <ul class="space-y-2.5 text-xs sm:text-sm text-rose-950 dark:text-rose-200 leading-relaxed">
+                <li class="flex items-start gap-2.5">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-1"></i>
+                    <span><strong>Catat Nominal & Tanggal Secara Jujur:</strong> Masukkan nilai rupiah asli serta tanggal transaksi yang sesuai agar perhitungan pendapatan bersih, pencapaian target harian, dan rasio biaya tidak meleset.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-1"></i>
+                    <span><strong>Pisahkan Pemasukan & Pengeluaran:</strong> Jangan mencampur biaya operasional (bensin, makan, parkir, kuota, servis) ke dalam pemasukan agar arus kas tetap akurat.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-1"></i>
+                    <span><strong>Jaga Keamanan Akun & Isi Nama Kategori Jelas:</strong> Gunakan email dan password yang aman, serta ketik nama kategori sendiri secara jelas saat memilih <em>Pemasukan Lainnya</em> atau <em>Pengeluaran Lainnya</em>.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Bagian 2: Tata Cara Pakai Aplikasi -->
+        <section class="p-5 rounded-2xl bg-emerald-50/75 dark:bg-emerald-950/25 border border-emerald-200/90 dark:border-emerald-800/60 space-y-3.5">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-600 text-white">Langkah Mudah</span>
+                    <h2 class="font-bold text-base sm:text-lg text-emerald-950 dark:text-emerald-100 mt-0.5">Tata Cara Pakai Aplikasi</h2>
+                </div>
+            </div>
+
+            <ol class="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                <li class="flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                    <span><strong>Masuk atau Daftar Akun:</strong> Buka halaman utama, lalu masuk menggunakan email dan password Anda (atau pilih tab <em>Daftar Akun</em> jika belum memiliki akun).</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                    <span><strong>Catat Transaksi Cepat:</strong> Pilih tipe <strong>Pemasukan</strong> atau <strong>Pengeluaran</strong>, isi nominal, pilih kategori, ketik nama kategori sendiri jika memilih <em>Lainnya</em>, lalu klik <strong>Simpan Transaksi</strong>.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                    <span><strong>Pantau Target, Pos & Grafik 1 Lingkaran:</strong> Periksa progres target bersih harian (dapat diubah lewat tombol <em>Ubah</em>), simulasi pembagian pos, dan grafik 1 lingkaran hijau-merah.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
+                    <span><strong>Kelola Riwayat Transaksi:</strong> Saring transaksi berdasarkan waktu atau tipe, dan hapus catatan yang keliru melalui ikon tempat sampah.</span>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Footer Aksi -->
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
+            <span>Dengan menggunakan aplikasi, Anda menyetujui ketentuan di atas.</span>
+            <a href="index.html" class="w-full sm:w-auto py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-center transition">
+                Lanjut ke Halaman Masuk
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const THEME_KEY = 'ojolku_finance_theme_v1';
+
+        function updateThemeIcons(isDark) {
+            const moon = document.getElementById('ann-icon-moon');
+            const sun = document.getElementById('ann-icon-sun');
+            if (moon) moon.classList.toggle('hidden', isDark);
+            if (sun) sun.classList.toggle('hidden', !isDark);
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+            updateThemeIcons(isDark);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem(THEME_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+            if (shouldBeDark) {
+                document.documentElement.classList.add('dark');
+            }
+            updateThemeIcons(shouldBeDark);
+            if (window.lucide) lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

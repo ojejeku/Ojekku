@@ -427,9 +427,15 @@
                 </button>
             </form>
 
-            <p class="text-[11px] text-slate-400 text-center mt-5 leading-relaxed">
-                Catatan pemasukan, pengeluaran, dan target harian Anda tersimpan aman di database PostgreSQL Supabase sesuai akun Anda.
-            </p>
+            <div class="mt-5 pt-4 border-t border-slate-200/80 dark:border-slate-800 text-center space-y-2">
+                <a href="announcement.html" class="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                    <span>Baca Panduan Wajib Dipatuhi & Tata Cara Pakai</span>
+                </a>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    Catatan pemasukan, pengeluaran, dan target harian Anda tersimpan aman di database PostgreSQL Supabase sesuai akun Anda.
+                </p>
+            </div>
         </div>
     </section>
 
@@ -457,6 +463,11 @@
                 </div>
 
                 <div class="flex items-center gap-2">
+                    <a href="announcement.html" title="Panduan & Tata Cara Pakai" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-950/80 transition">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                        <span class="hidden md:inline">Panduan</span>
+                    </a>
+
                     <div class="bg-slate-100 dark:bg-slate-800 p-1 rounded-xl flex items-center text-xs sm:text-sm font-medium">
                         <button onclick="setPeriod('today')" id="btn-period-today" class="px-2.5 sm:px-3 py-1.5 rounded-lg transition-all duration-200 bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm">
                             Hari Ini
@@ -537,6 +548,78 @@
                                 <circle cx="136" cy="41" r="3.2" class="fill-rose-500"/>
                             </svg>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panduan Wajib Dipatuhi & Tata Cara Pakai di Beranda (Bisa Dilipat) -->
+            <section class="anim-enter anim-delay-1 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 sm:p-6 shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                            <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">Panduan Wajib Dipatuhi & Tata Cara Pakai</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Ringkasan aturan main & langkah penggunaan di beranda</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="toggleHomeGuide()" id="btn-toggle-guide" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                            <i data-lucide="chevron-up" id="icon-guide-chevron" class="w-3.5 h-3.5"></i>
+                            <span id="label-guide-toggle">Sembunyikan</span>
+                        </button>
+                        <a href="announcement.html" class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-950/80 transition">
+                            <span>Halaman Panduan</span>
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="home-guide-body" class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4 mt-4 border-t border-slate-200/80 dark:border-slate-800">
+                    <!-- Wajib Dipatuhi -->
+                    <div class="p-4 rounded-xl bg-rose-50/75 dark:bg-rose-950/20 border border-rose-200/80 dark:border-rose-800/50 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-600 text-white">Wajib Dipatuhi</span>
+                            <span class="text-xs sm:text-sm font-bold text-rose-950 dark:text-rose-100">Aturan Pencatatan</span>
+                        </div>
+                        <ul class="space-y-1.5 text-xs text-rose-900 dark:text-rose-200 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5"></i>
+                                <span>Catat nominal rupiah dan tanggal transaksi secara jujur & sesuai kenyataan.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5"></i>
+                                <span>Pisahkan tegas antara <strong>Pemasukan</strong> dan <strong>Pengeluaran</strong> operasional.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5"></i>
+                                <span>Isi nama kategori sendiri dengan jelas saat memilih <em>Lainnya</em>.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Tata Cara Pakai -->
+                    <div class="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-800/50 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-600 text-white">Tata Cara Pakai</span>
+                            <span class="text-xs sm:text-sm font-bold text-emerald-950 dark:text-emerald-100">Langkah Cepat di Beranda</span>
+                        </div>
+                        <ol class="space-y-1.5 text-xs text-slate-700 dark:text-slate-200 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <span class="w-4 h-4 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                                <span>Pilih <strong>Pemasukan</strong> atau <strong>Pengeluaran</strong> di form <em>Catat Transaksi Cepat</em>.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-4 h-4 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                                <span>Isi nominal (bisa pakai tombol +10rb s.d. +50rb), kategori, tanggal & catatan lalu simpan.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-4 h-4 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                                <span>Pantau target bersih harian, simulasi pos, grafik 1 lingkaran, dan edit/ekspor riwayat.</span>
+                            </li>
+                        </ol>
                     </div>
                 </div>
             </section>
@@ -798,30 +881,46 @@
                 </div>
             </div>
 
-            <!-- 5. RIWAYAT TRANSAKSI & FILTER -->
+            <!-- 5. RIWAYAT TRANSAKSI, PENCARIAN, FILTER & EKSPOR CSV -->
             <section class="anim-enter anim-delay-4 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center">
-                            <i data-lucide="history" class="w-5 h-5"></i>
+                <div class="flex flex-col gap-4 mb-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center">
+                                <i data-lucide="history" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">Riwayat Transaksi</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Tersimpan di database Supabase per akun • Bisa diedit & diekspor CSV</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">Riwayat Transaksi</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Tersimpan di database Supabase per akun</p>
-                        </div>
+
+                        <button type="button" onclick="exportTransactionsCSV()" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-950/80 border border-emerald-200/70 dark:border-emerald-800/60 transition self-start sm:self-center">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>Ekspor CSV</span>
+                        </button>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                        <div class="relative">
+                            <input type="text" id="filter-search" oninput="renderHistory()" placeholder="Cari catatan / kategori..."
+                                class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                        </div>
+
                         <select id="filter-time" onchange="renderHistory()" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                             <option value="today">Hari Ini</option>
                             <option value="week">Minggu Ini (7 Hari)</option>
                             <option value="all" selected>Semua Riwayat</option>
                         </select>
 
-                        <select id="filter-type" onchange="renderHistory()" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                        <select id="filter-type" onchange="handleFilterTypeChange()" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                             <option value="all">Semua Tipe</option>
                             <option value="income">Pemasukan Saja</option>
                             <option value="expense">Pengeluaran Saja</option>
+                        </select>
+
+                        <select id="filter-category" onchange="renderHistory()" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                            <option value="all">Semua Kategori</option>
                         </select>
                     </div>
                 </div>
@@ -847,6 +946,77 @@
         </div>
     </div>
 
+    <!-- MODAL EDIT TRANSAKSI -->
+    <div id="edit-tx-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 transition-opacity">
+        <div class="modal-card-anim bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h4 class="font-bold text-lg text-slate-900 dark:text-white">Edit Transaksi</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Perbarui detail transaksi yang tersimpan di Supabase</p>
+                </div>
+                <button type="button" onclick="closeEditTxModal()" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <form id="edit-tx-form" class="space-y-3.5">
+                <input type="hidden" id="edit-tx-id">
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Tipe</label>
+                        <select id="edit-tx-type" onchange="syncEditCategoryOptions()" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-900 dark:text-white">
+                            <option value="income">Pemasukan</option>
+                            <option value="expense">Pengeluaran</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Nominal (Rp)</label>
+                        <input type="number" id="edit-tx-amount" required min="500" step="500" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Kategori</label>
+                    <select id="edit-tx-category" onchange="handleEditCategoryChange()" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-900 dark:text-white">
+                    </select>
+                </div>
+
+                <div id="edit-tx-custom-wrapper" class="hidden">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">Nama Kategori Kustom</label>
+                    <input type="text" id="edit-tx-custom-category" placeholder="Ketik nama kategori" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-emerald-300 dark:border-emerald-700 text-sm font-medium text-slate-900 dark:text-white">
+                </div>
+
+                <div id="edit-tx-platform-wrapper">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Aplikasi Mitra</label>
+                    <select id="edit-tx-platform" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-900 dark:text-white">
+                        <option value="Gojek">Gojek</option>
+                        <option value="Grab">Grab</option>
+                        <option value="Maxim">Maxim</option>
+                        <option value="ShopeeFood">ShopeeFood</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Tanggal</label>
+                        <input type="date" id="edit-tx-date" required class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Catatan</label>
+                        <input type="text" id="edit-tx-note" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeEditTxModal()" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Batal</button>
+                    <button type="submit" id="save-edit-tx-btn" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- TOAST NOTIFIKASI -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-xs sm:max-w-sm"></div>
 
@@ -854,6 +1024,7 @@
         const SUPABASE_URL = 'https://twvmodivxmpyxvsuyhvz.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_9zVqwyMGLZz9ERqNXVoOUg_N5lB-U6L';
         const THEME_KEY = 'ojolku_finance_theme_v1';
+        const GUIDE_COLLAPSED_KEY = 'ojolku_home_guide_collapsed_v1';
 
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -914,6 +1085,7 @@
 
         let currentUser = null;
         let transactions = [];
+        let lastRenderedHistory = [];
         let dailyTarget = 150000;
         let currentPeriod = 'today';
         let authMode = 'login';
@@ -921,6 +1093,30 @@
         let categoryChartInstance = null;
         const displayedNumbers = {};
         const activeAnimFrames = {};
+
+        function toggleHomeGuide(forceCollapsed = null) {
+            const bodyEl = document.getElementById('home-guide-body');
+            const labelEl = document.getElementById('label-guide-toggle');
+            const iconEl = document.getElementById('icon-guide-chevron');
+            if (!bodyEl || !labelEl) return;
+
+            const shouldCollapse = forceCollapsed !== null
+                ? forceCollapsed
+                : !bodyEl.classList.contains('hidden');
+
+            bodyEl.classList.toggle('hidden', shouldCollapse);
+            labelEl.textContent = shouldCollapse ? 'Tampilkan' : 'Sembunyikan';
+            if (iconEl) {
+                iconEl.setAttribute('data-lucide', shouldCollapse ? 'chevron-down' : 'chevron-up');
+                if (window.lucide) lucide.createIcons();
+            }
+            localStorage.setItem(GUIDE_COLLAPSED_KEY, shouldCollapse ? '1' : '0');
+        }
+
+        function initHomeGuideState() {
+            const isCollapsed = localStorage.getItem(GUIDE_COLLAPSED_KEY) === '1';
+            toggleHomeGuide(isCollapsed);
+        }
 
         function getTodayStr() {
             const now = new Date();
@@ -1119,6 +1315,133 @@
                 date: row.tx_date
             }));
         }
+
+        function openEditTxModal(txId) {
+            const tx = transactions.find(item => String(item.id) === String(txId));
+            if (!tx) return;
+
+            document.getElementById('edit-tx-id').value = tx.id;
+            document.getElementById('edit-tx-type').value = tx.type;
+            document.getElementById('edit-tx-amount').value = tx.amount;
+            document.getElementById('edit-tx-date').value = tx.date;
+            document.getElementById('edit-tx-note').value = tx.note;
+            document.getElementById('edit-tx-platform').value = tx.platform || 'Gojek';
+
+            syncEditCategoryOptions(tx.category);
+
+            const modal = document.getElementById('edit-tx-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function closeEditTxModal() {
+            const modal = document.getElementById('edit-tx-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function syncEditCategoryOptions(currentCategory = '') {
+            const type = document.getElementById('edit-tx-type').value;
+            const catSelect = document.getElementById('edit-tx-category');
+            const customInput = document.getElementById('edit-tx-custom-category');
+            const platformWrapper = document.getElementById('edit-tx-platform-wrapper');
+
+            platformWrapper.classList.toggle('hidden', type !== 'income');
+
+            const presetOptions = CATEGORIES[type] || [];
+            const presetValues = presetOptions.map(c => c.value);
+
+            catSelect.innerHTML = presetOptions.map(cat =>
+                `<option value="${cat.value}">${cat.label}</option>`
+            ).join('');
+
+            if (currentCategory && !presetValues.includes(currentCategory)) {
+                catSelect.value = 'Lainnya';
+                customInput.value = currentCategory;
+            } else if (currentCategory) {
+                catSelect.value = currentCategory;
+                customInput.value = '';
+            } else {
+                customInput.value = '';
+            }
+
+            handleEditCategoryChange();
+        }
+
+        function handleEditCategoryChange() {
+            const catVal = document.getElementById('edit-tx-category').value;
+            const wrapper = document.getElementById('edit-tx-custom-wrapper');
+            const customInput = document.getElementById('edit-tx-custom-category');
+            const isOther = catVal === 'Lainnya';
+            wrapper.classList.toggle('hidden', !isOther);
+            customInput.required = isOther;
+            if (!isOther) customInput.value = '';
+        }
+
+        document.getElementById('edit-tx-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const txId = document.getElementById('edit-tx-id').value;
+            const type = document.getElementById('edit-tx-type').value;
+            const amount = parseInt(document.getElementById('edit-tx-amount').value, 10);
+            const selectedCategory = document.getElementById('edit-tx-category').value;
+            const customCat = document.getElementById('edit-tx-custom-category').value.trim();
+            const platform = type === 'income' ? document.getElementById('edit-tx-platform').value : '';
+            const date = document.getElementById('edit-tx-date').value || getTodayStr();
+            const note = document.getElementById('edit-tx-note').value.trim();
+
+            let category = selectedCategory;
+            if (selectedCategory === 'Lainnya') {
+                if (!customCat) {
+                    showToast('Isi nama kategori kustom terlebih dahulu', 'error');
+                    return;
+                }
+                category = customCat;
+            }
+
+            if (!amount || amount <= 0) {
+                showToast('Nominal tidak valid', 'error');
+                return;
+            }
+
+            const finalNote = note || category;
+            const saveBtn = document.getElementById('save-edit-tx-btn');
+            saveBtn.disabled = true;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('transactions')
+                    .update({
+                        type,
+                        category,
+                        platform,
+                        amount,
+                        note: finalNote,
+                        tx_date: date
+                    })
+                    .eq('id', txId)
+                    .eq('user_id', currentUser.id);
+
+                if (error) throw error;
+
+                transactions = transactions.map(t =>
+                    String(t.id) === String(txId)
+                        ? { ...t, type, category, platform, amount, note: finalNote, date }
+                        : t
+                );
+
+                closeEditTxModal();
+                refreshDashboard();
+                showToast('Transaksi berhasil diperbarui', 'success');
+            } catch (err) {
+                console.error('Error updateTransaction:', err);
+                showToast(getSupabaseErrorMessage(err, 'Gagal memperbarui transaksi'), 'error');
+            } finally {
+                saveBtn.disabled = false;
+            }
+        });
 
         async function deleteTransaction(id) {
             if (!currentUser) return;
@@ -1587,10 +1910,41 @@
             return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${style}">${platform}</span>`;
         }
 
+        function syncCategoryFilterOptions() {
+            const typeFilter = document.getElementById('filter-type').value;
+            const catSelect = document.getElementById('filter-category');
+            const prevVal = catSelect.value;
+
+            const uniqueCats = [...new Set(
+                transactions
+                    .filter(tx => typeFilter === 'all' || tx.type === typeFilter)
+                    .map(tx => tx.category)
+                    .filter(Boolean)
+            )];
+
+            catSelect.innerHTML = `<option value="all">Semua Kategori</option>` +
+                uniqueCats.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+
+            if (uniqueCats.includes(prevVal)) {
+                catSelect.value = prevVal;
+            } else {
+                catSelect.value = 'all';
+            }
+        }
+
+        function handleFilterTypeChange() {
+            syncCategoryFilterOptions();
+            renderHistory();
+        }
+
         function renderHistory() {
+            syncCategoryFilterOptions();
+
             const listContainer = document.getElementById('transaction-list');
+            const searchQuery = (document.getElementById('filter-search')?.value || '').trim().toLowerCase();
             const timeFilter = document.getElementById('filter-time').value;
             const typeFilter = document.getElementById('filter-type').value;
+            const categoryFilter = document.getElementById('filter-category')?.value || 'all';
             const todayStr = getTodayStr();
             const sevenDaysAgoStr = getOffsetDateStr(-7);
 
@@ -1598,8 +1952,15 @@
                 if (timeFilter === 'today' && tx.date !== todayStr) return false;
                 if (timeFilter === 'week' && tx.date < sevenDaysAgoStr) return false;
                 if (typeFilter !== 'all' && tx.type !== typeFilter) return false;
+                if (categoryFilter !== 'all' && tx.category !== categoryFilter) return false;
+                if (searchQuery) {
+                    const haystack = `${tx.category} ${tx.note} ${tx.platform} ${tx.date}`.toLowerCase();
+                    if (!haystack.includes(searchQuery)) return false;
+                }
                 return true;
             });
+
+            lastRenderedHistory = filtered;
 
             if (filtered.length === 0) {
                 listContainer.innerHTML = `
@@ -1608,7 +1969,7 @@
                             <i data-lucide="inbox" class="w-6 h-6"></i>
                         </div>
                         <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Belum ada transaksi ditemukan</p>
-                        <p class="text-xs text-slate-400 mt-1">Catat pemasukan atau pengeluaran baru di form sebelah kiri.</p>
+                        <p class="text-xs text-slate-400 mt-1">Coba ubah filter atau catat transaksi baru di form sebelah kiri.</p>
                     </div>
                 `;
                 if (window.lucide) lucide.createIcons();
@@ -1644,10 +2005,13 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center gap-3 shrink-0">
-                            <span class="font-bold text-sm sm:text-base ${amountColor}">
+                        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                            <span class="font-bold text-sm sm:text-base ${amountColor} mr-1">
                                 ${sign}${formatRupiah(tx.amount)}
                             </span>
+                            <button onclick="openEditTxModal('${tx.id}')" title="Edit Transaksi" class="p-2 rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 active:scale-90 transition">
+                                <i data-lucide="pencil" class="w-4 h-4"></i>
+                            </button>
                             <button onclick="deleteTransaction('${tx.id}')" title="Hapus Transaksi" class="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 active:scale-90 transition">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                             </button>
@@ -1657,6 +2021,44 @@
             }).join('');
 
             if (window.lucide) lucide.createIcons();
+        }
+
+        function exportTransactionsCSV() {
+            if (!lastRenderedHistory || lastRenderedHistory.length === 0) {
+                showToast('Tidak ada transaksi untuk diekspor', 'error');
+                return;
+            }
+
+            const escapeCell = (val) => {
+                const str = String(val ?? '');
+                return `"${str.replace(/"/g, '""')}"`;
+            };
+
+            const headers = ['Tanggal', 'Tipe', 'Kategori', 'Aplikasi Mitra', 'Nominal (Rp)', 'Catatan'];
+            const rows = lastRenderedHistory.map(tx => [
+                tx.date,
+                tx.type === 'income' ? 'Pemasukan' : 'Pengeluaran',
+                tx.category,
+                tx.platform || '-',
+                tx.type === 'income' ? tx.amount : -tx.amount,
+                tx.note
+            ]);
+
+            const csvContent = [headers, ...rows]
+                .map(row => row.map(escapeCell).join(','))
+                .join('\n');
+
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ojolku-finance-${getTodayStr()}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showToast(`Berhasil mengekspor ${lastRenderedHistory.length} transaksi ke CSV`, 'success');
         }
 
         function openTargetModal() {
@@ -1767,6 +2169,7 @@
 
         window.addEventListener('DOMContentLoaded', async () => {
             initTheme();
+            initHomeGuideState();
 
             const now = new Date();
             document.getElementById('current-date-display').textContent = now.toLocaleDateString('id-ID', {
