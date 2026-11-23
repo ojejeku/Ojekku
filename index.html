@@ -80,7 +80,6 @@
             font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
         }
 
-        /* Latar Belakang Mesh Gradient & Blob Berjalan */
         .ambient-bg {
             position: fixed;
             inset: 0;
@@ -317,7 +316,6 @@
             animation: floatGentle 3.6s ease-in-out infinite;
         }
 
-        /* 1 Lingkaran Merah & Hijau Menyatu */
         .combined-circle-ring {
             width: 68px;
             height: 68px;
@@ -433,8 +431,89 @@
                     <span>Baca Panduan Wajib Dipatuhi & Tata Cara Pakai</span>
                 </a>
                 <p class="text-[11px] text-slate-400 leading-relaxed">
-                    Catatan pemasukan, pengeluaran, dan target harian Anda tersimpan aman di database PostgreSQL Supabase sesuai akun Anda.
+                    Akun baru wajib membaca panduan selama 15 menit terlebih dahulu sebelum masuk ke beranda.
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LAYAR WAJIB BACA PANDUAN UNTUK AKUN BARU (TIMER 15 MENIT) -->
+    <section id="onboarding-gate-screen" class="hidden min-h-screen flex items-center justify-center px-4 py-10">
+        <div class="anim-enter w-full max-w-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xl p-6 sm:p-8 space-y-6">
+            <div class="flex items-center justify-between gap-3">
+                <div class="inline-flex items-center gap-2 text-xs font-bold px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/60">
+                    <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                    <span>Wajib Akun Baru • Membaca Panduan</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        <i data-lucide="moon" id="gate-icon-moon" class="w-4 h-4"></i>
+                        <i data-lucide="sun" id="gate-icon-sun" class="w-4 h-4 hidden text-amber-400"></i>
+                    </button>
+                    <button type="button" onclick="handleLogout()" class="inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/70 transition">
+                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                        <span>Keluar</span>
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                    Baca Panduan Terlebih Dahulu
+                </h2>
+                <p class="text-sm text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed">
+                    Untuk akun baru (<span id="gate-user-email" class="font-semibold text-emerald-600 dark:text-emerald-400">-</span>), selesaikan waktu membaca panduan selama <strong>15 menit</strong> sebelum tombol masuk ke beranda terbuka.
+                </p>
+            </div>
+
+            <!-- Kotak Timer 15 Menit -->
+            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 space-y-3">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                        <i data-lucide="timer" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                        <span>Sisa Waktu Wajib Baca</span>
+                    </span>
+                    <span id="onboarding-status-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300">
+                        Sedang Berjalan (15 Menit)
+                    </span>
+                </div>
+
+                <div class="flex items-baseline justify-between gap-4">
+                    <div id="onboarding-timer-display" class="font-display text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white tabular-nums">
+                        15:00
+                    </div>
+                    <div class="text-right text-xs text-slate-500 dark:text-slate-400">
+                        <div>Durasi wajib: <strong class="text-slate-700 dark:text-slate-200">15:00</strong></div>
+                        <div id="onboarding-progress-pct" class="font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">0% selesai</div>
+                    </div>
+                </div>
+
+                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <div id="onboarding-timer-bar" class="h-full bg-emerald-600 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Langkah Singkat Sebelum Masuk -->
+            <div class="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/25 border border-emerald-200/80 dark:border-emerald-800/60 space-y-2 text-xs sm:text-sm">
+                <div class="font-bold text-emerald-950 dark:text-emerald-200">Langkah Wajib Akun Baru:</div>
+                <ol class="list-decimal list-inside space-y-1 text-slate-700 dark:text-slate-200 leading-relaxed">
+                    <li>Buka halaman <strong>Panduan Lengkap</strong> dan pelajari aturan pencatatan, kategori/aplikasi mitra manual, target harian, serta riwayat jam 00.00.</li>
+                    <li>Biarkan timer <strong>15 menit</strong> berjalan hingga mencapai <strong>00:00</strong>.</li>
+                    <li>Setelah 15 menit selesai, klik <strong>Masuk ke Beranda</strong> untuk mulai mencatat transaksi.</li>
+                </ol>
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a href="announcement.html?onboarding=1" class="flex-1 py-3.5 px-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 dark:hover:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 font-bold text-sm transition flex items-center justify-center gap-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>Buka Halaman Panduan</span>
+                </a>
+
+                <button type="button" id="onboarding-enter-btn" disabled onclick="completeOnboardingAndEnter()" class="flex-1 py-3.5 px-4 rounded-xl bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-sm cursor-not-allowed transition flex items-center justify-center gap-2">
+                    <i data-lucide="lock" id="onboarding-btn-icon" class="w-4 h-4"></i>
+                    <span id="onboarding-enter-label">Tunggu Timer (15:00)</span>
+                </button>
             </div>
         </div>
     </section>
@@ -508,7 +587,6 @@
                         <p class="text-sm text-slate-500 dark:text-slate-400" id="current-date-display">Memuat tanggal...</p>
                     </div>
 
-                    <!-- 1 Lingkaran Merah & Hijau Menyatu + Ilustrasi Rute Berjalan -->
                     <div class="flex items-center justify-between sm:justify-end gap-4">
                         <div class="flex items-center gap-3 bg-slate-50/90 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 rounded-2xl px-3.5 py-2.5">
                             <div id="combined-circle-ring" class="combined-circle-ring shrink-0" title="Proporsi Masuk (Hijau) vs Keluar (Merah) dalam 1 lingkaran">
@@ -578,7 +656,6 @@
                 </div>
 
                 <div id="home-guide-body" class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4 mt-4 border-t border-slate-200/80 dark:border-slate-800">
-                    <!-- Wajib Dipatuhi -->
                     <div class="p-4 rounded-xl bg-rose-50/75 dark:bg-rose-950/20 border border-rose-200/80 dark:border-rose-800/50 space-y-2">
                         <div class="flex items-center gap-2">
                             <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-600 text-white">Wajib Dipatuhi</span>
@@ -595,12 +672,11 @@
                             </li>
                             <li class="flex items-start gap-2">
                                 <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5"></i>
-                                <span>Isi nama kategori sendiri dengan jelas saat memilih <em>Lainnya</em>.</span>
+                                <span>Isi nama kategori atau aplikasi mitra sendiri dengan jelas saat memilih <em>Lainnya</em>.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Tata Cara Pakai -->
                     <div class="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-800/50 space-y-2">
                         <div class="flex items-center gap-2">
                             <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-600 text-white">Tata Cara Pakai</span>
@@ -613,11 +689,11 @@
                             </li>
                             <li class="flex items-start gap-2">
                                 <span class="w-4 h-4 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
-                                <span>Isi nominal (bisa pakai tombol +10rb s.d. +50rb), kategori, tanggal & catatan lalu simpan.</span>
+                                <span>Isi nominal (bisa pakai tombol +10rb s.d. +50rb), kategori, aplikasi mitra, tanggal & catatan lalu simpan.</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <span class="w-4 h-4 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
-                                <span>Pantau target bersih harian, simulasi pos, grafik 1 lingkaran, dan edit/ekspor riwayat.</span>
+                                <span>Pilih tanggal tertentu di riwayat (otomatis kosong tiap jam 00.00 hari baru).</span>
                             </li>
                         </ol>
                     </div>
@@ -693,7 +769,6 @@
 
             <!-- GRID UTAMA: FORM INPUT CEPAT + ALOKASI & GRAFIK 1 LINGKARAN -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- KOLOM KIRI -->
                 <div class="lg:col-span-5 space-y-6">
                     <div class="anim-enter anim-delay-2 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
                         <div class="flex items-center gap-2.5 mb-5">
@@ -737,7 +812,6 @@
                                 </select>
                             </div>
 
-                            <!-- Input Teks Ketik Sendiri untuk Kategori Lainnya (Pemasukan & Pengeluaran) -->
                             <div id="tx-custom-category-wrapper" class="hidden">
                                 <label id="tx-custom-category-label" class="block text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1.5">Nama Kategori Lainnya (Ketik)</label>
                                 <input type="text" id="tx-custom-category" placeholder="Misal: Cashback / Tambal Ban"
@@ -754,6 +828,12 @@
                                     <button type="button" onclick="selectPlatform('Lainnya')" data-platform="Lainnya" class="platform-btn py-2 px-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-95 transition-all duration-150">Lainnya</button>
                                 </div>
                                 <input type="hidden" id="tx-platform" value="Gojek">
+
+                                <div id="tx-custom-platform-wrapper" class="hidden mt-2.5">
+                                    <label for="tx-custom-platform" class="block text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1">Nama Aplikasi Mitra Lainnya (Ketik)</label>
+                                    <input type="text" id="tx-custom-platform" placeholder="Misal: inDrive / Lalamove / Offline"
+                                        class="w-full px-3.5 py-2.5 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/25 border border-emerald-300 dark:border-emerald-700 text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                                </div>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -775,7 +855,6 @@
                     </div>
                 </div>
 
-                <!-- KOLOM KANAN -->
                 <div class="lg:col-span-7 space-y-6">
                     <div class="anim-enter anim-delay-3 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
@@ -836,7 +915,6 @@
                         </div>
                     </div>
 
-                    <!-- GRAFIK 1 LINGKARAN TERPADU (MERAH & HIJAU MENYATU) -->
                     <div class="anim-enter anim-delay-4 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                             <div class="flex items-center gap-2.5">
@@ -853,7 +931,6 @@
                             </div>
                         </div>
 
-                        <!-- Filter Fokus pada 1 Lingkaran -->
                         <div class="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl mb-5">
                             <button type="button" id="chart-mode-all" onclick="setCategoryChartMode('all')" class="py-2 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">
                                 Gabungan
@@ -881,7 +958,7 @@
                 </div>
             </div>
 
-            <!-- 5. RIWAYAT TRANSAKSI, PENCARIAN, FILTER & EKSPOR CSV -->
+            <!-- 5. RIWAYAT TRANSAKSI -->
             <section class="anim-enter anim-delay-4 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
                 <div class="flex flex-col gap-4 mb-5">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -890,28 +967,39 @@
                                 <i data-lucide="history" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">Riwayat Transaksi</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Tersimpan di database Supabase per akun • Bisa diedit & diekspor CSV</p>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">Riwayat Transaksi</h3>
+                                    <span id="midnight-reset-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200/70 dark:border-amber-800/60">
+                                        Reset otomatis jam 00.00
+                                    </span>
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400" id="history-date-subtitle">Pilih tanggal tertentu • Otomatis kosong setiap pergantian hari jam 00.00</p>
                             </div>
                         </div>
 
-                        <button type="button" onclick="exportTransactionsCSV()" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-950/80 border border-emerald-200/70 dark:border-emerald-800/60 transition self-start sm:self-center">
-                            <i data-lucide="download" class="w-4 h-4"></i>
-                            <span>Ekspor CSV</span>
-                        </button>
+                        <div class="flex items-center gap-2 self-start sm:self-center">
+                            <button type="button" onclick="resetHistoryToToday()" class="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                                <i data-lucide="calendar-check" class="w-4 h-4"></i>
+                                <span>Hari Ini</span>
+                            </button>
+                            <button type="button" onclick="exportTransactionsCSV()" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-950/80 border border-emerald-200/70 dark:border-emerald-800/60 transition">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                <span>Ekspor CSV</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                        <div>
+                            <label for="filter-selected-date" class="sr-only">Pilih Tanggal Tertentu</label>
+                            <input type="date" id="filter-selected-date" onchange="handleSelectedDateChange()" oninput="handleSelectedDateChange()"
+                                class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                        </div>
+
                         <div class="relative">
                             <input type="text" id="filter-search" oninput="renderHistory()" placeholder="Cari catatan / kategori..."
                                 class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                         </div>
-
-                        <select id="filter-time" onchange="renderHistory()" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
-                            <option value="today">Hari Ini</option>
-                            <option value="week">Minggu Ini (7 Hari)</option>
-                            <option value="all" selected>Semua Riwayat</option>
-                        </select>
 
                         <select id="filter-type" onchange="handleFilterTypeChange()" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                             <option value="all">Semua Tipe</option>
@@ -989,13 +1077,16 @@
 
                 <div id="edit-tx-platform-wrapper">
                     <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Aplikasi Mitra</label>
-                    <select id="edit-tx-platform" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-900 dark:text-white">
+                    <select id="edit-tx-platform" onchange="handleEditPlatformChange()" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-900 dark:text-white">
                         <option value="Gojek">Gojek</option>
                         <option value="Grab">Grab</option>
                         <option value="Maxim">Maxim</option>
                         <option value="ShopeeFood">ShopeeFood</option>
                         <option value="Lainnya">Lainnya</option>
                     </select>
+                    <div id="edit-tx-custom-platform-wrapper" class="hidden mt-2">
+                        <input type="text" id="edit-tx-custom-platform" placeholder="Ketik nama aplikasi mitra kustom" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-emerald-300 dark:border-emerald-700 text-sm font-medium text-slate-900 dark:text-white">
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -1025,8 +1116,14 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_9zVqwyMGLZz9ERqNXVoOUg_N5lB-U6L';
         const THEME_KEY = 'ojolku_finance_theme_v1';
         const GUIDE_COLLAPSED_KEY = 'ojolku_home_guide_collapsed_v1';
+        const DAILY_RESET_DATE_KEY = 'ojolku_daily_reset_date_v1';
+        const ONBOARDING_REQUIRED_PREFIX = 'ojolku_new_user_guide_req_v1_';
+        const ONBOARDING_TIMER_PREFIX = 'ojolku_guide_timer_v1_';
+        const ONBOARDING_DURATION_SEC = 15 * 60; // 15 menit = 900 detik
 
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const PRESET_PLATFORMS = ['Gojek', 'Grab', 'Maxim', 'ShopeeFood'];
 
         const CATEGORIES = {
             income: [
@@ -1088,11 +1185,142 @@
         let lastRenderedHistory = [];
         let dailyTarget = 150000;
         let currentPeriod = 'today';
+        let selectedHistoryDate = getTodayStr();
+        let lastObservedDay = getTodayStr();
+        let clearedAfterMidnightDates = new Set();
         let authMode = 'login';
         let categoryChartMode = 'all';
         let categoryChartInstance = null;
+        let onboardingIntervalId = null;
         const displayedNumbers = {};
         const activeAnimFrames = {};
+
+        function markUserAsNewAccount(userId) {
+            if (!userId) return;
+            localStorage.setItem(ONBOARDING_REQUIRED_PREFIX + userId, '1');
+            const timerKey = ONBOARDING_TIMER_PREFIX + userId;
+            if (!localStorage.getItem(timerKey)) {
+                localStorage.setItem(timerKey, String(Date.now() + ONBOARDING_DURATION_SEC * 1000));
+            }
+        }
+
+        function isFreshlyCreatedAuthUser(user) {
+            if (!user || !user.created_at) return false;
+            const createdMs = new Date(user.created_at).getTime();
+            if (!Number.isFinite(createdMs)) return false;
+            // Akun baru yang dibuat dalam 24 jam terakhir
+            return (Date.now() - createdMs) < (24 * 60 * 60 * 1000);
+        }
+
+        function isNewUserOnboardingActive(user) {
+            if (!user || !user.id) return false;
+            const reqFlag = localStorage.getItem(ONBOARDING_REQUIRED_PREFIX + user.id);
+            if (reqFlag === 'done') return false;
+            if (reqFlag === '1') return true;
+
+            if (isFreshlyCreatedAuthUser(user)) {
+                markUserAsNewAccount(user.id);
+                return true;
+            }
+            return false;
+        }
+
+        function getRemainingOnboardingSeconds(userId) {
+            if (!userId) return 0;
+            const timerKey = ONBOARDING_TIMER_PREFIX + userId;
+            let endMs = Number(localStorage.getItem(timerKey));
+            if (!endMs || !Number.isFinite(endMs)) {
+                endMs = Date.now() + ONBOARDING_DURATION_SEC * 1000;
+                localStorage.setItem(timerKey, String(endMs));
+            }
+            return Math.max(0, Math.ceil((endMs - Date.now()) / 1000));
+        }
+
+        function formatMMSS(totalSeconds) {
+            const safeSec = Math.max(0, Math.floor(totalSeconds));
+            const mins = String(Math.floor(safeSec / 60)).padStart(2, '0');
+            const secs = String(safeSec % 60).padStart(2, '0');
+            return `${mins}:${secs}`;
+        }
+
+        function stopOnboardingTicker() {
+            if (onboardingIntervalId) {
+                clearInterval(onboardingIntervalId);
+                onboardingIntervalId = null;
+            }
+        }
+
+        function updateOnboardingGateUI() {
+            if (!currentUser) return;
+            const remaining = getRemainingOnboardingSeconds(currentUser.id);
+            const elapsed = Math.max(0, ONBOARDING_DURATION_SEC - remaining);
+            const pct = Math.min(100, Math.round((elapsed / ONBOARDING_DURATION_SEC) * 100));
+
+            const displayEl = document.getElementById('onboarding-timer-display');
+            const barEl = document.getElementById('onboarding-timer-bar');
+            const pctEl = document.getElementById('onboarding-progress-pct');
+            const badgeEl = document.getElementById('onboarding-status-badge');
+            const btnEl = document.getElementById('onboarding-enter-btn');
+            const labelEl = document.getElementById('onboarding-enter-label');
+            const iconEl = document.getElementById('onboarding-btn-icon');
+
+            if (displayEl) displayEl.textContent = formatMMSS(remaining);
+            if (barEl) barEl.style.width = `${pct}%`;
+            if (pctEl) pctEl.textContent = `${pct}% selesai`;
+
+            if (remaining <= 0) {
+                if (badgeEl) {
+                    badgeEl.textContent = 'Selesai (15 Menit Tercapai)';
+                    badgeEl.className = 'text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300';
+                }
+                if (btnEl) {
+                    btnEl.disabled = false;
+                    btnEl.className = 'flex-1 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-2 cursor-pointer';
+                }
+                if (labelEl) labelEl.textContent = 'Masuk ke Beranda';
+                if (iconEl) iconEl.setAttribute('data-lucide', 'arrow-right-circle');
+            } else {
+                if (badgeEl) {
+                    badgeEl.textContent = 'Sedang Berjalan (15 Menit)';
+                    badgeEl.className = 'text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300';
+                }
+                if (btnEl) {
+                    btnEl.disabled = true;
+                    btnEl.className = 'flex-1 py-3.5 px-4 rounded-xl bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-sm cursor-not-allowed transition flex items-center justify-center gap-2';
+                }
+                if (labelEl) labelEl.textContent = `Tunggu Timer (${formatMMSS(remaining)})`;
+                if (iconEl) iconEl.setAttribute('data-lucide', 'lock');
+            }
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function startOnboardingGateScreen(user) {
+            stopOnboardingTicker();
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('app-shell').classList.add('hidden');
+            const gateEl = document.getElementById('onboarding-gate-screen');
+            gateEl.classList.remove('hidden');
+
+            const emailSpan = document.getElementById('gate-user-email');
+            if (emailSpan) emailSpan.textContent = user.email || 'Akun Baru';
+
+            updateOnboardingGateUI();
+            onboardingIntervalId = setInterval(updateOnboardingGateUI, 1000);
+        }
+
+        async function completeOnboardingAndEnter() {
+            if (!currentUser) return;
+            const remaining = getRemainingOnboardingSeconds(currentUser.id);
+            if (remaining > 0) {
+                showToast(`Selesaikan waktu baca 15 menit terlebih dahulu (${formatMMSS(remaining)})`, 'error');
+                return;
+            }
+            localStorage.setItem(ONBOARDING_REQUIRED_PREFIX + currentUser.id, 'done');
+            localStorage.removeItem(ONBOARDING_TIMER_PREFIX + currentUser.id);
+            stopOnboardingTicker();
+            await onSessionReady({ user: currentUser });
+            showToast('Waktu baca 15 menit selesai. Selamat datang di beranda!', 'success');
+        }
 
         function toggleHomeGuide(forceCollapsed = null) {
             const bodyEl = document.getElementById('home-guide-body');
@@ -1126,13 +1354,79 @@
             return `${year}-${month}-${day}`;
         }
 
-        function getOffsetDateStr(daysOffset) {
-            const d = new Date();
-            d.setDate(d.getDate() + daysOffset);
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
+        function syncDateInputsWithState() {
+            const filterDateInput = document.getElementById('filter-selected-date');
+            if (filterDateInput && selectedHistoryDate && filterDateInput.value !== selectedHistoryDate) {
+                filterDateInput.value = selectedHistoryDate;
+            }
+        }
+
+        function checkMidnightReset(showNotice = false) {
+            const todayStr = getTodayStr();
+            const storedDate = localStorage.getItem(DAILY_RESET_DATE_KEY);
+
+            if (!storedDate) {
+                localStorage.setItem(DAILY_RESET_DATE_KEY, todayStr);
+                lastObservedDay = todayStr;
+                return false;
+            }
+
+            if (storedDate !== todayStr || lastObservedDay !== todayStr) {
+                clearedAfterMidnightDates.add(todayStr);
+                localStorage.setItem(DAILY_RESET_DATE_KEY, todayStr);
+                lastObservedDay = todayStr;
+                selectedHistoryDate = todayStr;
+
+                const dateInput = document.getElementById('filter-selected-date');
+                if (dateInput) dateInput.value = todayStr;
+
+                const txDateInput = document.getElementById('tx-date');
+                if (txDateInput) txDateInput.value = todayStr;
+
+                const now = new Date();
+                const dateDisplay = document.getElementById('current-date-display');
+                if (dateDisplay) {
+                    dateDisplay.textContent = now.toLocaleDateString('id-ID', {
+                        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+                    });
+                }
+
+                if (currentUser) {
+                    refreshDashboard();
+                }
+
+                if (showNotice) {
+                    showToast('Jam 00.00 tercapai: riwayat dikosongkan untuk hari baru', 'info');
+                }
+                return true;
+            }
+
+            return false;
+        }
+
+        function handleSelectedDateChange() {
+            const inputEl = document.getElementById('filter-selected-date');
+            const nextDate = (inputEl && inputEl.value) ? inputEl.value : getTodayStr();
+            if (nextDate === selectedHistoryDate) return;
+
+            selectedHistoryDate = nextDate;
+            if (currentUser) {
+                refreshDashboard();
+            } else {
+                renderHistory();
+            }
+        }
+
+        function resetHistoryToToday() {
+            const todayStr = getTodayStr();
+            selectedHistoryDate = todayStr;
+            const inputEl = document.getElementById('filter-selected-date');
+            if (inputEl) inputEl.value = todayStr;
+            if (currentUser) {
+                refreshDashboard();
+            } else {
+                renderHistory();
+            }
         }
 
         function formatRupiah(amount) {
@@ -1241,11 +1535,14 @@
                 } else {
                     const { data, error } = await supabaseClient.auth.signUp({ email, password });
                     if (error) throw error;
+                    if (data?.user?.id) {
+                        markUserAsNewAccount(data.user.id);
+                    }
                     if (!data.session) {
-                        errBox.textContent = 'Pendaftaran berhasil. Silakan cek kotak masuk email Anda untuk konfirmasi akun sebelum masuk.';
+                        errBox.textContent = 'Pendaftaran berhasil. Silakan cek kotak masuk email Anda untuk konfirmasi akun, lalu masuk dan baca panduan selama 15 menit.';
                         errBox.classList.remove('hidden');
                     } else {
-                        showToast('Akun berhasil dibuat', 'success');
+                        showToast('Akun baru terdaftar. Silakan baca panduan (timer 15 menit)', 'success');
                     }
                 }
             } catch (err) {
@@ -1257,6 +1554,7 @@
         });
 
         async function handleLogout() {
+            stopOnboardingTicker();
             await supabaseClient.auth.signOut();
             currentUser = null;
             transactions = [];
@@ -1316,6 +1614,16 @@
             }));
         }
 
+        function handleEditPlatformChange() {
+            const platVal = document.getElementById('edit-tx-platform').value;
+            const wrapper = document.getElementById('edit-tx-custom-platform-wrapper');
+            const customInput = document.getElementById('edit-tx-custom-platform');
+            const isOther = platVal === 'Lainnya';
+            wrapper.classList.toggle('hidden', !isOther);
+            customInput.required = isOther;
+            if (!isOther) customInput.value = '';
+        }
+
         function openEditTxModal(txId) {
             const tx = transactions.find(item => String(item.id) === String(txId));
             if (!tx) return;
@@ -1325,7 +1633,21 @@
             document.getElementById('edit-tx-amount').value = tx.amount;
             document.getElementById('edit-tx-date').value = tx.date;
             document.getElementById('edit-tx-note').value = tx.note;
-            document.getElementById('edit-tx-platform').value = tx.platform || 'Gojek';
+
+            const platSelect = document.getElementById('edit-tx-platform');
+            const customPlatInput = document.getElementById('edit-tx-custom-platform');
+            const rawPlat = tx.platform || 'Gojek';
+            if (PRESET_PLATFORMS.includes(rawPlat)) {
+                platSelect.value = rawPlat;
+                customPlatInput.value = '';
+            } else {
+                platSelect.value = 'Lainnya';
+                customPlatInput.value = rawPlat;
+            }
+            handleEditPlatformChange();
+            if (platSelect.value === 'Lainnya') {
+                customPlatInput.value = rawPlat;
+            }
 
             syncEditCategoryOptions(tx.category);
 
@@ -1388,7 +1710,23 @@
             const amount = parseInt(document.getElementById('edit-tx-amount').value, 10);
             const selectedCategory = document.getElementById('edit-tx-category').value;
             const customCat = document.getElementById('edit-tx-custom-category').value.trim();
-            const platform = type === 'income' ? document.getElementById('edit-tx-platform').value : '';
+
+            let platform = '';
+            if (type === 'income') {
+                const selectedPlat = document.getElementById('edit-tx-platform').value;
+                const customPlat = document.getElementById('edit-tx-custom-platform').value.trim();
+                if (selectedPlat === 'Lainnya') {
+                    if (!customPlat) {
+                        showToast('Ketik nama aplikasi mitra terlebih dahulu', 'error');
+                        document.getElementById('edit-tx-custom-platform').focus();
+                        return;
+                    }
+                    platform = customPlat;
+                } else {
+                    platform = selectedPlat;
+                }
+            }
+
             const date = document.getElementById('edit-tx-date').value || getTodayStr();
             const note = document.getElementById('edit-tx-note').value.trim();
 
@@ -1431,6 +1769,10 @@
                         ? { ...t, type, category, platform, amount, note: finalNote, date }
                         : t
                 );
+
+                if (date === getTodayStr()) {
+                    clearedAfterMidnightDates.delete(date);
+                }
 
                 closeEditTxModal();
                 refreshDashboard();
@@ -1563,6 +1905,17 @@
                     btn.className = 'platform-btn py-2 px-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-95 transition-all duration-150';
                 }
             });
+
+            const customPlatWrapper = document.getElementById('tx-custom-platform-wrapper');
+            const customPlatInput = document.getElementById('tx-custom-platform');
+            const isOther = platformName === 'Lainnya';
+            customPlatWrapper.classList.toggle('hidden', !isOther);
+            customPlatInput.required = isOther;
+            if (isOther) {
+                customPlatInput.focus();
+            } else {
+                customPlatInput.value = '';
+            }
         }
 
         function addQuickAmount(val) {
@@ -1597,7 +1950,22 @@
                 category = customCategoryInput;
             }
 
-            const platform = type === 'income' ? document.getElementById('tx-platform').value : '';
+            let platform = '';
+            if (type === 'income') {
+                const selectedPlat = document.getElementById('tx-platform').value;
+                const customPlatInput = document.getElementById('tx-custom-platform').value.trim();
+                if (selectedPlat === 'Lainnya') {
+                    if (!customPlatInput) {
+                        showToast('Ketik nama aplikasi mitra lainnya terlebih dahulu!', 'error');
+                        document.getElementById('tx-custom-platform').focus();
+                        return;
+                    }
+                    platform = customPlatInput;
+                } else {
+                    platform = selectedPlat;
+                }
+            }
+
             const date = document.getElementById('tx-date').value || getTodayStr();
             const note = document.getElementById('tx-note').value.trim() || category;
             const saveBtn = document.getElementById('save-tx-btn');
@@ -1636,9 +2004,17 @@
                     date: data.tx_date
                 });
 
+                if (date === getTodayStr()) {
+                    clearedAfterMidnightDates.delete(date);
+                }
+                selectedHistoryDate = date;
+                const filterDateEl = document.getElementById('filter-selected-date');
+                if (filterDateEl) filterDateEl.value = date;
+
                 document.getElementById('tx-amount').value = '';
                 document.getElementById('tx-note').value = '';
                 document.getElementById('tx-custom-category').value = '';
+                document.getElementById('tx-custom-platform').value = '';
                 handleCategoryChange();
 
                 refreshDashboard();
@@ -1667,12 +2043,13 @@
         }
 
         function getFilteredTransactionsByPeriod() {
-            const todayStr = getTodayStr();
-            const currentMonthPrefix = todayStr.substring(0, 7);
+            const activeDate = selectedHistoryDate || getTodayStr();
+            const currentMonthPrefix = activeDate.substring(0, 7);
 
             return transactions.filter(tx => {
+                if (clearedAfterMidnightDates.has(tx.date)) return false;
                 if (currentPeriod === 'today') {
-                    return tx.date === todayStr;
+                    return tx.date === activeDate;
                 }
                 return tx.date.startsWith(currentMonthPrefix);
             });
@@ -1699,7 +2076,7 @@
 
         function updateSummaryAndAllocations() {
             const periodTx = getFilteredTransactionsByPeriod();
-            const todayStr = getTodayStr();
+            const activeDate = selectedHistoryDate || getTodayStr();
 
             let totalIncome = 0;
             let incomeCount = 0;
@@ -1722,13 +2099,15 @@
             animateRupiahText('stat-net', netIncome);
             updateCombinedCircle(totalIncome, totalExpense);
 
-            const todayTx = transactions.filter(t => t.date === todayStr);
-            const todayIncome = todayTx.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
-            const todayExpense = todayTx.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
-            const todayNet = todayIncome - todayExpense;
+            const dateTx = clearedAfterMidnightDates.has(activeDate)
+                ? []
+                : transactions.filter(t => t.date === activeDate);
+            const dateIncome = dateTx.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+            const dateExpense = dateTx.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+            const dateNet = dateIncome - dateExpense;
 
             document.getElementById('target-amount-display').textContent = formatRupiah(dailyTarget);
-            const rawPercent = dailyTarget > 0 ? Math.round((todayNet / dailyTarget) * 100) : 0;
+            const rawPercent = dailyTarget > 0 ? Math.round((dateNet / dailyTarget) * 100) : 0;
             const clampedPercent = Math.max(0, Math.min(100, rawPercent));
 
             document.getElementById('target-percentage').textContent = `${Math.max(0, rawPercent)}%`;
@@ -1736,19 +2115,19 @@
             progressBar.style.width = `${clampedPercent}%`;
 
             const statusText = document.getElementById('target-status-text');
-            if (todayNet >= dailyTarget) {
+            if (dateNet >= dailyTarget) {
                 progressBar.className = 'progress-shimmer h-full bg-emerald-500 rounded-full transition-all duration-700 ease-out';
-                statusText.textContent = `Target harian tercapai (+${formatRupiah(todayNet - dailyTarget)})`;
+                statusText.textContent = `Target tercapai (+${formatRupiah(dateNet - dailyTarget)})`;
                 statusText.className = 'text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 mt-1.5';
             } else {
-                const remaining = dailyTarget - Math.max(0, todayNet);
+                const remaining = dailyTarget - Math.max(0, dateNet);
                 progressBar.className = 'progress-shimmer h-full bg-rose-500 rounded-full transition-all duration-700 ease-out';
-                statusText.textContent = `Kurang ${formatRupiah(remaining)} lagi untuk target hari ini`;
+                statusText.textContent = `Kurang ${formatRupiah(remaining)} lagi untuk target`;
                 statusText.className = 'text-[11px] text-slate-500 dark:text-slate-400 mt-1.5';
             }
 
             const allocatable = Math.max(0, netIncome);
-            document.getElementById('allocation-basis-label').textContent = `Basis (${currentPeriod === 'today' ? 'Hari Ini' : 'Bulan Ini'}): ${formatRupiah(allocatable)}`;
+            document.getElementById('allocation-basis-label').textContent = `Basis (${currentPeriod === 'today' ? formatDateIndo(activeDate) : 'Bulan Ini'}): ${formatRupiah(allocatable)}`;
             animateRupiahText('alloc-home', Math.round(allocatable * 0.70));
             animateRupiahText('alloc-vehicle', Math.round(allocatable * 0.15));
             animateRupiahText('alloc-savings', Math.round(allocatable * 0.10));
@@ -1904,23 +2283,26 @@
                 'Grab': 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300',
                 'Maxim': 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300',
                 'ShopeeFood': 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300',
-                'Lainnya': 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                'Lainnya': 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300'
             };
-            const style = map[platform] || map['Lainnya'];
+            const style = map[platform] || 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300';
             return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${style}">${platform}</span>`;
         }
 
         function syncCategoryFilterOptions() {
+            const targetDate = selectedHistoryDate || getTodayStr();
             const typeFilter = document.getElementById('filter-type').value;
             const catSelect = document.getElementById('filter-category');
             const prevVal = catSelect.value;
 
-            const uniqueCats = [...new Set(
-                transactions
-                    .filter(tx => typeFilter === 'all' || tx.type === typeFilter)
-                    .map(tx => tx.category)
-                    .filter(Boolean)
-            )];
+            const uniqueCats = clearedAfterMidnightDates.has(targetDate)
+                ? []
+                : [...new Set(
+                    transactions
+                        .filter(tx => tx.date === targetDate && (typeFilter === 'all' || tx.type === typeFilter))
+                        .map(tx => tx.category)
+                        .filter(Boolean)
+                )];
 
             catSelect.innerHTML = `<option value="all">Semua Kategori</option>` +
                 uniqueCats.map(cat => `<option value="${cat}">${cat}</option>`).join('');
@@ -1938,27 +2320,34 @@
         }
 
         function renderHistory() {
+            syncDateInputsWithState();
+            const targetDate = selectedHistoryDate || getTodayStr();
+            const isClearedAfterMidnight = clearedAfterMidnightDates.has(targetDate);
+
+            const subtitleEl = document.getElementById('history-date-subtitle');
+            if (subtitleEl) {
+                subtitleEl.textContent = `Menampilkan tanggal: ${formatDateIndo(targetDate)} • Otomatis kosong setiap pergantian hari jam 00.00`;
+            }
+
             syncCategoryFilterOptions();
 
             const listContainer = document.getElementById('transaction-list');
             const searchQuery = (document.getElementById('filter-search')?.value || '').trim().toLowerCase();
-            const timeFilter = document.getElementById('filter-time').value;
             const typeFilter = document.getElementById('filter-type').value;
             const categoryFilter = document.getElementById('filter-category')?.value || 'all';
-            const todayStr = getTodayStr();
-            const sevenDaysAgoStr = getOffsetDateStr(-7);
 
-            const filtered = transactions.filter(tx => {
-                if (timeFilter === 'today' && tx.date !== todayStr) return false;
-                if (timeFilter === 'week' && tx.date < sevenDaysAgoStr) return false;
-                if (typeFilter !== 'all' && tx.type !== typeFilter) return false;
-                if (categoryFilter !== 'all' && tx.category !== categoryFilter) return false;
-                if (searchQuery) {
-                    const haystack = `${tx.category} ${tx.note} ${tx.platform} ${tx.date}`.toLowerCase();
-                    if (!haystack.includes(searchQuery)) return false;
-                }
-                return true;
-            });
+            const filtered = isClearedAfterMidnight
+                ? []
+                : transactions.filter(tx => {
+                    if (tx.date !== targetDate) return false;
+                    if (typeFilter !== 'all' && tx.type !== typeFilter) return false;
+                    if (categoryFilter !== 'all' && tx.category !== categoryFilter) return false;
+                    if (searchQuery) {
+                        const haystack = `${tx.category} ${tx.note} ${tx.platform} ${tx.date}`.toLowerCase();
+                        if (!haystack.includes(searchQuery)) return false;
+                    }
+                    return true;
+                });
 
             lastRenderedHistory = filtered;
 
@@ -1968,8 +2357,8 @@
                         <div class="float-badge w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center mb-3">
                             <i data-lucide="inbox" class="w-6 h-6"></i>
                         </div>
-                        <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Belum ada transaksi ditemukan</p>
-                        <p class="text-xs text-slate-400 mt-1">Coba ubah filter atau catat transaksi baru di form sebelah kiri.</p>
+                        <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Riwayat kosong untuk tanggal ${formatDateIndo(targetDate)}</p>
+                        <p class="text-xs text-slate-400 mt-1">Riwayat otomatis dikosongkan setiap pergantian hari jam 00.00 atau pilih tanggal lain.</p>
                     </div>
                 `;
                 if (window.lucide) lucide.createIcons();
@@ -2025,34 +2414,65 @@
 
         function exportTransactionsCSV() {
             if (!lastRenderedHistory || lastRenderedHistory.length === 0) {
-                showToast('Tidak ada transaksi untuk diekspor', 'error');
+                showToast('Tidak ada transaksi pada tanggal yang dipilih untuk diekspor', 'error');
                 return;
             }
 
+            const delimiter = ';';
             const escapeCell = (val) => {
                 const str = String(val ?? '');
                 return `"${str.replace(/"/g, '""')}"`;
             };
 
-            const headers = ['Tanggal', 'Tipe', 'Kategori', 'Aplikasi Mitra', 'Nominal (Rp)', 'Catatan'];
+            let totalIncome = 0;
+            let totalExpense = 0;
+
+            lastRenderedHistory.forEach(tx => {
+                if (tx.type === 'income') totalIncome += Number(tx.amount) || 0;
+                else totalExpense += Number(tx.amount) || 0;
+            });
+
+            const netBalance = totalIncome - totalExpense;
+
+            const headers = [
+                'Tanggal',
+                'Tipe',
+                'Kategori',
+                'Aplikasi Mitra',
+                'Nominal (Rp)',
+                'Catatan'
+            ];
+
             const rows = lastRenderedHistory.map(tx => [
                 tx.date,
                 tx.type === 'income' ? 'Pemasukan' : 'Pengeluaran',
                 tx.category,
                 tx.platform || '-',
-                tx.type === 'income' ? tx.amount : -tx.amount,
-                tx.note
+                tx.type === 'income' ? Number(tx.amount) : -Math.abs(Number(tx.amount)),
+                tx.note || '-'
             ]);
 
-            const csvContent = [headers, ...rows]
-                .map(row => row.map(escapeCell).join(','))
-                .join('\n');
+            const summaryRows = [
+                ['', '', '', '', '', ''],
+                ['RINGKASAN', '', '', '', '', ''],
+                ['', 'Total Pemasukan', '', '', totalIncome, ''],
+                ['', 'Total Pengeluaran', '', '', -Math.abs(totalExpense), ''],
+                ['', 'Saldo Bersih', '', '', netBalance, '']
+            ];
 
+            const csvLines = [
+                `sep=${delimiter}`,
+                headers.map(escapeCell).join(delimiter),
+                ...rows.map(row => row.map(escapeCell).join(delimiter)),
+                ...summaryRows.map(row => row.map(escapeCell).join(delimiter))
+            ];
+
+            const csvContent = csvLines.join('\r\n');
             const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `ojolku-finance-${getTodayStr()}.csv`;
+            a.download = `ojolku-finance-${selectedHistoryDate || getTodayStr()}.csv`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -2079,15 +2499,15 @@
             const isDark = html.classList.toggle('dark');
             localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
             updateThemeIcons(isDark);
-            if (currentUser) refreshDashboard();
+            if (currentUser && !isNewUserOnboardingActive(currentUser)) refreshDashboard();
         }
 
         function updateThemeIcons(isDark) {
-            ['icon-moon', 'auth-icon-moon'].forEach(id => {
+            ['icon-moon', 'auth-icon-moon', 'gate-icon-moon'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.classList.toggle('hidden', isDark);
             });
-            ['icon-sun', 'auth-icon-sun'].forEach(id => {
+            ['icon-sun', 'auth-icon-sun', 'gate-icon-sun'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.classList.toggle('hidden', !isDark);
             });
@@ -2141,6 +2561,7 @@
         async function onSessionReady(session) {
             const syncId = ++sessionSyncToken;
             const authScreen = document.getElementById('auth-screen');
+            const gateScreen = document.getElementById('onboarding-gate-screen');
             const appShell = document.getElementById('app-shell');
 
             if (session && session.user) {
@@ -2150,18 +2571,38 @@
                     resetDisplayedNumbers();
                 }
 
+                if (isNewUserOnboardingActive(currentUser)) {
+                    startOnboardingGateScreen(currentUser);
+                    return;
+                }
+
+                stopOnboardingTicker();
                 authScreen.classList.add('hidden');
+                gateScreen.classList.add('hidden');
                 appShell.classList.remove('hidden');
                 document.getElementById('user-email-badge').textContent = currentUser.email || 'Mitra Driver';
 
                 await Promise.all([fetchUserSettings(), fetchUserTransactions()]);
                 if (syncId !== sessionSyncToken) return;
+
+                const todayStr = getTodayStr();
+                const storedResetDate = localStorage.getItem(DAILY_RESET_DATE_KEY);
+                if (storedResetDate && storedResetDate !== todayStr) {
+                    checkMidnightReset(false);
+                } else {
+                    localStorage.setItem(DAILY_RESET_DATE_KEY, todayStr);
+                    lastObservedDay = todayStr;
+                    syncDateInputsWithState();
+                }
+
                 refreshDashboard();
             } else {
+                stopOnboardingTicker();
                 currentUser = null;
                 transactions = [];
                 resetDisplayedNumbers();
                 appShell.classList.add('hidden');
+                gateScreen.classList.add('hidden');
                 authScreen.classList.remove('hidden');
             }
             if (window.lucide) lucide.createIcons();
@@ -2171,11 +2612,19 @@
             initTheme();
             initHomeGuideState();
 
+            const todayStr = getTodayStr();
+            selectedHistoryDate = todayStr;
+            lastObservedDay = todayStr;
+            if (!localStorage.getItem(DAILY_RESET_DATE_KEY)) {
+                localStorage.setItem(DAILY_RESET_DATE_KEY, todayStr);
+            }
+
             const now = new Date();
             document.getElementById('current-date-display').textContent = now.toLocaleDateString('id-ID', {
                 weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
             });
-            document.getElementById('tx-date').value = getTodayStr();
+            document.getElementById('tx-date').value = todayStr;
+            document.getElementById('filter-selected-date').value = todayStr;
 
             const hour = now.getHours();
             let greeting = 'Semangat Narik Hari Ini';
@@ -2187,6 +2636,19 @@
 
             setTransactionType('income');
             if (window.lucide) lucide.createIcons();
+
+            setInterval(() => {
+                checkMidnightReset(true);
+            }, 30000);
+
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    checkMidnightReset(true);
+                    if (currentUser && isNewUserOnboardingActive(currentUser)) {
+                        updateOnboardingGateUI();
+                    }
+                }
+            });
 
             const { data: { session } } = await supabaseClient.auth.getSession();
             await onSessionReady(session);

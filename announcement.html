@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Panduan & Tata Cara Pakai — OjolKu Finance</title>
-    <meta name="description" content="Aturan yang wajib dipatuhi dan tata cara penggunaan aplikasi OjolKu Finance bagi mitra driver.">
+    <title>Panduan Lengkap & Tata Cara Pakai — OjolKu Finance</title>
+    <meta name="description" content="Tutorial langkah demi langkah penggunaan OjolKu Finance: catat pemasukan & pengeluaran, input manual aplikasi mitra/kategori lainnya, target harian, riwayat jam 00.00, dan ekspor CSV.">
 
     <meta name="theme-color" content="#059669" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)">
@@ -31,129 +31,310 @@
             }
         }
     </script>
+
     <script defer src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
         h1, h2, h3, .font-display {
             font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
         }
-        @keyframes fadeUpSmooth {
-            0% { opacity: 0; transform: translateY(14px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .guide-card {
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
         }
-        .anim-enter {
-            animation: fadeUpSmooth 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+        .guide-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px -14px rgba(15, 23, 42, 0.14);
+        }
+        .dark .guide-card:hover {
+            box-shadow: 0 14px 28px -14px rgba(0, 0, 0, 0.55);
+        }
+        kbd {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-300 py-8 px-4 sm:px-6">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-300 pb-16">
 
-    <div class="anim-enter max-w-3xl mx-auto bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xl p-6 sm:p-8 space-y-6">
-        <!-- Header Halaman Panduan -->
-        <div class="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-slate-200/80 dark:border-slate-800">
-            <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white shadow-md">
-                    <i data-lucide="megaphone" class="w-5 h-5"></i>
+    <!-- Header Navigasi -->
+    <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+            <a href="index.html" class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white shadow-sm shrink-0">
+                    <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="8.5" cy="22.5" r="4.2"/>
+                        <circle cx="23.5" cy="22.5" r="4.2"/>
+                        <path d="M8.5 22.5h6.5l4.5-8h4.5"/>
+                        <path d="M15 22.5l-2.5-6.5h6"/>
+                        <path d="M18.5 11h6"/>
+                    </svg>
                 </div>
-                <div>
-                    <h1 class="font-extrabold text-xl sm:text-2xl tracking-tight text-slate-900 dark:text-white">
-                        Panduan & Tata Cara Pakai
-                    </h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">OjolKu Finance — Ketentuan Wajib Dipatuhi Mitra Driver</p>
+                <div class="min-w-0">
+                    <div class="font-extrabold text-base sm:text-lg leading-tight text-slate-900 dark:text-white truncate">
+                        OjolKu <span class="text-emerald-600 dark:text-emerald-400">Finance</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">Pusat Tutorial & Aturan Penggunaan</p>
                 </div>
-            </div>
+            </a>
 
-            <div class="flex items-center gap-2">
-                <button onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
-                    <i data-lucide="moon" id="ann-icon-moon" class="w-4 h-4"></i>
-                    <i data-lucide="sun" id="ann-icon-sun" class="w-4 h-4 hidden text-amber-400"></i>
+            <div class="flex items-center gap-2 shrink-0">
+                <button type="button" onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                    <i data-lucide="moon" id="icon-moon" class="w-4 h-4"></i>
+                    <i data-lucide="sun" id="icon-sun" class="w-4 h-4 hidden text-amber-400"></i>
                 </button>
-                <a href="index.html" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-emerald-600/20 transition">
+                <a href="index.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    <span>Kembali ke Login</span>
+                    <span>Kembali ke Beranda</span>
                 </a>
             </div>
         </div>
+    </header>
 
-        <!-- Bagian 1: Wajib Dipatuhi -->
-        <section class="p-5 rounded-2xl bg-rose-50/85 dark:bg-rose-950/25 border border-rose-200/90 dark:border-rose-800/60 space-y-3">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0">
-                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 space-y-7">
+
+        <!-- Banner Timer Wajib Baca 15 Menit (Tampil Jika Akun Baru Masih Dalam Masa Wajib Baca) -->
+        <section id="guide-onboarding-banner" class="hidden rounded-2xl bg-amber-50 dark:bg-amber-950/35 border border-amber-300/80 dark:border-amber-800/70 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+                <div class="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300">
+                    <i data-lucide="timer" class="w-4 h-4"></i>
+                    <span>Wajib Baca Akun Baru (15 Menit)</span>
                 </div>
-                <div>
-                    <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-600 text-white">Wajib Dipatuhi</span>
-                    <h2 class="font-bold text-base sm:text-lg text-rose-950 dark:text-rose-100 mt-0.5">Aturan & Ketentuan Penggunaan</h2>
-                </div>
+                <p class="text-xs sm:text-sm text-amber-950 dark:text-amber-100">
+                    Sisa waktu baca sebelum masuk beranda: <strong id="guide-timer-countdown" class="font-mono text-base">15:00</strong>
+                </p>
             </div>
-
-            <ul class="space-y-2.5 text-xs sm:text-sm text-rose-950 dark:text-rose-200 leading-relaxed">
-                <li class="flex items-start gap-2.5">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-1"></i>
-                    <span><strong>Catat Nominal & Tanggal Secara Jujur:</strong> Masukkan nilai rupiah asli serta tanggal transaksi yang sesuai agar perhitungan pendapatan bersih, pencapaian target harian, dan rasio biaya tidak meleset.</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-1"></i>
-                    <span><strong>Pisahkan Pemasukan & Pengeluaran:</strong> Jangan mencampur biaya operasional (bensin, makan, parkir, kuota, servis) ke dalam pemasukan agar arus kas tetap akurat.</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-1"></i>
-                    <span><strong>Jaga Keamanan Akun & Isi Nama Kategori Jelas:</strong> Gunakan email dan password yang aman, serta ketik nama kategori sendiri secara jelas saat memilih <em>Pemasukan Lainnya</em> atau <em>Pengeluaran Lainnya</em>.</span>
-                </li>
-            </ul>
+            <a href="index.html" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-600 hover:bg-amber-700 text-white shrink-0 transition">
+                <span>Cek Status Timer di Beranda</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
         </section>
 
-        <!-- Bagian 2: Tata Cara Pakai Aplikasi -->
-        <section class="p-5 rounded-2xl bg-emerald-50/75 dark:bg-emerald-950/25 border border-emerald-200/90 dark:border-emerald-800/60 space-y-3.5">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
-                    <i data-lucide="book-open" class="w-4 h-4"></i>
-                </div>
+        <!-- Hero & Daftar Isi Cepat -->
+        <section class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 sm:p-7 shadow-sm">
+            <div class="inline-flex items-center gap-2 text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-800/60 mb-3">
+                <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+                <span>Tutorial Resmi Aplikasi</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                Panduan Lengkap & Tata Cara Pakai OjolKu Finance
+            </h1>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed max-w-3xl">
+                Panduan ini menjelaskan cara menggunakan setiap fitur di <strong>OjolKu Finance</strong> secara tepat: mulai dari login, mencatat pemasukan/pengeluaran dengan input manual <kbd class="px-1.5 py-0.5 text-xs rounded bg-slate-100 dark:bg-slate-800">Lainnya</kbd>, memantau target harian, membaca grafik 1 lingkaran, hingga mengelola riwayat harian dan ekspor CSV.
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mt-5 pt-5 border-t border-slate-200/80 dark:border-slate-800 text-xs font-semibold">
+                <a href="#tut-akun" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">1. Akun & Login</a>
+                <a href="#tut-transaksi" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">2. Input Transaksi</a>
+                <a href="#tut-target" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">3. Target & Alokasi</a>
+                <a href="#tut-grafik" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">4. Grafik & Periode</a>
+                <a href="#tut-riwayat" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">5. Riwayat & CSV</a>
+                <a href="#tut-aturan" class="px-3 py-2 rounded-xl bg-rose-50/80 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-950/50 text-rose-700 dark:text-rose-300 transition">6. Aturan & Bantuan</a>
+            </div>
+        </section>
+
+        <!-- TUTORIAL 1: AKUN & LOGIN -->
+        <section id="tut-akun" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">1</span>
                 <div>
-                    <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-600 text-white">Langkah Mudah</span>
-                    <h2 class="font-bold text-base sm:text-lg text-emerald-950 dark:text-emerald-100 mt-0.5">Tata Cara Pakai Aplikasi</h2>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Masuk, Daftar Akun & Wajib Baca 15 Menit Akun Baru</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Setiap transaksi dan target bersih harian tersimpan privat per akun di Supabase</p>
                 </div>
             </div>
 
-            <ol class="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
-                <li class="flex items-start gap-3">
-                    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
-                    <span><strong>Masuk atau Daftar Akun:</strong> Buka halaman utama, lalu masuk menggunakan email dan password Anda (atau pilih tab <em>Daftar Akun</em> jika belum memiliki akun).</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i data-lucide="user-plus" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                        <span>Alur Akun Baru (Timer 15 Menit)</span>
+                    </h3>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>Daftar akun dengan <strong>Email</strong> aktif dan <strong>Password</strong> minimal <strong>6 karakter</strong>.</li>
+                        <li>Setelah masuk ke akun baru, sistem mengarahkan ke tahap baca panduan dengan timer <strong>15:00</strong>.</li>
+                        <li>Setelah timer 15 menit selesai (<code>00:00</code>), tombol <strong>Masuk ke Beranda</strong> terbuka.</li>
+                    </ol>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i data-lucide="log-in" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                        <span>Cara Masuk & Keluar Akun</span>
+                    </h3>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>Pada tab <strong>Masuk</strong>, isi Email dan Password lalu klik <strong>Masuk ke Akun</strong>.</li>
+                        <li>Email akun aktif akan tampil di bagian atas header dashboard.</li>
+                        <li>Jika memakai perangkat bersama/umum, klik tombol <strong>Keluar</strong> di pojok kanan atas setelah selesai mencatat.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- TUTORIAL 2: PENCATATAN TRANSAKSI & INPUT MANUAL LAINNYA -->
+        <section id="tut-transaksi" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">2</span>
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Mencatat Transaksi Cepat & Menulis Manual <span class="text-emerald-600 dark:text-emerald-400">"Lainnya"</span></h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Catat pemasukan orderan maupun biaya operasional dengan cepat dan akurat</p>
+                </div>
+            </div>
+
+            <ol class="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <li class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
+                    <strong class="text-slate-900 dark:text-white">Langkah A — Pilih Tipe Transaksi:</strong> Klik <strong>Pemasukan</strong> (hijau) untuk pendapatan orderan, tip, atau bonus; atau klik <strong>Pengeluaran</strong> (merah) untuk bensin, makan, parkir, kuota, maupun servis. Saat memilih <em>Pengeluaran</em>, pilihan <em>Aplikasi Mitra</em> otomatis disembunyikan.
                 </li>
-                <li class="flex items-start gap-3">
-                    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
-                    <span><strong>Catat Transaksi Cepat:</strong> Pilih tipe <strong>Pemasukan</strong> atau <strong>Pengeluaran</strong>, isi nominal, pilih kategori, ketik nama kategori sendiri jika memilih <em>Lainnya</em>, lalu klik <strong>Simpan Transaksi</strong>.</span>
+                <li class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
+                    <strong class="text-slate-900 dark:text-white">Langkah B — Isi Nominal:</strong> Ketik nominal rupiah (minimal Rp 500) atau klik tombol cepat <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600">+10rb</kbd>, <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600">+15rb</kbd>, <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600">+25rb</kbd>, atau <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600">+50rb</kbd> (bisa diklik berkali-kali untuk mengakumulasi nominal).
                 </li>
-                <li class="flex items-start gap-3">
-                    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
-                    <span><strong>Pantau Target, Pos & Grafik 1 Lingkaran:</strong> Periksa progres target bersih harian (dapat diubah lewat tombol <em>Ubah</em>), simulasi pembagian pos, dan grafik 1 lingkaran hijau-merah.</span>
+                <li class="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/25 border border-emerald-200/80 dark:border-emerald-800/60">
+                    <strong class="text-emerald-950 dark:text-emerald-200">Langkah C — Pilih Kategori & Aplikasi Mitra (Termasuk Tulis Manual "Lainnya"):</strong>
+                    <ul class="list-disc list-inside mt-1.5 space-y-1 text-slate-700 dark:text-slate-200">
+                        <li><strong>Aplikasi Mitra (pada Pemasukan):</strong> Pilih <em>Gojek</em>, <em>Grab</em>, <em>Maxim</em>, <em>Shopee</em>, atau klik <strong>Lainnya</strong>. Saat <strong>Lainnya</strong> dipilih, akan muncul kolom <em>Nama Aplikasi Mitra Lainnya (Ketik)</em>—isi nama aplikasi atau sumber orderan secara manual (misalnya: <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">inDrive</code>, <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">Lalamove</code>, atau <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">Orderan Offline</code>).</li>
+                        <li><strong>Kategori:</strong> Pilih kategori yang tersedia. Jika memilih <strong>Pemasukan Lainnya</strong> atau <strong>Pengeluaran Lainnya</strong>, kolom ketik manual akan muncul (misalnya: <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">Cashback</code> atau <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">Tambal Ban</code>).</li>
+                    </ul>
                 </li>
-                <li class="flex items-start gap-3">
-                    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
-                    <span><strong>Kelola Riwayat Transaksi:</strong> Saring transaksi berdasarkan waktu atau tipe, dan hapus catatan yang keliru melalui ikon tempat sampah.</span>
+                <li class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
+                    <strong class="text-slate-900 dark:text-white">Langkah D — Tanggal, Catatan & Simpan:</strong> Pastikan <strong>Tanggal</strong> sudah sesuai, isi <strong>Catatan Singkat</strong> (jika dikosongkan, sistem otomatis memakai nama kategori), lalu klik <strong>Simpan Transaksi</strong>.
                 </li>
             </ol>
         </section>
 
-        <!-- Footer Aksi -->
-        <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
-            <span>Dengan menggunakan aplikasi, Anda menyetujui ketentuan di atas.</span>
-            <a href="index.html" class="w-full sm:w-auto py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-center transition">
-                Lanjut ke Halaman Masuk
-            </a>
-        </div>
-    </div>
+        <!-- TUTORIAL 3: TARGET BERSIH HARIAN & SIMULASI PEMBAGIAN -->
+        <section id="tut-target" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">3</span>
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Target Bersih Harian & Simulasi Pembagian Pendapatan</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Hitung uang bersih dan rencanakan pos keuangan harian maupun bulanan</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white">Rumus & Cara Mengatur Target</h3>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <strong>Pendapatan Bersih</strong> dihitung dari <em>Pendapatan Kotor − Biaya Operasional</em>. Persentase progres pada kartu <strong>Target Bersih Harian</strong> mengacu pada pendapatan bersih di tanggal yang sedang dipilih.
+                    </p>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Klik tombol <strong>Ubah</strong> pada kartu <em>Target Bersih Harian</em>, masukkan nominal target (minimal Rp 10.000), lalu klik <strong>Simpan Target</strong> agar tersimpan ke akun Anda di Supabase.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white">Simulasi Pembagian Pendapatan Bersih</h3>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Jika pendapatan bersih bernilai positif (<code>&gt; Rp 0</code>), sistem menampilkan simulasi pembagian otomatis:
+                    </p>
+                    <ul class="space-y-1 text-slate-700 dark:text-slate-200 font-medium">
+                        <li>• <strong>Rumah Tangga:</strong> 70%</li>
+                        <li>• <strong>Servis & Ganti Oli:</strong> 15%</li>
+                        <li>• <strong>Dana Darurat:</strong> 10%</li>
+                        <li>• <strong>Sedekah & Sosial:</strong> 5%</li>
+                    </ul>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Jika pendapatan bersih minus/nol, simulasi otomatis menampilkan Rp 0.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TUTORIAL 4: GRAFIK 1 LINGKARAN & PERIODE -->
+        <section id="tut-grafik" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-3.5">
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">4</span>
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Membaca Grafik 1 Lingkaran & Filter Periode</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Bandingkan arus kas masuk (hijau) dan keluar (merah) dalam satu tampilan</p>
+                </div>
+            </div>
+
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <li>• <strong>Hari Ini vs Bulan Ini:</strong> Gunakan tombol di header untuk melihat ringkasan & grafik berdasarkan tanggal terpilih (<em>Hari Ini</em>) atau akumulasi sepanjang bulan dari tanggal tersebut (<em>Bulan Ini</em>).</li>
+                <li>• <strong>Mode Grafik 1 Lingkaran:</strong> Pilih <strong>Gabungan</strong> untuk melihat kategori pemasukan (nuansa hijau) dan pengeluaran (nuansa merah) sekaligus, atau fokuskan ke <strong>Pemasukan</strong> maupun <strong>Pengeluaran</strong>. Arahkan kursor atau sentuh potongan grafik untuk melihat nominal persis tiap kategori.</li>
+                <li>• <strong>Rasio Biaya:</strong> Menunjukkan persentase pengeluaran terhadap pendapatan kotor. Lencana akan berubah menjadi merah apabila rasio biaya melampaui <strong>40%</strong> sebagai peringatan dini agar pengeluaran operasional tetap terkendali.</li>
+            </ul>
+        </section>
+
+        <!-- TUTORIAL 5: RIWAYAT, RESET JAM 00.00, EDIT, HAPUS & EKSPOR CSV -->
+        <section id="tut-riwayat" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">5</span>
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Riwayat Transaksi, Reset Jam 00.00, Edit, Hapus & Ekspor CSV</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Kelola riwayat harian dan unduh laporan dalam format CSV</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white">Pilih Tanggal & Perilaku Jam 00.00</h3>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Gunakan kolom <strong>Pilih Tanggal</strong> di bagian <em>Riwayat Transaksi</em> untuk mengecek catatan pada tanggal tertentu, atau klik <strong>Hari Ini</strong> untuk kembali ke tanggal hari ini.
+                    </p>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Saat pergantian hari melewati <strong>jam 00.00</strong>, sistem mendeteksi pergantian tanggal dan mengosongkan tampilan riwayat hari baru untuk memulai pencatatan hari tersebut dari awal.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white">Edit, Hapus & Ekspor CSV</h3>
+                    <ul class="space-y-1.5 text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>• <strong>Edit (ikon pensil):</strong> Ubah tipe, nominal, kategori (termasuk kategori kustom), aplikasi mitra (termasuk input manual <em>Lainnya</em>), tanggal, atau catatan, lalu klik <strong>Simpan Perubahan</strong>.</li>
+                        <li>• <strong>Hapus (ikon tempat sampah):</strong> Menghapus transaksi terpilih dari database akun Anda dan memperbarui statistik secara langsung.</li>
+                        <li>• <strong>Ekspor CSV:</strong> Klik <strong>Ekspor CSV</strong> untuk mengunduh daftar transaksi yang sedang tampil pada tanggal terpilih lengkap dengan ringkasan pemasukan, pengeluaran, dan saldo bersih.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- TUTORIAL 6: ATURAN WAJIB DIPATUHI & TROUBLESHOOTING -->
+        <section id="tut-aturan" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-rose-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">6</span>
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Aturan Wajib Dipatuhi & Penyelesaian Kendala</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Jaga konsistensi catatan dan atasi kendala umum dengan cepat</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                <div class="p-4 rounded-xl bg-rose-50/75 dark:bg-rose-950/25 border border-rose-200/80 dark:border-rose-800/50 space-y-2">
+                    <h3 class="font-bold text-rose-950 dark:text-rose-100">Wajib Dipatuhi</h3>
+                    <ul class="space-y-1.5 text-rose-900 dark:text-rose-200 leading-relaxed">
+                        <li>• Catat nominal dan tanggal transaksi secara jujur serta sesuai kondisi sebenarnya.</li>
+                        <li>• Jangan mencampur pemasukan kotor dengan pengeluaran operasional pada satu entri.</li>
+                        <li>• Tuliskan nama aplikasi mitra atau kategori secara jelas saat memilih <strong>Lainnya</strong> agar mudah dicari dan dibaca di riwayat maupun CSV.</li>
+                    </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white">Jika Mengalami Kendala</h3>
+                    <ul class="space-y-1.5 text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>• <strong>Gagal simpan / muat data:</strong> Periksa koneksi internet Anda, pastikan sudah masuk ke akun yang benar, lalu muat ulang halaman.</li>
+                        <li>• <strong>Tidak bisa masuk setelah daftar:</strong> Pastikan password minimal 6 karakter dan cek email konfirmasi jika diwajibkan oleh pengaturan akun.</li>
+                        <li>• <strong>CSV berantakan di Excel:</strong> File CSV sudah menggunakan pemisah titik koma (<code class="px-1 py-0.5 rounded bg-slate-200/80 dark:bg-slate-700">;</code>) dan encoding UTF-8 agar rapi dibuka di Microsoft Excel maupun spreadsheet lain.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <script>
+        const SUPABASE_URL = 'https://twvmodivxmpyxvsuyhvz.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_9zVqwyMGLZz9ERqNXVoOUg_N5lB-U6L';
         const THEME_KEY = 'ojolku_finance_theme_v1';
+        const ONBOARDING_REQUIRED_PREFIX = 'ojolku_new_user_guide_req_v1_';
+        const ONBOARDING_TIMER_PREFIX = 'ojolku_guide_timer_v1_';
 
         function updateThemeIcons(isDark) {
-            const moon = document.getElementById('ann-icon-moon');
-            const sun = document.getElementById('ann-icon-sun');
+            const moon = document.getElementById('icon-moon');
+            const sun = document.getElementById('icon-sun');
             if (moon) moon.classList.toggle('hidden', isDark);
             if (sun) sun.classList.toggle('hidden', !isDark);
         }
@@ -164,7 +345,41 @@
             updateThemeIcons(isDark);
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        function formatMMSS(totalSeconds) {
+            const safeSec = Math.max(0, Math.floor(totalSeconds));
+            const mins = String(Math.floor(safeSec / 60)).padStart(2, '0');
+            const secs = String(safeSec % 60).padStart(2, '0');
+            return `${mins}:${secs}`;
+        }
+
+        async function initOnboardingBannerIfNeeded() {
+            if (!window.supabase) return;
+            const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const { data: { session } } = await client.auth.getSession();
+            const user = session?.user;
+            if (!user?.id) return;
+
+            const reqFlag = localStorage.getItem(ONBOARDING_REQUIRED_PREFIX + user.id);
+            if (reqFlag !== '1') return;
+
+            const endMs = Number(localStorage.getItem(ONBOARDING_TIMER_PREFIX + user.id));
+            if (!endMs || !Number.isFinite(endMs)) return;
+
+            const banner = document.getElementById('guide-onboarding-banner');
+            const countdownEl = document.getElementById('guide-timer-countdown');
+            if (!banner || !countdownEl) return;
+
+            banner.classList.remove('hidden');
+
+            const tick = () => {
+                const remSec = Math.max(0, Math.ceil((endMs - Date.now()) / 1000));
+                countdownEl.textContent = formatMMSS(remSec);
+            };
+            tick();
+            setInterval(tick, 1000);
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
             const savedTheme = localStorage.getItem(THEME_KEY);
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
@@ -173,6 +388,8 @@
             }
             updateThemeIcons(shouldBeDark);
             if (window.lucide) lucide.createIcons();
+
+            await initOnboardingBannerIfNeeded();
         });
     </script>
 </body>
