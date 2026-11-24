@@ -99,19 +99,19 @@
 
     <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 space-y-7">
 
-        <!-- Banner Timer Wajib Baca 15 Menit (Tampil Jika Akun Baru Masih Dalam Masa Wajib Baca) -->
+        <!-- Banner Timer Wajib Baca 5 Menit -> Tanya Jawab 100% Benar -->
         <section id="guide-onboarding-banner" class="hidden rounded-2xl bg-amber-50 dark:bg-amber-950/35 border border-amber-300/80 dark:border-amber-800/70 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div class="space-y-1">
                 <div class="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300">
                     <i data-lucide="timer" class="w-4 h-4"></i>
-                    <span>Wajib Baca Akun Baru (15 Menit)</span>
+                    <span id="guide-timer-status">Wajib Baca & Tanya Jawab 100% Benar Akun Baru</span>
                 </div>
-                <p class="text-xs sm:text-sm text-amber-950 dark:text-amber-100">
-                    Sisa waktu baca sebelum masuk beranda: <strong id="guide-timer-countdown" class="font-mono text-base">15:00</strong>
+                <p id="guide-timer-desc" class="text-xs sm:text-sm text-amber-950 dark:text-amber-100">
+                    Sisa waktu baca sebelum sesi tanya jawab: <strong id="guide-timer-countdown" class="font-mono text-base">05:00</strong>
                 </p>
             </div>
             <a href="index.html" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-600 hover:bg-amber-700 text-white shrink-0 transition">
-                <span>Cek Status Timer di Beranda</span>
+                <span id="guide-cta-label">Cek Status Timer di Beranda</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </section>
@@ -144,7 +144,7 @@
             <div class="flex items-center gap-3">
                 <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">1</span>
                 <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Masuk, Daftar Akun & Wajib Baca 15 Menit Akun Baru</h2>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Masuk, Daftar Akun & Wajib Baca 5 Menit + Tanya Jawab 100% Benar</h2>
                     <p class="text-xs text-slate-500 dark:text-slate-400">Setiap transaksi dan target bersih harian tersimpan privat per akun di Supabase</p>
                 </div>
             </div>
@@ -153,12 +153,12 @@
                 <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
                     <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                         <i data-lucide="user-plus" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                        <span>Alur Akun Baru (Timer 15 Menit)</span>
+                        <span>Alur Akun Baru (Baca 5m -> Tanya Jawab 100%)</span>
                     </h3>
                     <ol class="list-decimal list-inside space-y-1.5 text-slate-600 dark:text-slate-300 leading-relaxed">
                         <li>Daftar akun dengan <strong>Email</strong> aktif dan <strong>Password</strong> minimal <strong>6 karakter</strong>.</li>
-                        <li>Setelah masuk ke akun baru, sistem mengarahkan ke tahap baca panduan dengan timer <strong>15:00</strong>.</li>
-                        <li>Setelah timer 15 menit selesai (<code>00:00</code>), tombol <strong>Masuk ke Beranda</strong> terbuka.</li>
+                        <li>Baca peraturan selama <strong>05:00</strong> (otomatis <strong>freeze</strong> saat keluar dari browser).</li>
+                        <li>Selesaikan <strong>6 soal tanya jawab hingga 100% benar</strong> agar akses ke beranda terbuka.</li>
                     </ol>
                 </div>
 
@@ -330,7 +330,8 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_9zVqwyMGLZz9ERqNXVoOUg_N5lB-U6L';
         const THEME_KEY = 'ojolku_finance_theme_v1';
         const ONBOARDING_REQUIRED_PREFIX = 'ojolku_new_user_guide_req_v1_';
-        const ONBOARDING_TIMER_PREFIX = 'ojolku_guide_timer_v1_';
+        const ONBOARDING_STATE_PREFIX = 'ojolku_guide_state_v1_';
+        const ONBOARDING_DURATION_SEC = 5 * 60;
 
         function updateThemeIcons(isDark) {
             const moon = document.getElementById('icon-moon');
@@ -362,21 +363,119 @@
             const reqFlag = localStorage.getItem(ONBOARDING_REQUIRED_PREFIX + user.id);
             if (reqFlag !== '1') return;
 
-            const endMs = Number(localStorage.getItem(ONBOARDING_TIMER_PREFIX + user.id));
-            if (!endMs || !Number.isFinite(endMs)) return;
+            const stateKey = ONBOARDING_STATE_PREFIX + user.id;
+            if (!localStorage.getItem(stateKey)) {
+                localStorage.setItem(stateKey, JSON.stringify({
+                    remainingSec: ONBOARDING_DURATION_SEC,
+                    isPaused: Boolean(document.hidden),
+                    lastTickMs: Date.now()
+                }));
+            }
 
             const banner = document.getElementById('guide-onboarding-banner');
             const countdownEl = document.getElementById('guide-timer-countdown');
+            const statusEl = document.getElementById('guide-timer-status');
+            const descEl = document.getElementById('guide-timer-desc');
+            const ctaEl = document.getElementById('guide-cta-label');
             if (!banner || !countdownEl) return;
 
             banner.classList.remove('hidden');
+            let guideTickerId = null;
 
-            const tick = () => {
-                const remSec = Math.max(0, Math.ceil((endMs - Date.now()) / 1000));
-                countdownEl.textContent = formatMMSS(remSec);
+            const syncGuideTimer = (forceFreeze = null) => {
+                try {
+                    const nowMs = Date.now();
+                    const parsed = JSON.parse(localStorage.getItem(stateKey) || '{}');
+                    let rem = typeof parsed.remainingSec === 'number' && Number.isFinite(parsed.remainingSec)
+                        ? Math.max(0, Math.min(ONBOARDING_DURATION_SEC, parsed.remainingSec))
+                        : ONBOARDING_DURATION_SEC;
+                    const wasPaused = Boolean(parsed.isPaused);
+                    const lastTickMs = typeof parsed.lastTickMs === 'number' && Number.isFinite(parsed.lastTickMs)
+                        ? parsed.lastTickMs
+                        : nowMs;
+
+                    if (!wasPaused && !document.hidden && rem > 0) {
+                        const elapsedSec = Math.max(0, (nowMs - lastTickMs) / 1000);
+                        rem = Math.max(0, rem - elapsedSec);
+                    }
+
+                    const shouldFreeze = forceFreeze !== null ? Boolean(forceFreeze) : Boolean(document.hidden);
+                    const nextPaused = rem > 0 ? shouldFreeze : false;
+
+                    localStorage.setItem(stateKey, JSON.stringify({
+                        remainingSec: rem,
+                        isPaused: nextPaused,
+                        lastTickMs: nowMs
+                    }));
+
+                    const ceilSec = Math.ceil(rem);
+                    countdownEl.textContent = formatMMSS(ceilSec);
+
+                    if (ceilSec <= 0) {
+                        if (statusEl) statusEl.textContent = 'Wajib Baca Selesai • Siap Tanya Jawab (6 Soal • 100% Benar)';
+                        if (descEl) descEl.innerHTML = 'Waktu baca 5 menit sudah selesai. Kerjakan <strong>6 soal tanya jawab hingga 100% benar</strong> untuk membuka beranda.';
+                        if (ctaEl) ctaEl.textContent = 'Buka Sesi Tanya Jawab';
+                    } else if (statusEl) {
+                        statusEl.textContent = nextPaused
+                            ? 'Wajib Baca Akun Baru • Freeze (Di Luar Browser)'
+                            : 'Wajib Baca Akun Baru (5 Menit -> Tanya Jawab)';
+                    }
+                } catch (_e) {}
             };
-            tick();
-            setInterval(tick, 1000);
+
+            const startTicker = () => {
+                if (guideTickerId) {
+                    clearInterval(guideTickerId);
+                    guideTickerId = null;
+                }
+                if (!document.hidden) {
+                    guideTickerId = setInterval(() => {
+                        if (!document.hidden) {
+                            syncGuideTimer(false);
+                        }
+                    }, 1000);
+                }
+            };
+
+            const handleVisibilityChange = () => {
+                if (document.hidden) {
+                    syncGuideTimer(true);
+                    if (guideTickerId) {
+                        clearInterval(guideTickerId);
+                        guideTickerId = null;
+                    }
+                } else {
+                    syncGuideTimer(false);
+                    startTicker();
+                }
+            };
+
+            const handleExitBrowser = () => {
+                syncGuideTimer(true);
+                if (guideTickerId) {
+                    clearInterval(guideTickerId);
+                    guideTickerId = null;
+                }
+            };
+
+            syncGuideTimer(Boolean(document.hidden));
+            startTicker();
+
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+            window.addEventListener('pagehide', handleExitBrowser);
+            window.addEventListener('freeze', handleExitBrowser);
+            window.addEventListener('pageshow', () => {
+                if (!document.hidden) {
+                    syncGuideTimer(false);
+                    startTicker();
+                }
+            });
+            window.addEventListener('resume', () => {
+                if (!document.hidden) {
+                    syncGuideTimer(false);
+                    startTicker();
+                }
+            });
         }
 
         window.addEventListener('DOMContentLoaded', async () => {

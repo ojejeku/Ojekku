@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>OjolKu Finance — Kelola Keuangan & Operasional Mitra Driver</title>
-    <meta name="description" content="Aplikasi pencatatan pemasukan orderan, biaya operasional bensin & makan, target harian, serta alokasi tabungan motor mitra ojek online.">
+    <meta name="description" content="Aplikasi pencatatan pemasukan orderan, biaya operasional bensin & makan, target harian, angsuran, uang pokok, serta alokasi tabungan motor mitra ojek online.">
 
     <!-- Tema Warna Browser & Mode Aplikasi HP -->
     <meta name="theme-color" content="#059669" media="(prefers-color-scheme: light)">
@@ -19,7 +19,7 @@
     <!-- Open Graph / Preview Link -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="OjolKu Finance — Kelola Keuangan Mitra Driver">
-    <meta property="og:description" content="Catat orderan, pantau pengeluaran harian, capai target bersih, dan alokasikan dana servis motor dengan mudah.">
+    <meta property="og:description" content="Catat orderan, pantau pengeluaran harian, capai target bersih, angsuran, uang pokok, dan alokasi dana servis motor dengan mudah.">
 
     <!-- Favicon Presisi Geometris (Logo OjolKu Finance) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23047857'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='%2334d399' stroke-width='1.5' stroke-opacity='0.45'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='19' cy='43' r='7.5'/%3E%3Ccircle cx='45' cy='43' r='7.5'/%3E%3Cpath d='M19 43h12l8-14h7'/%3E%3Cpath d='M31 43l-4-11h11'/%3E%3Cpath d='M37 22h11'/%3E%3C/g%3E%3C/svg%3E">
@@ -305,7 +305,6 @@
             stroke-dasharray: 6 6;
             animation: dashFlow 1.6s linear infinite;
         }
-
         .route-pulse-ring {
             transform-box: fill-box;
             transform-origin: center;
@@ -388,13 +387,12 @@
                         <p class="text-xs text-slate-500 dark:text-slate-400">Sinkronisasi Cloud Supabase</p>
                     </div>
                 </div>
-                <button onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:rotate-12 active:scale-95 transition-all duration-200">
+                <button type="button" onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:rotate-12 active:scale-95 transition-all duration-200">
                     <i data-lucide="moon" id="auth-icon-moon" class="w-4 h-4"></i>
                     <i data-lucide="sun" id="auth-icon-sun" class="w-4 h-4 hidden text-amber-400"></i>
                 </button>
             </div>
 
-            <!-- Tab Masuk / Daftar -->
             <div class="grid grid-cols-2 gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl mb-6">
                 <button type="button" id="tab-login" onclick="switchAuthMode('login')" class="py-2 rounded-lg text-xs sm:text-sm font-bold bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm transition-all duration-200">
                     Masuk
@@ -431,19 +429,19 @@
                     <span>Baca Panduan Wajib Dipatuhi & Tata Cara Pakai</span>
                 </a>
                 <p class="text-[11px] text-slate-400 leading-relaxed">
-                    Akun baru wajib membaca panduan selama 15 menit terlebih dahulu sebelum masuk ke beranda.
+                    Alur akun baru: baca peraturan (5 menit, freeze saat keluar browser) lalu lulus <strong>sesi tanya jawab 100% benar</strong> sebelum masuk ke beranda.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- LAYAR WAJIB BACA PANDUAN UNTUK AKUN BARU (TIMER 15 MENIT) -->
+    <!-- LAYAR WAJIB AKUN BARU -->
     <section id="onboarding-gate-screen" class="hidden min-h-screen flex items-center justify-center px-4 py-10">
-        <div class="anim-enter w-full max-w-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xl p-6 sm:p-8 space-y-6">
+        <div class="anim-enter w-full max-w-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xl p-6 sm:p-8 space-y-6">
             <div class="flex items-center justify-between gap-3">
-                <div class="inline-flex items-center gap-2 text-xs font-bold px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/60">
+                <div id="gate-step-pill" class="inline-flex items-center gap-2 text-xs font-bold px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/60">
                     <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
-                    <span>Wajib Akun Baru • Membaca Panduan</span>
+                    <span>Tahap 1 dari 2 • Baca Peraturan (5 Menit)</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="button" onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
@@ -457,63 +455,107 @@
                 </div>
             </div>
 
-            <div>
-                <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Baca Panduan Terlebih Dahulu
-                </h2>
-                <p class="text-sm text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed">
-                    Untuk akun baru (<span id="gate-user-email" class="font-semibold text-emerald-600 dark:text-emerald-400">-</span>), selesaikan waktu membaca panduan selama <strong>15 menit</strong> sebelum tombol masuk ke beranda terbuka.
-                </p>
+            <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+                <div id="step-indicator-1" class="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200 border border-amber-300/80 dark:border-amber-700/60 flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-full bg-amber-600 text-white text-[11px] flex items-center justify-center shrink-0">1</span>
+                    <span class="truncate">Baca Peraturan (5m)</span>
+                </div>
+                <div id="step-indicator-2" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/70 text-slate-400 dark:text-slate-500 border border-slate-200/70 dark:border-slate-700/70 flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-full bg-slate-300 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[11px] flex items-center justify-center shrink-0">2</span>
+                    <span class="truncate">Tanya Jawab (6 Soal • 100%)</span>
+                </div>
             </div>
 
-            <!-- Kotak Timer 15 Menit -->
-            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 space-y-3">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-                        <i data-lucide="timer" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                        <span>Sisa Waktu Wajib Baca</span>
-                    </span>
-                    <span id="onboarding-status-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300">
-                        Sedang Berjalan (15 Menit)
-                    </span>
+            <div id="onboarding-phase-reading" class="space-y-5">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                        Baca Peraturan Terlebih Dahulu
+                    </h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed">
+                        Untuk akun baru (<span id="gate-user-email" class="font-semibold text-emerald-600 dark:text-emerald-400">-</span>), selesaikan sesi membaca peraturan selama <strong>5 menit</strong> (otomatis <strong>freeze</strong> saat keluar dari browser), lalu kerjakan <strong>6 soal tanya jawab hingga 100% benar</strong> untuk masuk ke beranda.
+                    </p>
                 </div>
 
-                <div class="flex items-baseline justify-between gap-4">
-                    <div id="onboarding-timer-display" class="font-display text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white tabular-nums">
-                        15:00
+                <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                            <i data-lucide="timer" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                            <span>Sisa Waktu Wajib Baca</span>
+                        </span>
+                        <span id="onboarding-status-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300">
+                            Sedang Berjalan (5 Menit)
+                        </span>
                     </div>
-                    <div class="text-right text-xs text-slate-500 dark:text-slate-400">
-                        <div>Durasi wajib: <strong class="text-slate-700 dark:text-slate-200">15:00</strong></div>
-                        <div id="onboarding-progress-pct" class="font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">0% selesai</div>
+
+                    <div class="flex items-baseline justify-between gap-4">
+                        <div id="onboarding-timer-display" class="font-display text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white tabular-nums">
+                            05:00
+                        </div>
+                        <div class="text-right text-xs text-slate-500 dark:text-slate-400">
+                            <div>Durasi wajib: <strong class="text-slate-700 dark:text-slate-200">05:00</strong></div>
+                            <div id="onboarding-progress-pct" class="font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">0% selesai</div>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                        <div id="onboarding-timer-bar" class="h-full bg-emerald-600 rounded-full transition-all duration-500" style="width: 0%"></div>
                     </div>
                 </div>
 
-                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                    <div id="onboarding-timer-bar" class="h-full bg-emerald-600 rounded-full transition-all duration-500" style="width: 0%"></div>
+                <div class="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/25 border border-emerald-200/80 dark:border-emerald-800/60 space-y-2 text-xs sm:text-sm">
+                    <div class="font-bold text-emerald-950 dark:text-emerald-200">Materi Wajib yang Diujikan pada 6 Soal Tanya Jawab:</div>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-200 leading-relaxed">
+                        <li><strong>Pisahkan Kotor vs Bersih:</strong> Jangan pernah mencatat selisih kotor dikurangi bensin ke dalam 1 entri; catat Pemasukan kotor dan Pengeluaran operasional terpisah.</li>
+                        <li><strong>Kolom Ketik Manual & CSV:</strong> Input manual hanya muncul jika memilih <em>Lainnya</em>. Ekspor CSV memakai pemisah titik koma (<code>;</code>) dan UTF-8.</li>
+                        <li><strong>Simulasi Pembagian Bersih:</strong> Dihitung dari <em>Pendapatan Bersih (&gt; Rp 0)</em>: <strong>70% Rumah Tangga</strong>, <strong>15% Servis &amp; Ganti Oli</strong>, <strong>10% Dana Darurat</strong>, <strong>5% Sedekah</strong>. Jika bersih &le; Rp 0, seluruh pos bernilai Rp 0.</li>
+                        <li><strong>Rasio Biaya & Jam 00.00:</strong> Rasio biaya berubah merah jika <strong>&gt; 40%</strong> dari kotor. Saat jam <strong>00.00</strong>, tampilan riwayat hari baru otomatis dikosongkan tanpa menghapus riwayat tanggal sebelumnya di database.</li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="announcement.html?onboarding=1" class="flex-1 py-3.5 px-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 dark:hover:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 font-bold text-sm transition flex items-center justify-center gap-2">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                        <span>Buka Halaman Peraturan</span>
+                    </a>
+
+                    <button type="button" id="onboarding-enter-btn" disabled onclick="openQuizPhase()" class="flex-1 py-3.5 px-4 rounded-xl bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-sm cursor-not-allowed transition flex items-center justify-center gap-2">
+                        <i data-lucide="lock" id="onboarding-btn-icon" class="w-4 h-4"></i>
+                        <span id="onboarding-enter-label">Tunggu Timer (05:00)</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Langkah Singkat Sebelum Masuk -->
-            <div class="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/25 border border-emerald-200/80 dark:border-emerald-800/60 space-y-2 text-xs sm:text-sm">
-                <div class="font-bold text-emerald-950 dark:text-emerald-200">Langkah Wajib Akun Baru:</div>
-                <ol class="list-decimal list-inside space-y-1 text-slate-700 dark:text-slate-200 leading-relaxed">
-                    <li>Buka halaman <strong>Panduan Lengkap</strong> dan pelajari aturan pencatatan, kategori/aplikasi mitra manual, target harian, serta riwayat jam 00.00.</li>
-                    <li>Biarkan timer <strong>15 menit</strong> berjalan hingga mencapai <strong>00:00</strong>.</li>
-                    <li>Setelah 15 menit selesai, klik <strong>Masuk ke Beranda</strong> untuk mulai mencatat transaksi.</li>
-                </ol>
-            </div>
+            <div id="onboarding-phase-quiz" class="hidden space-y-5">
+                <div class="flex flex-wrap items-start justify-between gap-2">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Sesi Tanya Jawab Peraturan (6 Soal)
+                        </h2>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                            Pahami studi kasus dan hitungan aturan di bawah ini. Seluruh <strong>6 soal wajib 100% benar</strong> untuk masuk ke beranda.
+                        </p>
+                    </div>
+                    <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 shrink-0">
+                        Syarat Lulus: 6/6 (100%)
+                    </span>
+                </div>
 
-            <!-- Tombol Aksi -->
-            <div class="flex flex-col sm:flex-row gap-3">
-                <a href="announcement.html?onboarding=1" class="flex-1 py-3.5 px-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 dark:hover:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 font-bold text-sm transition flex items-center justify-center gap-2">
-                    <i data-lucide="book-open" class="w-4 h-4"></i>
-                    <span>Buka Halaman Panduan</span>
-                </a>
+                <div id="quiz-feedback-banner" class="hidden p-4 rounded-2xl border text-xs sm:text-sm font-medium space-y-1"></div>
 
-                <button type="button" id="onboarding-enter-btn" disabled onclick="completeOnboardingAndEnter()" class="flex-1 py-3.5 px-4 rounded-xl bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-sm cursor-not-allowed transition flex items-center justify-center gap-2">
-                    <i data-lucide="lock" id="onboarding-btn-icon" class="w-4 h-4"></i>
-                    <span id="onboarding-enter-label">Tunggu Timer (15:00)</span>
-                </button>
+                <form id="onboarding-quiz-form" class="space-y-4">
+                    <div id="quiz-questions-container" class="space-y-4"></div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                        <button type="button" onclick="backToReadingPhase()" class="py-3 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-sm transition flex items-center justify-center gap-2">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <span>Kembali ke Peraturan</span>
+                        </button>
+                        <button type="submit" id="submit-quiz-btn" class="flex-1 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                            <span>Kirim Jawaban & Cek (Wajib 100% Benar)</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -548,20 +590,20 @@
                     </a>
 
                     <div class="bg-slate-100 dark:bg-slate-800 p-1 rounded-xl flex items-center text-xs sm:text-sm font-medium">
-                        <button onclick="setPeriod('today')" id="btn-period-today" class="px-2.5 sm:px-3 py-1.5 rounded-lg transition-all duration-200 bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm">
+                        <button type="button" onclick="setPeriod('today')" id="btn-period-today" class="px-2.5 sm:px-3 py-1.5 rounded-lg transition-all duration-200 bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm">
                             Hari Ini
                         </button>
-                        <button onclick="setPeriod('month')" id="btn-period-month" class="px-2.5 sm:px-3 py-1.5 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                        <button type="button" onclick="setPeriod('month')" id="btn-period-month" class="px-2.5 sm:px-3 py-1.5 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
                             Bulan Ini
                         </button>
                     </div>
 
-                    <button onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:rotate-12 active:scale-95 transition-all duration-200">
+                    <button type="button" onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:rotate-12 active:scale-95 transition-all duration-200">
                         <i data-lucide="moon" id="icon-moon" class="w-5 h-5"></i>
                         <i data-lucide="sun" id="icon-sun" class="w-5 h-5 hidden text-amber-400"></i>
                     </button>
 
-                    <button onclick="handleLogout()" title="Keluar" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/70 active:scale-95 transition">
+                    <button type="button" onclick="handleLogout()" title="Keluar" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/70 active:scale-95 transition">
                         <i data-lucide="log-out" class="w-4 h-4"></i>
                         <span class="hidden sm:inline">Keluar</span>
                     </button>
@@ -746,7 +788,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Target Bersih Harian</span>
-                            <button onclick="openTargetModal()" class="text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:underline active:scale-95 flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-1 rounded-lg transition">
+                            <button type="button" onclick="openTargetModal()" class="text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:underline active:scale-95 flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-1 rounded-lg transition">
                                 <i data-lucide="edit-3" class="w-3 h-3"></i> Ubah
                             </button>
                         </div>
@@ -958,6 +1000,145 @@
                 </div>
             </div>
 
+            <!-- 4. PUSAT SETOR PER HARI & TARGET OTOMATIS (TANGGUNGAN, ANGSURAN & UANG POKOK) -->
+            <section id="goals-installments-section" class="anim-enter anim-delay-3 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                            <i data-lucide="calendar-plus" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">Angsuran, Target & Setor Per Hari Otomatis</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Sistem hitung otomatis per hari dan bisa setor per hari (nominal harian otomatis atau bebas)</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button type="button" onclick="openGoalModal('target')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            <span>Target</span>
+                        </button>
+                        <button type="button" onclick="openGoalModal('angsuran')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-sm transition">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            <span>Angsuran</span>
+                        </button>
+                        <button type="button" onclick="openGoalModal('pokok')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            <span>Uang Pokok</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div class="p-3.5 rounded-xl bg-amber-50/90 dark:bg-amber-950/30 border border-amber-300/80 dark:border-amber-700/60">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300">Otomatis Per Hari</div>
+                        <div id="summary-daily-collection" class="text-lg font-extrabold text-amber-900 dark:text-amber-200 mt-0.5">Rp 0 / hari</div>
+                        <div id="summary-daily-collection-detail" class="text-[11px] text-amber-700 dark:text-amber-400 mt-0.5">Setoran hari ini: Rp 0</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/25 border border-emerald-200/70 dark:border-emerald-800/50">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">Total Target</div>
+                        <div id="summary-goals-target" class="text-lg font-extrabold text-slate-900 dark:text-white mt-0.5">Rp 0 / Rp 0</div>
+                        <div id="summary-goals-count" class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">0 target aktif</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-xl bg-orange-50/70 dark:bg-orange-950/25 border border-orange-200/70 dark:border-orange-800/50">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-orange-700 dark:text-orange-300">Sisa Angsuran</div>
+                        <div id="summary-installment-left" class="text-lg font-extrabold text-slate-900 dark:text-white mt-0.5">Rp 0</div>
+                        <div id="summary-installment-monthly" class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Cicilan/periode: Rp 0</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/25 border border-indigo-200/70 dark:border-indigo-800/50">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300">Total Uang Pokok</div>
+                        <div id="summary-principal-total" class="text-lg font-extrabold text-slate-900 dark:text-white mt-0.5">Rp 0</div>
+                        <div id="summary-principal-detail" class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Dana pokok terkumpul: Rp 0</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl w-fit text-xs font-bold">
+                    <button type="button" onclick="setGoalFilter('all')" id="goal-filter-all" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm transition">Semua</button>
+                    <button type="button" onclick="setGoalFilter('target')" id="goal-filter-target" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition">Target</button>
+                    <button type="button" onclick="setGoalFilter('angsuran')" id="goal-filter-angsuran" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition">Angsuran</button>
+                    <button type="button" onclick="setGoalFilter('pokok')" id="goal-filter-pokok" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Uang Pokok</button>
+                </div>
+
+                <div id="goals-installments-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </section>
+
+            <!-- FITUR KHUSUS: SETOR UANG HARIAN CEPAT (DI BAWAH ANGSURAN) -->
+            <section id="daily-money-deposit-section" class="anim-enter anim-delay-3 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm rounded-2xl border border-emerald-200/80 dark:border-emerald-800/60 p-5 sm:p-6 shadow-sm space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                            <i data-lucide="coins" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white">Setor Uang Harian</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Setor uang harian cepat ke celengan/tabungan/kas motor dengan konfirmasi jelas</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2.5 self-start sm:self-center">
+                        <div class="px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200/70 dark:border-emerald-800/60 text-right">
+                            <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">Terkumpul Hari Ini</div>
+                            <div id="quick-daily-deposit-today" class="text-sm font-extrabold text-emerald-800 dark:text-emerald-200">Rp 0</div>
+                        </div>
+                        <div class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-right">
+                            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Akumulasi</div>
+                            <div id="quick-daily-deposit-total" class="text-sm font-extrabold text-slate-900 dark:text-white">Rp 0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="quick-daily-deposit-form" class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+                    <div class="md:col-span-3">
+                        <label for="quick-deposit-pot" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Pos Setoran</label>
+                        <select id="quick-deposit-pot" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option value="Celengan Harian">Celengan Harian</option>
+                            <option value="Dana Servis & Oli Motor">Dana Servis & Oli Motor</option>
+                            <option value="Tabungan Keluarga">Tabungan Keluarga</option>
+                            <option value="Kas Darurat Driver">Kas Darurat Driver</option>
+                        </select>
+                    </div>
+
+                    <div class="md:col-span-3">
+                        <label for="quick-deposit-amount" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Nominal Setor (Rp)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">Rp</span>
+                            <input type="number" id="quick-deposit-amount" required min="500" step="500" value="20000"
+                                class="w-full pl-8 pr-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-extrabold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-3">
+                        <label for="quick-deposit-note" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Catatan (Opsional)</label>
+                        <input type="text" id="quick-deposit-note" placeholder="Misal: Setoran sore narik"
+                            class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+
+                    <div class="md:col-span-3 flex gap-2">
+                        <button type="submit" id="quick-deposit-submit-btn" class="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-1.5">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Setor Uang</span>
+                        </button>
+                        <button type="button" id="quick-deposit-undo-btn" onclick="undoLastQuickDepositToday()" title="Batalkan Setoran Terakhir Hari Ini" class="py-2.5 px-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-950/70 text-rose-600 dark:text-rose-400 font-bold text-xs transition flex items-center justify-center">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                    <div class="flex flex-wrap items-center gap-1.5">
+                        <span class="text-[11px] font-semibold text-slate-400 mr-1">Cepat:</span>
+                        <button type="button" onclick="setQuickDepositPreset(10000)" class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 text-slate-700 dark:text-slate-200 font-semibold transition">Rp 10.000</button>
+                        <button type="button" onclick="setQuickDepositPreset(20000)" class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 text-slate-700 dark:text-slate-200 font-semibold transition">Rp 20.000</button>
+                        <button type="button" onclick="setQuickDepositPreset(30000)" class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 text-slate-700 dark:text-slate-200 font-semibold transition">Rp 30.000</button>
+                        <button type="button" onclick="setQuickDepositPreset(50000)" class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 text-slate-700 dark:text-slate-200 font-semibold transition">Rp 50.000</button>
+                    </div>
+                    <div id="quick-deposit-today-list" class="flex flex-wrap items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400"></div>
+                </div>
+            </section>
+
             <!-- 5. RIWAYAT TRANSAKSI -->
             <section class="anim-enter anim-delay-4 glass-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
                 <div class="flex flex-col gap-4 mb-5">
@@ -1028,9 +1209,112 @@
                 <input type="number" id="input-daily-target" min="10000" step="5000" class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
             </div>
             <div class="flex justify-end gap-2">
-                <button onclick="closeTargetModal()" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition">Batal</button>
-                <button id="save-target-btn" onclick="saveDailyTarget()" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 active:scale-95 disabled:opacity-60 text-white transition">Simpan Target</button>
+                <button type="button" onclick="closeTargetModal()" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition">Batal</button>
+                <button type="button" id="save-target-btn" onclick="saveDailyTarget()" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 active:scale-95 disabled:opacity-60 text-white transition">Simpan Target</button>
             </div>
+        </div>
+    </div>
+
+    <!-- MODAL TAMBAH / EDIT TARGET, ANGSURAN & UANG POKOK -->
+    <div id="goal-item-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 transition-opacity">
+        <div class="modal-card-anim bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h4 id="goal-modal-title" class="font-bold text-lg text-slate-900 dark:text-white">Tambah Target / Angsuran / Pokok</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Sistem otomatis menghitung berapa yang harus dikumpulkan per hari</p>
+                </div>
+                <button type="button" onclick="closeGoalModal()" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <form id="goal-item-form" class="space-y-3.5">
+                <input type="hidden" id="goal-edit-id">
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Jenis Item</label>
+                    <select id="goal-kind" onchange="handleGoalKindChange(); updateGoalModalAutoPreview();" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-900 dark:text-white">
+                        <option value="target">Target Tabungan / Pembelian</option>
+                        <option value="angsuran">Angsuran / Cicilan (Motor / Pinjaman)</option>
+                        <option value="pokok">Uang Pokok (Modal / Pokok Dana)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Nama / Judul</label>
+                    <input type="text" id="goal-title" required placeholder="Misal: Tanggungan Rp 1 Juta"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-900 dark:text-white">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label id="goal-target-label" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Total Tanggungan / Target (Rp)</label>
+                        <input type="number" id="goal-target-amount" oninput="updateGoalModalAutoPreview()" required min="1000" step="500" placeholder="1000000"
+                            class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label id="goal-paid-label" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Sudah Terkumpul / Terbayar (Rp)</label>
+                        <input type="number" id="goal-paid-amount" oninput="updateGoalModalAutoPreview()" min="0" step="500" value="0"
+                            class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-amber-50/90 dark:bg-amber-950/35 border border-amber-300/80 dark:border-amber-700/60 flex items-center justify-between gap-2">
+                    <div>
+                        <div class="text-[10px] font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300">Hitungan Otomatis Sistem</div>
+                        <div id="goal-modal-auto-daily" class="text-base font-extrabold text-amber-950 dark:text-amber-100">Rp 0 / hari</div>
+                    </div>
+                    <div id="goal-modal-auto-sub" class="text-[11px] font-semibold text-amber-800 dark:text-amber-300 text-right">
+                        Acuan 30 hari
+                    </div>
+                </div>
+
+                <div id="goal-principal-box" class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-1">Uang Pokok (Rp)</label>
+                            <input type="number" id="goal-principal-amount" min="0" step="500" value="0"
+                                class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-900 dark:text-white">
+                        </div>
+                        <div id="goal-installment-amt-wrap">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1">Cicilan / Periode (Rp)</label>
+                            <input type="number" id="goal-installment-amount" min="0" step="500" value="0"
+                                class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-900 dark:text-white">
+                        </div>
+                    </div>
+
+                    <div id="goal-tenor-wrap" class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Tenor Terbayar</label>
+                            <input type="number" id="goal-paid-tenors" min="0" max="240" value="0"
+                                class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-900 dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Total Tenor</label>
+                            <input type="number" id="goal-total-tenors" min="1" max="240" value="12"
+                                class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-900 dark:text-white">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Tanggal Jatuh Tempo (Opsional)</label>
+                        <input type="date" id="goal-due-date" onchange="updateGoalModalAutoPreview()"
+                            class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Catatan</label>
+                        <input type="text" id="goal-note" placeholder="Opsional"
+                            class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeGoalModal()" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Batal</button>
+                    <button type="submit" id="save-goal-item-btn" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -1108,6 +1392,32 @@
         </div>
     </div>
 
+    <!-- MODAL KONFIRMASI SETOR PER HARI -->
+    <div id="deposit-confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 transition-opacity">
+        <div class="modal-card-anim bg-white dark:bg-slate-900 rounded-2xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800 shadow-2xl space-y-4">
+            <div>
+                <h4 class="font-bold text-lg text-slate-900 dark:text-white">Konfirmasi Setor Per Hari</h4>
+                <p id="deposit-confirm-desc" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 leading-relaxed"></p>
+            </div>
+
+            <div id="deposit-confirm-warning" class="hidden p-3 rounded-xl bg-amber-50 dark:bg-amber-950/35 border border-amber-200 dark:border-amber-800/60 text-xs text-amber-800 dark:text-amber-200 font-medium"></div>
+
+            <label class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 cursor-pointer text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-100">
+                <input type="checkbox" id="deposit-record-tx-checkbox" checked class="w-4 h-4 accent-emerald-600 rounded">
+                <span>Catat juga ke Riwayat Transaksi</span>
+            </label>
+
+            <div class="flex justify-end gap-2 pt-1">
+                <button type="button" onclick="closeDepositConfirmModal()" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    Batal
+                </button>
+                <button type="button" id="confirm-deposit-submit-btn" onclick="executeConfirmedDeposit()" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white shadow-sm transition">
+                    Ya, Setor Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- TOAST NOTIFIKASI -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-xs sm:max-w-sm"></div>
 
@@ -1118,10 +1428,84 @@
         const GUIDE_COLLAPSED_KEY = 'ojolku_home_guide_collapsed_v1';
         const DAILY_RESET_DATE_KEY = 'ojolku_daily_reset_date_v1';
         const ONBOARDING_REQUIRED_PREFIX = 'ojolku_new_user_guide_req_v1_';
-        const ONBOARDING_TIMER_PREFIX = 'ojolku_guide_timer_v1_';
-        const ONBOARDING_DURATION_SEC = 15 * 60; // 15 menit = 900 detik
+        const ONBOARDING_STATE_PREFIX = 'ojolku_guide_state_v1_';
+        const GOALS_LOCAL_PREFIX = 'ojolku_goals_installments_v1_';
+        const QUICK_DEPOSIT_PREFIX = 'ojolku_quick_daily_deposits_v1_';
+        const ONBOARDING_DURATION_SEC = 5 * 60;
+        const DEFAULT_SYSTEM_CYCLE_DAYS = 30;
 
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const QUIZ_QUESTIONS = [
+            {
+                id: 'q1',
+                question: '1. Anda menyelesaikan orderan Rp 20.000 lalu langsung membeli bensin Rp 5.000. Bagaimana pencatatan yang BENAR sesuai aturan?',
+                options: [
+                    'Mencatat 1 entri Pemasukan bersih sebesar Rp 15.000 agar praktis',
+                    'Mencatat Pemasukan Rp 20.000 dan Pengeluaran Rp 5.000 secara terpisah (tidak boleh dicampur dalam satu entri)',
+                    'Mencatat Pengeluaran Rp 5.000 saja karena sisa Rp 15.000 sudah di dompet'
+                ],
+                correctIndex: 1,
+                hint: 'Dilarang mencampur pemasukan kotor dengan pengeluaran operasional dalam satu entri.'
+            },
+            {
+                id: 'q2',
+                question: '2. Seorang mitra mendapat orderan dari aplikasi "inDrive" dengan kategori "Antar Paket Kilat" dan ingin mengunduh laporannya. Pernyataan manakah yang PALING TEPAT?',
+                options: [
+                    'Kolom ketik manual selalu muncul untuk semua pilihan, dan CSV menggunakan pemisah koma (,)',
+                    'Pilih "Lainnya" pada Aplikasi Mitra maupun Kategori untuk memunculkan kolom ketik manual, dan file CSV memakai pemisah titik koma (;) ber-encoding UTF-8',
+                    'Cukup tulis di kolom Catatan tanpa perlu memilih "Lainnya", dan CSV diekspor dalam format PDF'
+                ],
+                correctIndex: 1,
+                hint: 'Kolom ketik manual hanya muncul jika memilih "Lainnya", dan ekspor CSV memakai pemisah titik koma (;) + UTF-8.'
+            },
+            {
+                id: 'q3',
+                question: '3. Hitungan Kasus: Pendapatan kotor hari ini Rp 200.000 dan total biaya operasional Rp 50.000. Berapakah alokasi untuk "Servis & Ganti Oli" dan "Dana Darurat" pada simulasi pembagian?',
+                options: [
+                    'Servis & Ganti Oli Rp 30.000 (15% kotor) dan Dana Darurat Rp 20.000 (10% kotor)',
+                    'Servis & Ganti Oli Rp 22.500 (15% dari bersih Rp 150.000) dan Dana Darurat Rp 15.000 (10% dari bersih Rp 150.000)',
+                    'Servis & Ganti Oli Rp 15.000 (10%) dan Dana Darurat Rp 22.500 (15%)'
+                ],
+                correctIndex: 1,
+                hint: 'Simulasi dihitung dari Pendapatan Bersih (Rp 200.000 - Rp 50.000 = Rp 150.000): 15% = Rp 22.500 dan 10% = Rp 15.000.'
+            },
+            {
+                id: 'q4',
+                question: '4. Hitungan Rasio Biaya: Jika pendapatan kotor Rp 200.000 dan biaya operasional Rp 90.000, berapakah Rasio Biaya dan bagaimana status lencananya?',
+                options: [
+                    'Rasio Biaya 45% dari kotor — lencana berubah MERAH karena melampaui batas peringatan 40%',
+                    'Rasio Biaya 45% dari kotor — lencana tetap HIJAU karena batas peringatan adalah 50%',
+                    'Rasio Biaya 55% dari kotor — dihitung dari sisa pendapatan bersih'
+                ],
+                correctIndex: 0,
+                hint: 'Rp 90.000 / Rp 200.000 = 45%. Lencana berubah merah jika rasio biaya melampaui 40%.'
+            },
+            {
+                id: 'q5',
+                question: '5. Pada pukul 00.01 dini hari, mitra membuka halaman Riwayat Transaksi dan melihat daftar hari ini kosong. Apa penyebab dan cara mengecek transaksi kemarin?',
+                options: [
+                    'Semua data kemarin terhapus permanen dari database saat jam 00.00 sehingga tidak bisa dilihat lagi',
+                    'Sistem otomatis mengosongkan tampilan riwayat hari baru setiap jam 00.00; transaksi kemarin tetap aman di database dan dapat dilihat dengan memilih tanggal kemarin pada kolom Pilih Tanggal',
+                    'Harus melakukan Ekspor CSV sebelum jam 00.00 atau data otomatis hilang'
+                ],
+                correctIndex: 1,
+                hint: 'Jam 00.00 hanya mengosongkan tampilan hari baru; data tanggal sebelumnya tetap tersimpan dan bisa dipilih di kolom Pilih Tanggal.'
+            },
+            {
+                id: 'q6',
+                question: '6. Kondisi Khusus: Jika pada suatu hari Pendapatan Kotor Rp 40.000 tetapi Biaya Operasional (ganti oli & ban) Rp 110.000, berapakah nilai pada Simulasi Pembagian Pendapatan Bersih?',
+                options: [
+                    'Menampilkan angka minus (-Rp 70.000) yang dibagi sesuai persentase tiap pos',
+                    'Seluruh pos simulasi otomatis menampilkan Rp 0 karena pendapatan bersih bernilai minus/nol',
+                    'Dihitung dari Rp 40.000 pendapatan kotor tanpa dikurangi biaya operasional'
+                ],
+                correctIndex: 1,
+                hint: 'Jika pendapatan bersih minus atau nol, seluruh pos simulasi pembagian otomatis menampilkan Rp 0.'
+            }
+        ];
+
+        const supabaseClient = (window.supabase && typeof window.supabase.createClient === 'function')
+            ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+            : null;
 
         const PRESET_PLATFORMS = ['Gojek', 'Grab', 'Maxim', 'ShopeeFood'];
 
@@ -1138,6 +1522,8 @@
                 { value: 'Parkir', label: 'Parkir' },
                 { value: 'Kuota / Pulsa', label: 'Kuota Internet / Pulsa' },
                 { value: 'Servis / Ganti Oli', label: 'Servis / Ganti Oli' },
+                { value: 'Angsuran / Cicilan', label: 'Angsuran / Cicilan' },
+                { value: 'Target & Uang Pokok', label: 'Target & Uang Pokok' },
                 { value: 'Lainnya', label: 'Pengeluaran Lainnya' }
             ]
         };
@@ -1166,6 +1552,8 @@
             'Parkir': '#dc2626',
             'Kuota / Pulsa': '#e11d48',
             'Servis / Ganti Oli': '#b91c1c',
+            'Angsuran / Cicilan': '#f97316',
+            'Target & Uang Pokok': '#6366f1',
             'Lainnya': '#fb7185'
         };
 
@@ -1180,8 +1568,29 @@
             return CUSTOM_EXPENSE_PALETTE[Math.abs(hash) % CUSTOM_EXPENSE_PALETTE.length];
         }
 
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function assertSupabaseReady() {
+            if (!supabaseClient) {
+                showToast('Layanan Supabase belum siap. Periksa koneksi internet dan muat ulang halaman.', 'error');
+                return false;
+            }
+            return true;
+        }
+
         let currentUser = null;
         let transactions = [];
+        let goalsInstallments = [];
+        let quickDailyDeposits = [];
+        let goalFilter = 'all';
+        let goalsStorageMode = 'supabase';
         let lastRenderedHistory = [];
         let dailyTarget = 150000;
         let currentPeriod = 'today';
@@ -1192,15 +1601,203 @@
         let categoryChartMode = 'all';
         let categoryChartInstance = null;
         let onboardingIntervalId = null;
+        let onboardingPhase = 'reading';
+        let pendingDepositContext = null;
+        let isProcessingDeposit = false;
         const displayedNumbers = {};
         const activeAnimFrames = {};
+
+        /* ==========================================
+           FITUR SETOR UANG HARIAN CEPAT
+           ========================================== */
+        function readQuickDeposits(userId) {
+            if (!userId) return [];
+            try {
+                const raw = localStorage.getItem(QUICK_DEPOSIT_PREFIX + userId);
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (_e) {
+                return [];
+            }
+        }
+
+        function writeQuickDeposits(userId, list) {
+            if (!userId) return;
+            localStorage.setItem(QUICK_DEPOSIT_PREFIX + userId, JSON.stringify(list));
+        }
+
+        function setQuickDepositPreset(val) {
+            const input = document.getElementById('quick-deposit-amount');
+            if (input) {
+                input.value = val;
+                input.focus();
+            }
+        }
+
+        function renderQuickDailyDepositSummary() {
+            const todayEl = document.getElementById('quick-daily-deposit-today');
+            const totalEl = document.getElementById('quick-daily-deposit-total');
+            const listEl = document.getElementById('quick-deposit-today-list');
+            if (!todayEl || !totalEl || !listEl) return;
+
+            const todayStr = getTodayStr();
+            const todayItems = quickDailyDeposits.filter(item => item.date === todayStr);
+            const todaySum = todayItems.reduce((s, item) => s + (Number(item.amount) || 0), 0);
+            const allSum = quickDailyDeposits.reduce((s, item) => s + (Number(item.amount) || 0), 0);
+
+            todayEl.textContent = formatRupiah(todaySum);
+            totalEl.textContent = formatRupiah(allSum);
+
+            if (todayItems.length === 0) {
+                listEl.textContent = 'Belum ada setor uang hari ini';
+            } else {
+                listEl.innerHTML = todayItems.slice(0, 3).map(item =>
+                    `<span class="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-semibold">${escapeHtml(item.pot)}: ${formatRupiah(item.amount)}</span>`
+                ).join('');
+            }
+        }
+
+        document.getElementById('quick-daily-deposit-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (!currentUser || isProcessingDeposit || !assertSupabaseReady()) return;
+
+            const pot = document.getElementById('quick-deposit-pot').value;
+            const amount = parseInt(document.getElementById('quick-deposit-amount').value, 10);
+            const noteInput = document.getElementById('quick-deposit-note');
+            const customNote = noteInput.value.trim();
+            const depositDate = getTodayStr();
+            const submitBtn = document.getElementById('quick-deposit-submit-btn');
+
+            if (!amount || amount < 500) {
+                showToast('Nominal setor harian minimal Rp 500', 'error');
+                return;
+            }
+
+            isProcessingDeposit = true;
+            if (submitBtn) submitBtn.disabled = true;
+            try {
+                const entry = {
+                    id: `qdep-${Date.now()}`,
+                    pot,
+                    amount,
+                    note: customNote || `Setor uang harian (${pot})`,
+                    date: depositDate
+                };
+
+                await recordGoalExpenseToTransactions(
+                    { kind: 'target', title: `${pot}${customNote ? ` - ${customNote}` : ''}` },
+                    amount,
+                    depositDate
+                );
+
+                quickDailyDeposits.unshift(entry);
+                writeQuickDeposits(currentUser.id, quickDailyDeposits);
+
+                noteInput.value = '';
+                refreshDashboard();
+                showToast(`Setor uang harian ${formatRupiah(amount)} ke "${pot}" berhasil dicatat`, 'success');
+            } catch (err) {
+                console.error('Error quick daily deposit:', err);
+                showToast(getSupabaseErrorMessage(err, 'Gagal mencatat setor uang harian'), 'error');
+            } finally {
+                isProcessingDeposit = false;
+                if (submitBtn) submitBtn.disabled = false;
+            }
+        });
+
+        async function undoLastQuickDepositToday() {
+            if (!currentUser || isProcessingDeposit || !assertSupabaseReady()) return;
+            const todayStr = getTodayStr();
+            const idx = quickDailyDeposits.findIndex(item => item.date === todayStr);
+            if (idx === -1) {
+                showToast('Tidak ada setor uang hari ini untuk dibatalkan', 'info');
+                return;
+            }
+
+            isProcessingDeposit = true;
+            const undoBtn = document.getElementById('quick-deposit-undo-btn');
+            if (undoBtn) undoBtn.disabled = true;
+            const removed = quickDailyDeposits[idx];
+            try {
+                const matchingTx = transactions.find(t =>
+                    t.date === todayStr &&
+                    t.type === 'expense' &&
+                    Number(t.amount) === Number(removed.amount) &&
+                    String(t.note || '').includes(removed.pot)
+                );
+
+                if (matchingTx) {
+                    const { error } = await supabaseClient
+                        .from('transactions')
+                        .delete()
+                        .eq('id', matchingTx.id)
+                        .eq('user_id', currentUser.id);
+                    if (error) throw error;
+                    transactions = transactions.filter(t => t.id !== matchingTx.id);
+                }
+
+                quickDailyDeposits.splice(idx, 1);
+                writeQuickDeposits(currentUser.id, quickDailyDeposits);
+                refreshDashboard();
+                showToast(`Setor harian ${formatRupiah(removed.amount)} dibatalkan`, 'info');
+            } catch (err) {
+                console.error('Error undoLastQuickDepositToday:', err);
+                showToast(getSupabaseErrorMessage(err, 'Gagal membatalkan setoran'), 'error');
+            } finally {
+                isProcessingDeposit = false;
+                if (undoBtn) undoBtn.disabled = false;
+            }
+        }
+
+        function isBrowserActiveNow() {
+            return !document.hidden && document.hasFocus();
+        }
+
+        function readOnboardingState(userId) {
+            const key = ONBOARDING_STATE_PREFIX + userId;
+            const raw = localStorage.getItem(key);
+            if (!raw) {
+                const initial = {
+                    remainingSec: ONBOARDING_DURATION_SEC,
+                    isPaused: !isBrowserActiveNow(),
+                    lastTickMs: Date.now()
+                };
+                localStorage.setItem(key, JSON.stringify(initial));
+                return initial;
+            }
+            try {
+                const parsed = JSON.parse(raw);
+                const rem = typeof parsed.remainingSec === 'number' && Number.isFinite(parsed.remainingSec)
+                    ? Math.max(0, Math.min(ONBOARDING_DURATION_SEC, parsed.remainingSec))
+                    : ONBOARDING_DURATION_SEC;
+                return {
+                    remainingSec: rem,
+                    isPaused: Boolean(parsed.isPaused),
+                    lastTickMs: typeof parsed.lastTickMs === 'number' ? parsed.lastTickMs : Date.now()
+                };
+            } catch (_e) {
+                return {
+                    remainingSec: ONBOARDING_DURATION_SEC,
+                    isPaused: !isBrowserActiveNow(),
+                    lastTickMs: Date.now()
+                };
+            }
+        }
+
+        function writeOnboardingState(userId, state) {
+            localStorage.setItem(ONBOARDING_STATE_PREFIX + userId, JSON.stringify(state));
+        }
 
         function markUserAsNewAccount(userId) {
             if (!userId) return;
             localStorage.setItem(ONBOARDING_REQUIRED_PREFIX + userId, '1');
-            const timerKey = ONBOARDING_TIMER_PREFIX + userId;
-            if (!localStorage.getItem(timerKey)) {
-                localStorage.setItem(timerKey, String(Date.now() + ONBOARDING_DURATION_SEC * 1000));
+            const key = ONBOARDING_STATE_PREFIX + userId;
+            if (!localStorage.getItem(key)) {
+                writeOnboardingState(userId, {
+                    remainingSec: ONBOARDING_DURATION_SEC,
+                    isPaused: !isBrowserActiveNow(),
+                    lastTickMs: Date.now()
+                });
             }
         }
 
@@ -1208,7 +1805,6 @@
             if (!user || !user.created_at) return false;
             const createdMs = new Date(user.created_at).getTime();
             if (!Number.isFinite(createdMs)) return false;
-            // Akun baru yang dibuat dalam 24 jam terakhir
             return (Date.now() - createdMs) < (24 * 60 * 60 * 1000);
         }
 
@@ -1225,15 +1821,33 @@
             return false;
         }
 
-        function getRemainingOnboardingSeconds(userId) {
-            if (!userId) return 0;
-            const timerKey = ONBOARDING_TIMER_PREFIX + userId;
-            let endMs = Number(localStorage.getItem(timerKey));
-            if (!endMs || !Number.isFinite(endMs)) {
-                endMs = Date.now() + ONBOARDING_DURATION_SEC * 1000;
-                localStorage.setItem(timerKey, String(endMs));
+        function syncAndGetRemainingSeconds(userId, forcePause = null) {
+            if (!userId) return { remainingSec: 0, isPaused: false };
+            const nowMs = Date.now();
+            const state = readOnboardingState(userId);
+
+            if (!state.isPaused && state.remainingSec > 0) {
+                const elapsedSec = Math.max(0, (nowMs - state.lastTickMs) / 1000);
+                state.remainingSec = Math.max(0, state.remainingSec - elapsedSec);
             }
-            return Math.max(0, Math.ceil((endMs - Date.now()) / 1000));
+            state.lastTickMs = nowMs;
+
+            if (typeof forcePause === 'boolean') {
+                state.isPaused = forcePause;
+            } else {
+                state.isPaused = !isBrowserActiveNow();
+            }
+
+            if (state.remainingSec <= 0) {
+                state.remainingSec = 0;
+                state.isPaused = false;
+            }
+
+            writeOnboardingState(userId, state);
+            return {
+                remainingSec: Math.ceil(state.remainingSec),
+                isPaused: state.isPaused && state.remainingSec > 0
+            };
         }
 
         function formatMMSS(totalSeconds) {
@@ -1250,9 +1864,84 @@
             }
         }
 
-        function updateOnboardingGateUI() {
+        function renderQuizQuestions() {
+            const container = document.getElementById('quiz-questions-container');
+            if (!container) return;
+
+            container.innerHTML = QUIZ_QUESTIONS.map((q, qIdx) => `
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/75 border border-slate-200/80 dark:border-slate-700/80 space-y-2.5">
+                    <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug">${escapeHtml(q.question)}</p>
+                    <div class="space-y-2">
+                        ${q.options.map((opt, oIdx) => `
+                            <label class="flex items-start gap-2.5 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 hover:border-emerald-400 cursor-pointer transition text-xs sm:text-sm text-slate-700 dark:text-slate-200">
+                                <input type="radio" name="${q.id}" value="${oIdx}" class="mt-0.5 accent-emerald-600">
+                                <span class="leading-snug">${escapeHtml(opt)}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <p id="quiz-q-hint-${qIdx}" class="hidden text-xs font-semibold text-rose-600 dark:text-rose-400"></p>
+                </div>
+            `).join('');
+        }
+
+        function setOnboardingPhase(phase) {
+            onboardingPhase = phase;
+            const readingEl = document.getElementById('onboarding-phase-reading');
+            const quizEl = document.getElementById('onboarding-phase-quiz');
+            const pillEl = document.getElementById('gate-step-pill');
+            const step1El = document.getElementById('step-indicator-1');
+            const step2El = document.getElementById('step-indicator-2');
+
+            const isQuiz = phase === 'quiz';
+            if (readingEl) readingEl.classList.toggle('hidden', isQuiz);
+            if (quizEl) quizEl.classList.toggle('hidden', !isQuiz);
+
+            if (pillEl) {
+                pillEl.innerHTML = isQuiz
+                    ? `<i data-lucide="help-circle" class="w-3.5 h-3.5"></i><span>Tahap 2 dari 2 • Sesi Tanya Jawab (6 Soal • Wajib 100% Benar)</span>`
+                    : `<i data-lucide="shield-alert" class="w-3.5 h-3.5"></i><span>Tahap 1 dari 2 • Baca Peraturan (5 Menit)</span>`;
+            }
+
+            if (step1El && step2El) {
+                if (isQuiz) {
+                    step1El.className = 'p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 flex items-center gap-2';
+                    step2El.className = 'p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200 border border-emerald-400 dark:border-emerald-600 flex items-center gap-2';
+                } else {
+                    step1El.className = 'p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200 border border-amber-300/80 dark:border-amber-700/60 flex items-center gap-2';
+                    step2El.className = 'p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/70 text-slate-400 dark:text-slate-500 border border-slate-200/70 dark:border-slate-700/70 flex items-center gap-2';
+                }
+            }
+
+            if (isQuiz) {
+                renderQuizQuestions();
+                const banner = document.getElementById('quiz-feedback-banner');
+                if (banner) {
+                    banner.classList.add('hidden');
+                    banner.textContent = '';
+                }
+            }
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function openQuizPhase() {
             if (!currentUser) return;
-            const remaining = getRemainingOnboardingSeconds(currentUser.id);
+            const { remainingSec: remaining } = syncAndGetRemainingSeconds(currentUser.id);
+            if (remaining > 0) {
+                showToast(`Selesaikan waktu baca 5 menit terlebih dahulu (${formatMMSS(remaining)})`, 'error');
+                return;
+            }
+            setOnboardingPhase('quiz');
+        }
+
+        function backToReadingPhase() {
+            setOnboardingPhase('reading');
+            updateOnboardingGateUI(!isBrowserActiveNow());
+        }
+
+        function updateOnboardingGateUI(forcePause = null) {
+            if (!currentUser || !isNewUserOnboardingActive(currentUser)) return;
+            const { remainingSec: remaining, isPaused } = syncAndGetRemainingSeconds(currentUser.id, forcePause);
             const elapsed = Math.max(0, ONBOARDING_DURATION_SEC - remaining);
             const pct = Math.min(100, Math.round((elapsed / ONBOARDING_DURATION_SEC) * 100));
 
@@ -1270,18 +1959,29 @@
 
             if (remaining <= 0) {
                 if (badgeEl) {
-                    badgeEl.textContent = 'Selesai (15 Menit Tercapai)';
+                    badgeEl.textContent = 'Selesai Baca • Siap Tanya Jawab';
                     badgeEl.className = 'text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300';
                 }
                 if (btnEl) {
                     btnEl.disabled = false;
                     btnEl.className = 'flex-1 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-2 cursor-pointer';
                 }
-                if (labelEl) labelEl.textContent = 'Masuk ke Beranda';
+                if (labelEl) labelEl.textContent = 'Lanjut ke Sesi Tanya Jawab (6 Soal)';
                 if (iconEl) iconEl.setAttribute('data-lucide', 'arrow-right-circle');
+            } else if (isPaused) {
+                if (badgeEl) {
+                    badgeEl.textContent = 'Freeze (Di Luar Browser)';
+                    badgeEl.className = 'text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950/70 text-sky-700 dark:text-sky-300';
+                }
+                if (btnEl) {
+                    btnEl.disabled = true;
+                    btnEl.className = 'flex-1 py-3.5 px-4 rounded-xl bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-sm cursor-not-allowed transition flex items-center justify-center gap-2';
+                }
+                if (labelEl) labelEl.textContent = `Freeze (${formatMMSS(remaining)})`;
+                if (iconEl) iconEl.setAttribute('data-lucide', 'pause-circle');
             } else {
                 if (badgeEl) {
-                    badgeEl.textContent = 'Sedang Berjalan (15 Menit)';
+                    badgeEl.textContent = 'Sedang Berjalan (5 Menit)';
                     badgeEl.className = 'text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300';
                 }
                 if (btnEl) {
@@ -1304,23 +2004,78 @@
             const emailSpan = document.getElementById('gate-user-email');
             if (emailSpan) emailSpan.textContent = user.email || 'Akun Baru';
 
-            updateOnboardingGateUI();
-            onboardingIntervalId = setInterval(updateOnboardingGateUI, 1000);
+            const currentRemaining = syncAndGetRemainingSeconds(user.id, !isBrowserActiveNow()).remainingSec;
+            setOnboardingPhase(currentRemaining <= 0 ? 'quiz' : 'reading');
+            updateOnboardingGateUI(!isBrowserActiveNow());
+
+            onboardingIntervalId = setInterval(() => {
+                if (!document.hidden && onboardingPhase === 'reading') {
+                    updateOnboardingGateUI();
+                }
+            }, 1000);
         }
 
-        async function completeOnboardingAndEnter() {
+        document.getElementById('onboarding-quiz-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
             if (!currentUser) return;
-            const remaining = getRemainingOnboardingSeconds(currentUser.id);
-            if (remaining > 0) {
-                showToast(`Selesaikan waktu baca 15 menit terlebih dahulu (${formatMMSS(remaining)})`, 'error');
+
+            const banner = document.getElementById('quiz-feedback-banner');
+            let correctCount = 0;
+            let unansweredCount = 0;
+
+            QUIZ_QUESTIONS.forEach((q, qIdx) => {
+                const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+                const hintEl = document.getElementById(`quiz-q-hint-${qIdx}`);
+                if (!selected) {
+                    unansweredCount++;
+                    if (hintEl) {
+                        hintEl.textContent = 'Pertanyaan ini belum dijawab.';
+                        hintEl.classList.remove('hidden');
+                    }
+                    return;
+                }
+
+                const chosenIdx = parseInt(selected.value, 10);
+                if (chosenIdx === q.correctIndex) {
+                    correctCount++;
+                    if (hintEl) {
+                        hintEl.textContent = '';
+                        hintEl.classList.add('hidden');
+                    }
+                } else if (hintEl) {
+                    hintEl.textContent = `Belum tepat — ${q.hint}`;
+                    hintEl.classList.remove('hidden');
+                }
+            });
+
+            const pctScore = Math.round((correctCount / QUIZ_QUESTIONS.length) * 100);
+
+            if (unansweredCount > 0) {
+                if (banner) {
+                    banner.className = 'p-4 rounded-2xl border bg-amber-50 dark:bg-amber-950/35 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-xs sm:text-sm font-semibold';
+                    banner.textContent = `Masih ada ${unansweredCount} soal yang belum dijawab. Lengkapi seluruh 6 soal lalu kirim kembali (wajib 100% benar).`;
+                    banner.classList.remove('hidden');
+                }
+                showToast('Lengkapi semua 6 jawaban terlebih dahulu', 'error');
                 return;
             }
+
+            if (correctCount < QUIZ_QUESTIONS.length) {
+                if (banner) {
+                    banner.className = 'p-4 rounded-2xl border bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-800 text-rose-800 dark:text-rose-200 text-xs sm:text-sm font-semibold';
+                    banner.textContent = `Skor Anda ${pctScore}% (${correctCount}/${QUIZ_QUESTIONS.length} benar). Diperlukan 100% benar untuk masuk ke beranda — periksa kembali soal yang bertanda merah lalu coba lagi.`;
+                    banner.classList.remove('hidden');
+                }
+                showToast(`Skor ${pctScore}% — harus 6/6 (100% benar) untuk masuk beranda`, 'error');
+                return;
+            }
+
             localStorage.setItem(ONBOARDING_REQUIRED_PREFIX + currentUser.id, 'done');
-            localStorage.removeItem(ONBOARDING_TIMER_PREFIX + currentUser.id);
+            localStorage.removeItem(ONBOARDING_STATE_PREFIX + currentUser.id);
             stopOnboardingTicker();
             await onSessionReady({ user: currentUser });
-            showToast('Waktu baca 15 menit selesai. Selamat datang di beranda!', 'success');
-        }
+            showToast('100% benar (6/6)! Selamat datang di beranda OjolKu Finance.', 'success');
+        });
 
         function toggleHomeGuide(forceCollapsed = null) {
             const bodyEl = document.getElementById('home-guide-body');
@@ -1480,10 +2235,13 @@
         }
 
         function formatDateIndo(dateStr) {
-            const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
-            const [y, m, d] = dateStr.split('-');
+            if (!dateStr) return '-';
+            const parts = String(dateStr).split('-');
+            if (parts.length !== 3) return String(dateStr);
+            const [y, m, d] = parts.map(Number);
             const dateObj = new Date(y, m - 1, d);
-            return dateObj.toLocaleDateString('id-ID', options);
+            if (Number.isNaN(dateObj.getTime())) return String(dateStr);
+            return dateObj.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
         }
 
         function getSupabaseErrorMessage(error, fallback) {
@@ -1496,6 +2254,759 @@
                 return 'Ditolak kebijakan RLS Supabase. Pastikan policy auth.uid() = user_id sudah aktif.';
             }
             return msg || fallback;
+        }
+
+        /* ==========================================
+           SETOR PER HARI & TARGET OTOMATIS SISTEM
+           ========================================== */
+        function readGoalsLocal(userId) {
+            if (!userId) return [];
+            try {
+                const raw = localStorage.getItem(GOALS_LOCAL_PREFIX + userId);
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (_e) {
+                return [];
+            }
+        }
+
+        function writeGoalsLocal(userId, items) {
+            if (!userId) return;
+            localStorage.setItem(GOALS_LOCAL_PREFIX + userId, JSON.stringify(items));
+        }
+
+        function normalizeGoalRow(row) {
+            const rawLogs = row.daily_logs ?? row.dailyLogs ?? [];
+            let parsedLogs = [];
+            if (Array.isArray(rawLogs)) {
+                parsedLogs = rawLogs;
+            } else if (typeof rawLogs === 'string') {
+                try {
+                    const tmp = JSON.parse(rawLogs);
+                    if (Array.isArray(tmp)) parsedLogs = tmp;
+                } catch (_e) {
+                    parsedLogs = [];
+                }
+            }
+
+            return {
+                id: String(row.id),
+                kind: ['target', 'angsuran', 'pokok'].includes(row.kind) ? row.kind : 'target',
+                title: row.title || 'Item',
+                principalAmount: Number(row.principal_amount ?? row.principalAmount ?? 0),
+                targetAmount: Number(row.target_amount ?? row.targetAmount ?? 0),
+                paidAmount: Number(row.paid_amount ?? row.paidAmount ?? 0),
+                installmentAmount: Number(row.installment_amount ?? row.installmentAmount ?? 0),
+                totalTenors: Math.max(1, parseInt(row.total_tenors ?? row.totalTenors ?? 1, 10) || 1),
+                paidTenors: Math.max(0, parseInt(row.paid_tenors ?? row.paidTenors ?? 0, 10) || 0),
+                dueDate: row.due_date ?? row.dueDate ?? '',
+                note: row.note || '',
+                dailyLogs: parsedLogs
+                    .filter(l => l && l.date)
+                    .map(l => ({
+                        date: String(l.date),
+                        amount: Math.max(0, Number(l.amount) || 0)
+                    }))
+            };
+        }
+
+        function getDaysUntilDueDate(dueDateStr) {
+            if (!dueDateStr) return null;
+            const parts = String(dueDateStr).split('-');
+            if (parts.length !== 3) return null;
+            const dueObj = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+            if (Number.isNaN(dueObj.getTime())) return null;
+
+            const now = new Date();
+            const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            return Math.ceil((dueObj.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24));
+        }
+
+        function computeDailyTargetInfo(item) {
+            const remaining = Math.max(0, Number(item.targetAmount || 0) - Number(item.paidAmount || 0));
+            if (remaining <= 0) {
+                return {
+                    dailyAmount: 0,
+                    daysLeft: 0,
+                    label: 'Lunas / Tercapai',
+                    isOverdue: false
+                };
+            }
+
+            if (item.dueDate) {
+                const diffDays = getDaysUntilDueDate(item.dueDate);
+                if (diffDays !== null) {
+                    if (diffDays < 0) {
+                        return {
+                            dailyAmount: remaining,
+                            daysLeft: 0,
+                            label: `Lewat ${Math.abs(diffDays)} hr`,
+                            isOverdue: true
+                        };
+                    }
+                    const divisor = Math.max(1, diffDays);
+                    const roundedDaily = Math.ceil((remaining / divisor) / 500) * 500;
+                    return {
+                        dailyAmount: roundedDaily,
+                        daysLeft: diffDays,
+                        label: diffDays === 0 ? 'Jatuh tempo hari ini' : `Sisa ${diffDays} hari`,
+                        isOverdue: false
+                    };
+                }
+            }
+
+            const roundedDefaultDaily = Math.ceil((remaining / DEFAULT_SYSTEM_CYCLE_DAYS) / 500) * 500;
+            return {
+                dailyAmount: roundedDefaultDaily,
+                daysLeft: DEFAULT_SYSTEM_CYCLE_DAYS,
+                label: `Acuan ${DEFAULT_SYSTEM_CYCLE_DAYS} hari`,
+                isOverdue: false
+            };
+        }
+
+        function getTodayDepositForItem(item, dateStr = getTodayStr()) {
+            const logs = Array.isArray(item.dailyLogs) ? item.dailyLogs : [];
+            return logs
+                .filter(l => l.date === dateStr)
+                .reduce((sum, l) => sum + (Number(l.amount) || 0), 0);
+        }
+
+        function getUniqueDepositDaysCount(item) {
+            const logs = Array.isArray(item.dailyLogs) ? item.dailyLogs : [];
+            const uniqueDates = new Set(logs.filter(l => l.amount > 0).map(l => l.date));
+            return uniqueDates.size;
+        }
+
+        function updateGoalModalAutoPreview() {
+            const targetAmt = Math.max(0, parseInt(document.getElementById('goal-target-amount')?.value, 10) || 0);
+            const paidAmt = Math.max(0, parseInt(document.getElementById('goal-paid-amount')?.value, 10) || 0);
+            const dueDate = document.getElementById('goal-due-date')?.value || '';
+
+            const previewInfo = computeDailyTargetInfo({
+                targetAmount: targetAmt,
+                paidAmount: paidAmt,
+                dueDate
+            });
+
+            const dailyEl = document.getElementById('goal-modal-auto-daily');
+            const subEl = document.getElementById('goal-modal-auto-sub');
+            if (dailyEl) dailyEl.textContent = `${formatRupiah(previewInfo.dailyAmount)} / hari`;
+            if (subEl) subEl.textContent = previewInfo.label;
+        }
+
+        async function fetchGoalsInstallments() {
+            if (!currentUser) {
+                goalsInstallments = [];
+                return;
+            }
+            const localItems = readGoalsLocal(currentUser.id).map(normalizeGoalRow);
+            if (!supabaseClient) {
+                goalsStorageMode = 'local';
+                goalsInstallments = localItems;
+                return;
+            }
+
+            const { data, error } = await supabaseClient
+                .from('goals_installments')
+                .select('*')
+                .eq('user_id', currentUser.id)
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                goalsStorageMode = 'local';
+                goalsInstallments = localItems;
+                return;
+            }
+
+            goalsStorageMode = 'supabase';
+            const dbItems = (data || []).map(normalizeGoalRow);
+            if (dbItems.length > 0) {
+                goalsInstallments = dbItems.map(dbItem => {
+                    if (dbItem.dailyLogs.length > 0) return dbItem;
+                    const localMatch = localItems.find(l => l.id === dbItem.id || l.title === dbItem.title);
+                    return localMatch && localMatch.dailyLogs.length > 0
+                        ? { ...dbItem, dailyLogs: localMatch.dailyLogs }
+                        : dbItem;
+                });
+            } else {
+                goalsInstallments = localItems;
+            }
+            writeGoalsLocal(currentUser.id, goalsInstallments);
+        }
+
+        function setGoalFilter(filter) {
+            goalFilter = filter;
+            ['all', 'target', 'angsuran', 'pokok'].forEach(key => {
+                const btn = document.getElementById(`goal-filter-${key}`);
+                if (!btn) return;
+                btn.className = key === filter
+                    ? 'px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm transition'
+                    : 'px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition';
+            });
+            renderGoalsInstallments();
+        }
+
+        function handleGoalKindChange() {
+            const kind = document.getElementById('goal-kind').value;
+            const targetLabel = document.getElementById('goal-target-label');
+            const paidLabel = document.getElementById('goal-paid-label');
+            const instAmtWrap = document.getElementById('goal-installment-amt-wrap');
+            const tenorWrap = document.getElementById('goal-tenor-wrap');
+
+            if (kind === 'angsuran') {
+                if (targetLabel) targetLabel.textContent = 'Total Tanggungan Angsuran (Rp)';
+                if (paidLabel) paidLabel.textContent = 'Sudah Terbayar (Rp)';
+                if (instAmtWrap) instAmtWrap.classList.remove('hidden');
+                if (tenorWrap) tenorWrap.classList.remove('hidden');
+            } else if (kind === 'pokok') {
+                if (targetLabel) targetLabel.textContent = 'Total Tanggungan / Dana Pokok (Rp)';
+                if (paidLabel) paidLabel.textContent = 'Pokok Terkumpul / Teralokasi (Rp)';
+                if (instAmtWrap) instAmtWrap.classList.add('hidden');
+                if (tenorWrap) tenorWrap.classList.add('hidden');
+            } else {
+                if (targetLabel) targetLabel.textContent = 'Total Tanggungan / Target (Rp)';
+                if (paidLabel) paidLabel.textContent = 'Dana Terkumpul (Rp)';
+                if (instAmtWrap) instAmtWrap.classList.add('hidden');
+                if (tenorWrap) tenorWrap.classList.add('hidden');
+            }
+        }
+
+        function openGoalModal(defaultKind = 'target', editId = null) {
+            const modal = document.getElementById('goal-item-modal');
+            const titleEl = document.getElementById('goal-modal-title');
+            const idInput = document.getElementById('goal-edit-id');
+            const kindInput = document.getElementById('goal-kind');
+            const nameInput = document.getElementById('goal-title');
+            const targetInput = document.getElementById('goal-target-amount');
+            const paidInput = document.getElementById('goal-paid-amount');
+            const principalInput = document.getElementById('goal-principal-amount');
+            const instAmtInput = document.getElementById('goal-installment-amount');
+            const paidTenorsInput = document.getElementById('goal-paid-tenors');
+            const totalTenorsInput = document.getElementById('goal-total-tenors');
+            const dueDateInput = document.getElementById('goal-due-date');
+            const noteInput = document.getElementById('goal-note');
+
+            if (editId) {
+                const item = goalsInstallments.find(g => String(g.id) === String(editId));
+                if (!item) return;
+                if (titleEl) titleEl.textContent = 'Edit Item';
+                idInput.value = item.id;
+                kindInput.value = item.kind;
+                nameInput.value = item.title;
+                targetInput.value = item.targetAmount;
+                paidInput.value = item.paidAmount;
+                principalInput.value = item.principalAmount;
+                instAmtInput.value = item.installmentAmount;
+                paidTenorsInput.value = item.paidTenors;
+                totalTenorsInput.value = item.totalTenors;
+                dueDateInput.value = item.dueDate || '';
+                noteInput.value = item.note || '';
+            } else {
+                const labelMap = {
+                    target: 'Tambah Target Harian Baru',
+                    angsuran: 'Tambah Angsuran / Tanggungan',
+                    pokok: 'Tambah Uang Pokok'
+                };
+                if (titleEl) titleEl.textContent = labelMap[defaultKind] || 'Tambah Item';
+                idInput.value = '';
+                kindInput.value = defaultKind;
+                nameInput.value = '';
+                targetInput.value = '1000000';
+                paidInput.value = '0';
+                principalInput.value = '0';
+                instAmtInput.value = '0';
+                paidTenorsInput.value = '0';
+                totalTenorsInput.value = '12';
+                dueDateInput.value = '';
+                noteInput.value = '';
+            }
+
+            handleGoalKindChange();
+            updateGoalModalAutoPreview();
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function closeGoalModal() {
+            const modal = document.getElementById('goal-item-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        document.getElementById('goal-item-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const editId = document.getElementById('goal-edit-id').value;
+            const existingItem = editId ? goalsInstallments.find(g => String(g.id) === String(editId)) : null;
+            const kind = document.getElementById('goal-kind').value;
+            const title = document.getElementById('goal-title').value.trim();
+            const targetAmount = Math.max(0, parseInt(document.getElementById('goal-target-amount').value, 10) || 0);
+            const paidAmount = Math.max(0, parseInt(document.getElementById('goal-paid-amount').value, 10) || 0);
+            const principalAmount = Math.max(0, parseInt(document.getElementById('goal-principal-amount').value, 10) || 0);
+            const installmentAmount = Math.max(0, parseInt(document.getElementById('goal-installment-amount').value, 10) || 0);
+            const totalTenors = Math.max(1, parseInt(document.getElementById('goal-total-tenors').value, 10) || 1);
+            const paidTenors = Math.min(totalTenors, Math.max(0, parseInt(document.getElementById('goal-paid-tenors').value, 10) || 0));
+            const dueDate = document.getElementById('goal-due-date').value || null;
+            const note = document.getElementById('goal-note').value.trim();
+            const dailyLogs = existingItem?.dailyLogs || [];
+
+            if (!title || targetAmount <= 0) {
+                showToast('Isi judul dan nominal tanggungan/target yang valid', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('save-goal-item-btn');
+            btn.disabled = true;
+
+            const payload = {
+                user_id: currentUser.id,
+                kind,
+                title,
+                principal_amount: principalAmount,
+                target_amount: targetAmount,
+                paid_amount: paidAmount,
+                installment_amount: installmentAmount,
+                total_tenors: totalTenors,
+                paid_tenors: paidTenors,
+                due_date: dueDate,
+                note,
+                daily_logs: dailyLogs
+            };
+
+            try {
+                if (goalsStorageMode === 'supabase' && supabaseClient) {
+                    if (editId) {
+                        const { error } = await supabaseClient
+                            .from('goals_installments')
+                            .update(payload)
+                            .eq('id', editId)
+                            .eq('user_id', currentUser.id);
+                        if (error) throw error;
+                        goalsInstallments = goalsInstallments.map(g =>
+                            String(g.id) === String(editId)
+                                ? normalizeGoalRow({ ...payload, id: editId, dailyLogs })
+                                : g
+                        );
+                    } else {
+                        const { data, error } = await supabaseClient
+                            .from('goals_installments')
+                            .insert(payload)
+                            .select('*')
+                            .single();
+                        if (error) throw error;
+                        goalsInstallments.unshift(normalizeGoalRow({ ...data, dailyLogs }));
+                    }
+                } else {
+                    const localId = editId || `local-${Date.now()}`;
+                    const normalized = normalizeGoalRow({ ...payload, id: localId, dailyLogs });
+                    if (editId) {
+                        goalsInstallments = goalsInstallments.map(g => String(g.id) === String(editId) ? normalized : g);
+                    } else {
+                        goalsInstallments.unshift(normalized);
+                    }
+                }
+
+                writeGoalsLocal(currentUser.id, goalsInstallments);
+                closeGoalModal();
+                renderGoalsInstallments();
+                showToast(editId ? 'Data berhasil diperbarui' : 'Item baru ditambahkan & siap setor per hari', 'success');
+            } catch (_err) {
+                const localId = editId || `local-${Date.now()}`;
+                const normalized = normalizeGoalRow({ ...payload, id: localId, dailyLogs });
+                if (editId) {
+                    goalsInstallments = goalsInstallments.map(g => String(g.id) === String(editId) ? normalized : g);
+                } else {
+                    goalsInstallments.unshift(normalized);
+                }
+                writeGoalsLocal(currentUser.id, goalsInstallments);
+                closeGoalModal();
+                renderGoalsInstallments();
+                showToast('Tersimpan secara lokal & siap setor per hari', 'info');
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        async function recordGoalExpenseToTransactions(item, amount, depositDate) {
+            if (!currentUser || !amount || amount <= 0 || !assertSupabaseReady()) return false;
+            const txDate = depositDate || getTodayStr();
+            const category = item.kind === 'angsuran'
+                ? 'Angsuran / Cicilan'
+                : 'Target & Uang Pokok';
+            const note = `Setor harian (${txDate}) • ${item.title}`;
+
+            const { data, error } = await supabaseClient
+                .from('transactions')
+                .insert({
+                    user_id: currentUser.id,
+                    type: 'expense',
+                    category,
+                    platform: '',
+                    amount,
+                    note,
+                    tx_date: txDate
+                })
+                .select('id, type, category, platform, amount, note, tx_date, created_at')
+                .single();
+
+            if (error) throw error;
+
+            transactions.unshift({
+                id: data.id,
+                type: data.type,
+                category: data.category,
+                platform: data.platform || '',
+                amount: Number(data.amount),
+                note: data.note || '',
+                date: data.tx_date
+            });
+
+            if (txDate === getTodayStr()) {
+                clearedAfterMidnightDates.delete(txDate);
+            }
+            selectedHistoryDate = txDate;
+            const filterDateEl = document.getElementById('filter-selected-date');
+            if (filterDateEl) filterDateEl.value = txDate;
+            return true;
+        }
+
+        function getCustomDailyInputAmount(itemId) {
+            const inputEl = document.getElementById(`daily-setor-input-${itemId}`);
+            if (!inputEl) return null;
+            const parsed = parseInt(inputEl.value, 10);
+            return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+        }
+
+        function closeDepositConfirmModal() {
+            pendingDepositContext = null;
+            const modal = document.getElementById('deposit-confirm-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        async function addProgressToGoal(itemId, presetAmount = null, useCustomInput = false) {
+            if (!currentUser || isProcessingDeposit) return;
+            const item = goalsInstallments.find(g => String(g.id) === String(itemId));
+            if (!item) return;
+
+            const remaining = Math.max(0, item.targetAmount - item.paidAmount);
+            const dailyInfo = computeDailyTargetInfo(item);
+            const customVal = useCustomInput ? getCustomDailyInputAmount(itemId) : null;
+
+            let rawAmount = 0;
+            if (customVal && customVal > 0) {
+                rawAmount = customVal;
+            } else if (presetAmount && presetAmount > 0) {
+                rawAmount = presetAmount;
+            } else if (dailyInfo.dailyAmount > 0) {
+                rawAmount = dailyInfo.dailyAmount;
+            } else {
+                rawAmount = 50000;
+            }
+
+            const addVal = remaining > 0 ? Math.min(remaining, rawAmount) : rawAmount;
+            if (!addVal || addVal <= 0) {
+                showToast('Target/tanggungan sudah tercapai', 'info');
+                return;
+            }
+
+            const depositDate = getTodayStr();
+            const alreadyDepositedToday = getTodayDepositForItem(item, depositDate);
+
+            pendingDepositContext = {
+                itemId: item.id,
+                addVal,
+                depositDate
+            };
+
+            const descEl = document.getElementById('deposit-confirm-desc');
+            const warnEl = document.getElementById('deposit-confirm-warning');
+            const chkEl = document.getElementById('deposit-record-tx-checkbox');
+
+            if (descEl) {
+                descEl.innerHTML = `Setor per hari <strong>${formatRupiah(addVal)}</strong> (${escapeHtml(formatDateIndo(depositDate))}) ke <strong>"${escapeHtml(item.title)}"</strong>?`;
+            }
+
+            if (warnEl) {
+                if (alreadyDepositedToday > 0) {
+                    warnEl.textContent = `Catatan: Hari ini sudah ada setoran ${formatRupiah(alreadyDepositedToday)} untuk item ini.`;
+                    warnEl.classList.remove('hidden');
+                } else {
+                    warnEl.textContent = '';
+                    warnEl.classList.add('hidden');
+                }
+            }
+
+            if (chkEl) chkEl.checked = true;
+
+            const modal = document.getElementById('deposit-confirm-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        async function executeConfirmedDeposit() {
+            if (!currentUser || !pendingDepositContext || isProcessingDeposit) return;
+
+            const { itemId, addVal, depositDate } = pendingDepositContext;
+            const alsoRecordTx = Boolean(document.getElementById('deposit-record-tx-checkbox')?.checked);
+            const item = goalsInstallments.find(g => String(g.id) === String(itemId));
+            const confirmBtn = document.getElementById('confirm-deposit-submit-btn');
+
+            if (!item) {
+                closeDepositConfirmModal();
+                return;
+            }
+
+            if (alsoRecordTx && !assertSupabaseReady()) return;
+
+            isProcessingDeposit = true;
+            if (confirmBtn) confirmBtn.disabled = true;
+            const nextPaid = item.paidAmount + addVal;
+            const nextTenors = item.kind === 'angsuran'
+                ? Math.min(item.totalTenors, item.paidTenors + 1)
+                : item.paidTenors;
+            const nextDailyLogs = [...(item.dailyLogs || []), { date: depositDate, amount: addVal }];
+
+            try {
+                try {
+                    if (goalsStorageMode === 'supabase' && supabaseClient && !String(item.id).startsWith('local-')) {
+                        const { error } = await supabaseClient
+                            .from('goals_installments')
+                            .update({ paid_amount: nextPaid, paid_tenors: nextTenors, daily_logs: nextDailyLogs })
+                            .eq('id', item.id)
+                            .eq('user_id', currentUser.id);
+                        if (error) throw error;
+                    }
+                } catch (_err) {
+                    goalsStorageMode = 'local';
+                }
+
+                goalsInstallments = goalsInstallments.map(g =>
+                    String(g.id) === String(item.id)
+                        ? { ...g, paidAmount: nextPaid, paidTenors: nextTenors, dailyLogs: nextDailyLogs }
+                        : g
+                );
+                writeGoalsLocal(currentUser.id, goalsInstallments);
+
+                if (alsoRecordTx) {
+                    try {
+                        await recordGoalExpenseToTransactions(item, addVal, depositDate);
+                        closeDepositConfirmModal();
+                        refreshDashboard();
+                        showToast(`Setor harian ${formatRupiah(addVal)} tersimpan & tercatat di Riwayat`, 'success');
+                        return;
+                    } catch (txErr) {
+                        console.error('Error recordGoalExpenseToTransactions:', txErr);
+                        showToast(getSupabaseErrorMessage(txErr, 'Setoran tersimpan, gagal mencatat ke riwayat'), 'error');
+                    }
+                }
+
+                closeDepositConfirmModal();
+                renderGoalsInstallments();
+                showToast(`Setor harian ${formatRupiah(addVal)} berhasil dicatat untuk hari ini`, 'success');
+            } finally {
+                isProcessingDeposit = false;
+                if (confirmBtn) confirmBtn.disabled = false;
+            }
+        }
+
+        async function deleteGoalItem(itemId) {
+            if (!currentUser) return;
+            try {
+                if (goalsStorageMode === 'supabase' && supabaseClient && !String(itemId).startsWith('local-')) {
+                    const { error } = await supabaseClient
+                        .from('goals_installments')
+                        .delete()
+                        .eq('id', itemId)
+                        .eq('user_id', currentUser.id);
+                    if (error) throw error;
+                }
+            } catch (_err) {
+                goalsStorageMode = 'local';
+            }
+
+            goalsInstallments = goalsInstallments.filter(g => String(g.id) !== String(itemId));
+            writeGoalsLocal(currentUser.id, goalsInstallments);
+            renderGoalsInstallments();
+            showToast('Item dihapus', 'info');
+        }
+
+        function renderGoalsInstallments() {
+            const listEl = document.getElementById('goals-installments-list');
+            if (!listEl) return;
+
+            const todayStr = getTodayStr();
+            const targetItems = goalsInstallments.filter(g => g.kind === 'target');
+            const installmentItems = goalsInstallments.filter(g => g.kind === 'angsuran');
+            const principalItems = goalsInstallments.filter(g => g.kind === 'pokok');
+
+            let totalDailyNeeded = 0;
+            let activeDailyCount = 0;
+            let totalDepositedToday = 0;
+
+            goalsInstallments.forEach(item => {
+                const info = computeDailyTargetInfo(item);
+                if (info.dailyAmount > 0) {
+                    totalDailyNeeded += info.dailyAmount;
+                    activeDailyCount++;
+                }
+                totalDepositedToday += getTodayDepositForItem(item, todayStr);
+            });
+
+            const dailyColEl = document.getElementById('summary-daily-collection');
+            const dailyColDetailEl = document.getElementById('summary-daily-collection-detail');
+            if (dailyColEl) dailyColEl.textContent = `${formatRupiah(totalDailyNeeded)} / hari`;
+            if (dailyColDetailEl) {
+                dailyColDetailEl.textContent = `Setor hari ini: ${formatRupiah(totalDepositedToday)} (${activeDailyCount} aktif)`;
+            }
+
+            const sumTargetGoal = targetItems.reduce((s, g) => s + g.targetAmount, 0);
+            const sumTargetPaid = targetItems.reduce((s, g) => s + g.paidAmount, 0);
+            const goalsCountEl = document.getElementById('summary-goals-count');
+            const goalsTargetEl = document.getElementById('summary-goals-target');
+            if (goalsTargetEl) goalsTargetEl.textContent = `${formatRupiah(sumTargetPaid)} / ${formatRupiah(sumTargetGoal)}`;
+            if (goalsCountEl) goalsCountEl.textContent = `${targetItems.length} target aktif`;
+
+            const sumInstLeft = installmentItems.reduce((s, g) => s + Math.max(0, g.targetAmount - g.paidAmount), 0);
+            const sumInstMonthly = installmentItems.reduce((s, g) => s + g.installmentAmount, 0);
+            const instLeftEl = document.getElementById('summary-installment-left');
+            const instMonthlyEl = document.getElementById('summary-installment-monthly');
+            if (instLeftEl) instLeftEl.textContent = formatRupiah(sumInstLeft);
+            if (instMonthlyEl) instMonthlyEl.textContent = `Cicilan/periode: ${formatRupiah(sumInstMonthly)}`;
+
+            const allPrincipal = goalsInstallments.reduce((s, g) => s + g.principalAmount, 0);
+            const principalPaid = principalItems.reduce((s, g) => s + g.paidAmount, 0);
+            const prinTotalEl = document.getElementById('summary-principal-total');
+            const prinDetailEl = document.getElementById('summary-principal-detail');
+            if (prinTotalEl) prinTotalEl.textContent = formatRupiah(allPrincipal);
+            if (prinDetailEl) prinDetailEl.textContent = `Dana pokok terkumpul: ${formatRupiah(principalPaid)}`;
+
+            const visibleItems = goalFilter === 'all'
+                ? goalsInstallments
+                : goalsInstallments.filter(g => g.kind === goalFilter);
+
+            if (visibleItems.length === 0) {
+                listEl.innerHTML = `
+                    <div class="md:col-span-2 p-8 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-center space-y-2">
+                        <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Belum ada item ${escapeHtml(goalFilter === 'all' ? 'target, angsuran, maupun uang pokok' : goalFilter)}</p>
+                        <p class="text-xs text-slate-400">Klik tombol <strong>+ Target</strong>, <strong>+ Angsuran</strong>, atau <strong>+ Uang Pokok</strong> — lalu setor per hari kapan saja.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const badgeMeta = {
+                target: {
+                    label: 'Target',
+                    cls: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300',
+                    bar: 'bg-emerald-500'
+                },
+                angsuran: {
+                    label: 'Angsuran',
+                    cls: 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300',
+                    bar: 'bg-amber-500'
+                },
+                pokok: {
+                    label: 'Uang Pokok',
+                    cls: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300',
+                    bar: 'bg-indigo-500'
+                }
+            };
+
+            listEl.innerHTML = visibleItems.map(item => {
+                const meta = badgeMeta[item.kind] || badgeMeta.target;
+                const pct = item.targetAmount > 0 ? Math.min(100, Math.round((item.paidAmount / item.targetAmount) * 100)) : 0;
+                const remaining = Math.max(0, item.targetAmount - item.paidAmount);
+                const dailyInfo = computeDailyTargetInfo(item);
+                const todaySetor = getTodayDepositForItem(item, todayStr);
+                const totalSetorDays = getUniqueDepositDaysCount(item);
+                const suggestedDailyInput = dailyInfo.dailyAmount > 0 ? dailyInfo.dailyAmount : 25000;
+                const safeId = escapeHtml(item.id);
+                const safeTitle = escapeHtml(item.title);
+                const safeNote = escapeHtml(item.note);
+
+                return `
+                    <div class="p-4 rounded-2xl bg-slate-50/90 dark:bg-slate-800/70 border border-slate-200/75 dark:border-slate-700/75 space-y-3">
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md ${meta.cls}">${meta.label}</span>
+                                    <h4 class="font-bold text-sm text-slate-900 dark:text-white truncate">${safeTitle}</h4>
+                                </div>
+                                ${item.note ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 truncate">${safeNote}</p>` : ''}
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <button type="button" onclick="openGoalModal('${item.kind}', '${safeId}')" title="Edit" class="p-1.5 rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition">
+                                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <button type="button" onclick="deleteGoalItem('${safeId}')" title="Hapus" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="px-3 py-2 rounded-xl ${dailyInfo.isOverdue ? 'bg-rose-50 dark:bg-rose-950/35 border border-rose-200/80 dark:border-rose-800/60' : 'bg-amber-50/90 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60'} flex flex-wrap items-center justify-between gap-2">
+                            <div class="text-xs">
+                                <span class="font-bold ${dailyInfo.isOverdue ? 'text-rose-700 dark:text-rose-300' : 'text-amber-800 dark:text-amber-300'}">
+                                    Otomatis: ${dailyInfo.dailyAmount > 0 ? `${formatRupiah(dailyInfo.dailyAmount)}/hari` : 'Rp 0/hari'}
+                                </span>
+                                <span class="text-[11px] text-slate-500 dark:text-slate-400 ml-1">• ${escapeHtml(dailyInfo.label)}</span>
+                            </div>
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded-md ${todaySetor > 0 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300' : 'bg-slate-200/80 text-slate-700 dark:bg-slate-700 dark:text-slate-200'}">
+                                Hari ini: ${todaySetor > 0 ? formatRupiah(todaySetor) : 'Belum setor'}
+                            </span>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-0.5">
+                            <div class="relative flex-1">
+                                <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] font-bold text-slate-400">Rp</span>
+                                <input type="number" id="daily-setor-input-${safeId}" min="500" step="500" value="${suggestedDailyInput}" aria-label="Nominal setor per hari untuk ${safeTitle}"
+                                    class="w-full pl-7 pr-2.5 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+
+                            <button type="button" onclick="addProgressToGoal('${safeId}', null, true)" class="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shrink-0">
+                                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                                <span>Setor Per Hari</span>
+                            </button>
+
+                            ${dailyInfo.dailyAmount > 0 && remaining > 0 ? `
+                                <button type="button" onclick="addProgressToGoal('${safeId}', ${dailyInfo.dailyAmount}, false)" class="inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-[11px] transition shrink-0">
+                                    <span>+ ${formatRupiah(dailyInfo.dailyAmount)}</span>
+                                </button>
+                            ` : ''}
+                        </div>
+
+                        <div class="flex items-baseline justify-between text-xs">
+                            <span class="text-slate-600 dark:text-slate-300 font-semibold">
+                                ${formatRupiah(item.paidAmount)} <span class="text-slate-400 font-normal">/ ${formatRupiah(item.targetAmount)}</span>
+                            </span>
+                            <span class="font-extrabold text-slate-900 dark:text-white">${pct}%</span>
+                        </div>
+
+                        <div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full ${meta.bar} rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400 pt-0.5">
+                            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                                <span>Sisa: <strong class="text-slate-700 dark:text-slate-200">${formatRupiah(remaining)}</strong></span>
+                                <span>Hari setor: <strong class="text-emerald-700 dark:text-emerald-300">${totalSetorDays} hr</strong></span>
+                                ${item.principalAmount > 0 ? `<span>Pokok: <strong class="text-indigo-600 dark:text-indigo-400">${formatRupiah(item.principalAmount)}</strong></span>` : ''}
+                                ${item.kind === 'angsuran' ? `<span>Tenor: <strong class="text-amber-700 dark:text-amber-300">${item.paidTenors}/${item.totalTenors}</strong></span>` : ''}
+                                ${item.dueDate ? `<span>Jatuh tempo: <strong>${escapeHtml(formatDateIndo(item.dueDate))}</strong></span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            if (window.lucide) lucide.createIcons();
         }
 
         function switchAuthMode(mode) {
@@ -1519,6 +3030,8 @@
 
         document.getElementById('auth-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            if (!assertSupabaseReady()) return;
+
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value;
             const errBox = document.getElementById('auth-error-box');
@@ -1539,10 +3052,10 @@
                         markUserAsNewAccount(data.user.id);
                     }
                     if (!data.session) {
-                        errBox.textContent = 'Pendaftaran berhasil. Silakan cek kotak masuk email Anda untuk konfirmasi akun, lalu masuk dan baca panduan selama 15 menit.';
+                        errBox.textContent = 'Pendaftaran berhasil. Silakan cek kotak masuk email Anda untuk konfirmasi akun, lalu masuk dan selesaikan baca peraturan (5 menit) + 6 soal tanya jawab 100% benar.';
                         errBox.classList.remove('hidden');
                     } else {
-                        showToast('Akun baru terdaftar. Silakan baca panduan (timer 15 menit)', 'success');
+                        showToast('Akun baru terdaftar. Silakan baca peraturan & selesaikan 6 soal tanya jawab 100% benar', 'success');
                     }
                 }
             } catch (err) {
@@ -1555,14 +3068,18 @@
 
         async function handleLogout() {
             stopOnboardingTicker();
-            await supabaseClient.auth.signOut();
+            if (supabaseClient) {
+                await supabaseClient.auth.signOut();
+            }
             currentUser = null;
             transactions = [];
+            goalsInstallments = [];
+            quickDailyDeposits = [];
             showToast('Anda telah keluar', 'info');
         }
 
         async function fetchUserSettings() {
-            if (!currentUser) return;
+            if (!currentUser || !supabaseClient) return;
             const { data, error } = await supabaseClient
                 .from('driver_settings')
                 .select('daily_target')
@@ -1589,7 +3106,7 @@
         }
 
         async function fetchUserTransactions() {
-            if (!currentUser) return;
+            if (!currentUser || !supabaseClient) return;
             const { data, error } = await supabaseClient
                 .from('transactions')
                 .select('id, type, category, platform, amount, note, tx_date, created_at')
@@ -1675,7 +3192,7 @@
             const presetValues = presetOptions.map(c => c.value);
 
             catSelect.innerHTML = presetOptions.map(cat =>
-                `<option value="${cat.value}">${cat.label}</option>`
+                `<option value="${escapeHtml(cat.value)}">${escapeHtml(cat.label)}</option>`
             ).join('');
 
             if (currentCategory && !presetValues.includes(currentCategory)) {
@@ -1703,7 +3220,7 @@
 
         document.getElementById('edit-tx-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (!currentUser) return;
+            if (!currentUser || !assertSupabaseReady()) return;
 
             const txId = document.getElementById('edit-tx-id').value;
             const type = document.getElementById('edit-tx-type').value;
@@ -1786,7 +3303,7 @@
         });
 
         async function deleteTransaction(id) {
-            if (!currentUser) return;
+            if (!currentUser || !assertSupabaseReady()) return;
             const { error } = await supabaseClient
                 .from('transactions')
                 .delete()
@@ -1809,6 +3326,7 @@
                 showToast('Sesi login tidak ditemukan. Silakan masuk ulang.', 'error');
                 return;
             }
+            if (!assertSupabaseReady()) return;
 
             const inputEl = document.getElementById('input-daily-target');
             const saveBtn = document.getElementById('save-target-btn');
@@ -1890,7 +3408,7 @@
 
             const categorySelect = document.getElementById('tx-category');
             categorySelect.innerHTML = CATEGORIES[type].map(cat =>
-                `<option value="${cat.value}">${cat.label}</option>`
+                `<option value="${escapeHtml(cat.value)}">${escapeHtml(cat.label)}</option>`
             ).join('');
 
             handleCategoryChange();
@@ -1934,6 +3452,7 @@
                 showToast('Sesi login tidak ditemukan. Silakan masuk ulang.', 'error');
                 return;
             }
+            if (!assertSupabaseReady()) return;
 
             const type = document.getElementById('tx-type').value;
             const amount = parseInt(document.getElementById('tx-amount').value, 10);
@@ -2070,7 +3589,9 @@
             const greenDeg = Math.round((totalIncome / grossFlow) * 360);
             ringEl.style.background = `conic-gradient(#10b981 0deg ${greenDeg}deg, #ef4444 ${greenDeg}deg 360deg)`;
 
-            const netPct = Math.round(((totalIncome - totalExpense) / totalIncome || 0) * 100);
+            const netPct = totalIncome > 0
+                ? Math.round(((totalIncome - totalExpense) / totalIncome) * 100)
+                : 0;
             pctEl.textContent = `${totalIncome > 0 ? Math.max(-99, netPct) : 0}%`;
         }
 
@@ -2223,8 +3744,8 @@
                     return `
                         <div class="tx-row-anim flex items-center justify-between text-xs p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:translate-x-1 transition-transform" style="animation-delay: ${idx * 45}ms">
                             <div class="flex items-center gap-2 min-w-0">
-                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${item.color}"></span>
-                                <span class="font-medium text-slate-700 dark:text-slate-200 truncate">${item.label}</span>
+                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${escapeHtml(item.color)}"></span>
+                                <span class="font-medium text-slate-700 dark:text-slate-200 truncate">${escapeHtml(item.label)}</span>
                             </div>
                             <div class="text-right shrink-0 ml-2">
                                 <span class="font-bold text-slate-900 dark:text-white">${formatRupiah(item.value)}</span>
@@ -2286,7 +3807,7 @@
                 'Lainnya': 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300'
             };
             const style = map[platform] || 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300';
-            return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${style}">${platform}</span>`;
+            return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${style}">${escapeHtml(platform)}</span>`;
         }
 
         function syncCategoryFilterOptions() {
@@ -2305,7 +3826,7 @@
                 )];
 
             catSelect.innerHTML = `<option value="all">Semua Kategori</option>` +
-                uniqueCats.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+                uniqueCats.map(cat => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`).join('');
 
             if (uniqueCats.includes(prevVal)) {
                 catSelect.value = prevVal;
@@ -2357,7 +3878,7 @@
                         <div class="float-badge w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center mb-3">
                             <i data-lucide="inbox" class="w-6 h-6"></i>
                         </div>
-                        <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Riwayat kosong untuk tanggal ${formatDateIndo(targetDate)}</p>
+                        <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Riwayat kosong untuk tanggal ${escapeHtml(formatDateIndo(targetDate))}</p>
                         <p class="text-xs text-slate-400 mt-1">Riwayat otomatis dikosongkan setiap pergantian hari jam 00.00 atau pilih tanggal lain.</p>
                     </div>
                 `;
@@ -2376,6 +3897,7 @@
                     : 'text-rose-600 dark:text-rose-400';
                 const sign = isIncome ? '+' : '-';
                 const delay = Math.min(idx * 35, 280);
+                const safeId = escapeHtml(tx.id);
 
                 return `
                     <div class="tx-row-anim py-3.5 flex items-center justify-between gap-3 hover:bg-slate-50/90 dark:hover:bg-slate-800/50 hover:translate-x-1 px-2 rounded-xl transition-all duration-200" style="animation-delay: ${delay}ms">
@@ -2385,11 +3907,11 @@
                             </div>
                             <div class="min-w-0">
                                 <div class="flex items-center gap-2 flex-wrap">
-                                    <span class="font-semibold text-sm text-slate-900 dark:text-white truncate">${tx.category}</span>
+                                    <span class="font-semibold text-sm text-slate-900 dark:text-white truncate">${escapeHtml(tx.category)}</span>
                                     ${getPlatformBadge(tx.platform)}
                                 </div>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
-                                    ${tx.note} • <span class="text-slate-400">${formatDateIndo(tx.date)}</span>
+                                    ${escapeHtml(tx.note)} • <span class="text-slate-400">${escapeHtml(formatDateIndo(tx.date))}</span>
                                 </p>
                             </div>
                         </div>
@@ -2398,10 +3920,10 @@
                             <span class="font-bold text-sm sm:text-base ${amountColor} mr-1">
                                 ${sign}${formatRupiah(tx.amount)}
                             </span>
-                            <button onclick="openEditTxModal('${tx.id}')" title="Edit Transaksi" class="p-2 rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 active:scale-90 transition">
+                            <button type="button" onclick="openEditTxModal('${safeId}')" title="Edit Transaksi" class="p-2 rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 active:scale-90 transition">
                                 <i data-lucide="pencil" class="w-4 h-4"></i>
                             </button>
-                            <button onclick="deleteTransaction('${tx.id}')" title="Hapus Transaksi" class="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 active:scale-90 transition">
+                            <button type="button" onclick="deleteTransaction('${safeId}')" title="Hapus Transaksi" class="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 active:scale-90 transition">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                             </button>
                         </div>
@@ -2549,6 +4071,8 @@
 
         function refreshDashboard() {
             updateSummaryAndAllocations();
+            renderQuickDailyDepositSummary();
+            renderGoalsInstallments();
             renderHistory();
         }
 
@@ -2560,102 +4084,124 @@
 
         async function onSessionReady(session) {
             const syncId = ++sessionSyncToken;
-            const authScreen = document.getElementById('auth-screen');
-            const gateScreen = document.getElementById('onboarding-gate-screen');
-            const appShell = document.getElementById('app-shell');
+            currentUser = session.user;
+            resetDisplayedNumbers();
 
-            if (session && session.user) {
-                const prevUserId = currentUser?.id;
-                currentUser = session.user;
-                if (prevUserId !== currentUser.id) {
-                    resetDisplayedNumbers();
-                }
-
-                if (isNewUserOnboardingActive(currentUser)) {
-                    startOnboardingGateScreen(currentUser);
-                    return;
-                }
-
-                stopOnboardingTicker();
-                authScreen.classList.add('hidden');
-                gateScreen.classList.add('hidden');
-                appShell.classList.remove('hidden');
-                document.getElementById('user-email-badge').textContent = currentUser.email || 'Mitra Driver';
-
-                await Promise.all([fetchUserSettings(), fetchUserTransactions()]);
-                if (syncId !== sessionSyncToken) return;
-
-                const todayStr = getTodayStr();
-                const storedResetDate = localStorage.getItem(DAILY_RESET_DATE_KEY);
-                if (storedResetDate && storedResetDate !== todayStr) {
-                    checkMidnightReset(false);
-                } else {
-                    localStorage.setItem(DAILY_RESET_DATE_KEY, todayStr);
-                    lastObservedDay = todayStr;
-                    syncDateInputsWithState();
-                }
-
-                refreshDashboard();
-            } else {
-                stopOnboardingTicker();
-                currentUser = null;
-                transactions = [];
-                resetDisplayedNumbers();
-                appShell.classList.add('hidden');
-                gateScreen.classList.add('hidden');
-                authScreen.classList.remove('hidden');
+            if (isNewUserOnboardingActive(currentUser)) {
+                startOnboardingGateScreen(currentUser);
+                return;
             }
+
+            stopOnboardingTicker();
+            document.getElementById('onboarding-gate-screen').classList.add('hidden');
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('app-shell').classList.remove('hidden');
+            document.getElementById('user-email-badge').textContent = currentUser.email;
+
+            if (syncId !== sessionSyncToken) return;
+            await fetchUserSettings();
+            if (syncId !== sessionSyncToken) return;
+            await fetchUserTransactions();
+            if (syncId !== sessionSyncToken) return;
+            await fetchGoalsInstallments();
+            if (syncId !== sessionSyncToken) return;
+
+            quickDailyDeposits = readQuickDeposits(currentUser.id);
+            renderQuickDailyDepositSummary();
+
+            if (syncId !== sessionSyncToken) return;
+            refreshDashboard();
             if (window.lucide) lucide.createIcons();
         }
 
-        window.addEventListener('DOMContentLoaded', async () => {
+        function showAuthScreen() {
+            stopOnboardingTicker();
+            currentUser = null;
+            resetDisplayedNumbers();
+            document.getElementById('onboarding-gate-screen').classList.add('hidden');
+            document.getElementById('app-shell').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
             initTheme();
             initHomeGuideState();
+            checkMidnightReset(false);
+            setTransactionType('income');
+            selectPlatform('Gojek');
 
             const todayStr = getTodayStr();
             selectedHistoryDate = todayStr;
-            lastObservedDay = todayStr;
-            if (!localStorage.getItem(DAILY_RESET_DATE_KEY)) {
-                localStorage.setItem(DAILY_RESET_DATE_KEY, todayStr);
-            }
-
-            const now = new Date();
-            document.getElementById('current-date-display').textContent = now.toLocaleDateString('id-ID', {
-                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-            });
             document.getElementById('tx-date').value = todayStr;
             document.getElementById('filter-selected-date').value = todayStr;
 
+            const now = new Date();
             const hour = now.getHours();
             let greeting = 'Semangat Narik Hari Ini';
-            if (hour >= 4 && hour < 11) greeting = 'Selamat Pagi, Siap Mulai Narik';
-            else if (hour >= 11 && hour < 15) greeting = 'Selamat Siang, Atur Ritme & Istirahat';
-            else if (hour >= 15 && hour < 19) greeting = 'Semangat Sore, Kejar Target Harian';
-            else greeting = 'Selamat Malam, Utamakan Keselamatan';
-            document.getElementById('greeting-text').textContent = greeting;
+            if (hour < 11) greeting = 'Selamat Pagi, Semangat Narik!';
+            else if (hour < 15) greeting = 'Selamat Siang, Tetap Fokus & Hati-Hati';
+            else if (hour < 19) greeting = 'Selamat Sore, Kejar Targetnya';
+            else greeting = 'Selamat Malam, Rekap Hasil Narik';
 
-            setTransactionType('income');
+            document.getElementById('greeting-text').textContent = greeting;
+            document.getElementById('current-date-display').textContent = now.toLocaleDateString('id-ID', {
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+            });
+
             if (window.lucide) lucide.createIcons();
 
             setInterval(() => {
                 checkMidnightReset(true);
-            }, 30000);
+            }, 15000);
 
             document.addEventListener('visibilitychange', () => {
+                if (currentUser && isNewUserOnboardingActive(currentUser) && onboardingPhase === 'reading') {
+                    updateOnboardingGateUI(document.hidden || !document.hasFocus());
+                }
                 if (!document.hidden) {
                     checkMidnightReset(true);
-                    if (currentUser && isNewUserOnboardingActive(currentUser)) {
-                        updateOnboardingGateUI();
-                    }
                 }
             });
 
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            await onSessionReady(session);
-
-            supabaseClient.auth.onAuthStateChange(async (_event, newSession) => {
-                await onSessionReady(newSession);
+            window.addEventListener('blur', () => {
+                if (currentUser && isNewUserOnboardingActive(currentUser) && onboardingPhase === 'reading') {
+                    updateOnboardingGateUI(true);
+                }
             });
+
+            window.addEventListener('focus', () => {
+                if (currentUser && isNewUserOnboardingActive(currentUser) && onboardingPhase === 'reading') {
+                    updateOnboardingGateUI(document.hidden);
+                }
+            });
+
+            if (!supabaseClient) {
+                showAuthScreen();
+                showToast('SDK Supabase gagal dimuat. Periksa koneksi internet Anda.', 'error');
+                return;
+            }
+
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                if (event === 'INITIAL_SESSION') return;
+                if (session?.user) {
+                    onSessionReady(session);
+                } else {
+                    showAuthScreen();
+                }
+            });
+
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (session?.user) {
+                    await onSessionReady(session);
+                } else {
+                    showAuthScreen();
+                }
+            } catch (err) {
+                console.error('Error getSession:', err);
+                showAuthScreen();
+            }
         });
     </script>
 </body>
