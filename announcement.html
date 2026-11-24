@@ -1,495 +1,1547 @@
 <!DOCTYPE html>
-<html lang="id" class="light">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panduan Lengkap &amp; Kuis Akses Beranda</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg-canvas: #0b1120;
+      --bg-surface: #111827;
+      --bg-card: #162033;
+      --bg-card-soft: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent: #38bdf8;
+      --accent-strong: #0284c7;
+      --accent-glow: rgba(56, 189, 248, 0.16);
+      --emerald: #10b981;
+      --emerald-soft: rgba(16, 185, 129, 0.14);
+      --amber: #f59e0b;
+      --amber-soft: rgba(245, 158, 11, 0.14);
+      --rose: #f43f5e;
+      --rose-soft: rgba(244, 63, 94, 0.14);
+      --border: rgba(148, 163, 184, 0.16);
+      --border-strong: rgba(148, 163, 184, 0.3);
+      --hero-grad-start: rgba(22, 32, 51, 0.96);
+      --hero-grad-end: rgba(17, 24, 39, 0.98);
+      --glow-top-left: rgba(56, 189, 248, 0.12);
+      --glow-top-right: rgba(16, 185, 129, 0.09);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-card: 0 14px 34px rgba(2, 6, 23, 0.45);
+      --transition: 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+    }
 
-    <title>Panduan Lengkap & Tata Cara Pakai — OjolKu Finance</title>
-    <meta name="description" content="Tutorial langkah demi langkah penggunaan OjolKu Finance: catat pemasukan & pengeluaran, input manual aplikasi mitra/kategori lainnya, target harian, riwayat jam 00.00, dan ekspor CSV.">
+    body[data-theme="day"] {
+      --bg-canvas: #f1f5f9;
+      --bg-surface: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-soft: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --accent: #0284c7;
+      --accent-strong: #0369a1;
+      --accent-glow: rgba(2, 132, 199, 0.12);
+      --emerald: #059669;
+      --emerald-soft: rgba(5, 150, 105, 0.12);
+      --amber: #d97706;
+      --amber-soft: rgba(217, 119, 6, 0.12);
+      --rose: #e11d48;
+      --rose-soft: rgba(225, 29, 72, 0.12);
+      --border: rgba(15, 23, 42, 0.12);
+      --border-strong: rgba(15, 23, 42, 0.24);
+      --hero-grad-start: rgba(255, 255, 255, 0.98);
+      --hero-grad-end: rgba(248, 250, 252, 0.98);
+      --glow-top-left: rgba(2, 132, 199, 0.08);
+      --glow-top-right: rgba(5, 150, 105, 0.06);
+      --shadow-card: 0 10px 26px rgba(15, 23, 42, 0.07);
+    }
 
-    <meta name="theme-color" content="#059669" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23047857'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='%2334d399' stroke-width='1.5' stroke-opacity='0.45'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='19' cy='43' r='7.5'/%3E%3Ccircle cx='45' cy='43' r='7.5'/%3E%3Cpath d='M19 43h12l8-14h7'/%3E%3Cpath d='M31 43l-4-11h11'/%3E%3Cpath d='M37 22h11'/%3E%3C/g%3E%3C/svg%3E">
+    html {
+      scroll-behavior: smooth;
+    }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background:
+        radial-gradient(circle at 12% 0%, var(--glow-top-left), transparent 38%),
+        radial-gradient(circle at 88% 8%, var(--glow-top-right), transparent 40%),
+        var(--bg-canvas);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 32px 20px 64px;
+      transition: background-color 0.28s ease, color 0.28s ease;
+    }
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    .app-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
 
-    <script defer src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    .hero-card {
+      background: linear-gradient(145deg, var(--hero-grad-start), var(--hero-grad-end));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      transition: var(--transition);
+    }
 
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-        }
-        h1, h2, h3, .font-display {
-            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-        }
-        .guide-card {
-            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
-        }
-        .guide-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px -14px rgba(15, 23, 42, 0.14);
-        }
-        .dark .guide-card:hover {
-            box-shadow: 0 14px 28px -14px rgba(0, 0, 0, 0.55);
-        }
-        kbd {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        }
-    </style>
+    .hero-content {
+      flex: 1 1 460px;
+      min-width: 0;
+    }
+
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      margin-bottom: 12px;
+    }
+
+    body[data-theme="day"] .pill-tag {
+      border-color: rgba(2, 132, 199, 0.25);
+    }
+
+    h1 {
+      font-size: clamp(1.55rem, 2.8vw, 2.15rem);
+      font-weight: 700;
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .hero-desc {
+      color: var(--text-secondary);
+      font-size: 0.96rem;
+      max-width: 68ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    body:not([data-theme="day"]) .btn-primary {
+      color: #061220;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background: var(--emerald);
+      color: #ffffff;
+    }
+
+    body:not([data-theme="day"]) .btn-success {
+      color: #04160f;
+    }
+
+    .btn-success:hover:not(:disabled) {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: var(--bg-card-soft);
+      color: var(--text-primary);
+      border-color: var(--border);
+    }
+
+    .btn-ghost:hover:not(:disabled) {
+      border-color: var(--border-strong);
+      filter: brightness(1.04);
+    }
+
+    .btn:disabled,
+    .btn.is-locked {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+      transform: none;
+    }
+
+    .status-strip {
+      background: var(--bg-card);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      transition: var(--transition);
+    }
+
+    .status-strip.is-open {
+      border-color: rgba(16, 185, 129, 0.45);
+      background: linear-gradient(135deg, var(--emerald-soft), var(--bg-card));
+    }
+
+    .status-copy {
+      flex: 1 1 380px;
+      min-width: 0;
+    }
+
+    .status-heading {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--amber);
+      margin-bottom: 3px;
+    }
+
+    .status-strip.is-open .status-heading {
+      color: var(--emerald);
+    }
+
+    .status-subtext {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .timer-badge {
+      background: var(--amber-soft);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: var(--amber);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .status-strip.is-open .timer-badge {
+      background: var(--emerald-soft);
+      border-color: rgba(16, 185, 129, 0.45);
+      color: var(--emerald);
+    }
+
+    .section-head {
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .section-head h2 {
+      font-size: 1.32rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .section-head p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 36px;
+    }
+
+    .flow-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+      transition: var(--transition);
+    }
+
+    .flow-badge {
+      display: inline-block;
+      width: fit-content;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    body[data-theme="day"] .flow-badge {
+      border-color: rgba(2, 132, 199, 0.25);
+    }
+
+    .flow-step h3 {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .flow-step p {
+      font-size: 0.87rem;
+      color: var(--text-secondary);
+    }
+
+    .visual-showcase {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 36px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .visual-mock-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+      transition: var(--transition);
+    }
+
+    .mock-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+    }
+
+    .mock-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .mock-field {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .mock-field span {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+    }
+
+    .mock-field strong {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+
+    .mock-field.income strong {
+      color: var(--emerald);
+    }
+
+    .mock-field.expense strong {
+      color: var(--rose);
+    }
+
+    .visualizer-preview {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .donut-sample {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      background: conic-gradient(var(--emerald) 0% 62%, var(--rose) 62% 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 1px var(--border);
+    }
+
+    .donut-hole {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4px;
+      transition: var(--transition);
+    }
+
+    .donut-hole strong {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+
+    .donut-hole span {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+    }
+
+    .legend-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      flex: 1 1 180px;
+      min-width: 0;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot.inc {
+      background: var(--emerald);
+    }
+
+    .dot.exp {
+      background: var(--rose);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      align-items: stretch;
+      margin-bottom: 40px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .feature-card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .feature-num {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-glow);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.92rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    body[data-theme="day"] .feature-num {
+      border-color: rgba(2, 132, 199, 0.25);
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.35;
+      min-width: 0;
+    }
+
+    .feature-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.91rem;
+      color: var(--text-secondary);
+    }
+
+    .feature-points li {
+      position: relative;
+      padding-left: 16px;
+    }
+
+    .feature-points li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .feature-points strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .quiz-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+    }
+
+    .quiz-panel.is-completed {
+      display: none;
+    }
+
+    .quiz-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    .progress-widget {
+      flex: 0 1 300px;
+      min-width: 220px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 7px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-card-soft);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-strong), var(--accent));
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .quiz-lock-bar {
+      background: var(--amber-soft);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: var(--amber);
+      border-radius: var(--radius-md);
+      padding: 15px 18px;
+      margin-bottom: 20px;
+      font-size: 0.92rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .quiz-lock-bar.is-hidden {
+      display: none;
+    }
+
+    .quiz-content {
+      transition: var(--transition);
+    }
+
+    .quiz-content.is-locked {
+      opacity: 0.32;
+      filter: blur(1.5px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .questions-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .q-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: var(--transition);
+    }
+
+    .q-card.is-right {
+      background: var(--emerald-soft);
+      border-color: var(--emerald);
+    }
+
+    .q-card.is-wrong {
+      background: var(--rose-soft);
+      border-color: var(--rose);
+    }
+
+    .q-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+    }
+
+    .choice-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      transition: var(--transition);
+      min-width: 0;
+    }
+
+    .choice-box:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    .choice-box input[type="radio"] {
+      margin-top: 3px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .choice-label {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .q-explain {
+      display: none;
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.87rem;
+      line-height: 1.5;
+    }
+
+    .q-explain.is-visible {
+      display: block;
+    }
+
+    .q-explain.ok {
+      background: var(--emerald-soft);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .q-explain.fail {
+      background: var(--rose-soft);
+      color: var(--rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    .result-panel {
+      display: none;
+      margin-top: 22px;
+      padding: 20px 22px;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+    }
+
+    .result-panel.is-visible {
+      display: block;
+    }
+
+    .result-heading {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .result-detail {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .quiz-bottom {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .quiz-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 18px 14px 48px;
+      }
+
+      .hero-card,
+      .quiz-panel,
+      .feature-card,
+      .status-strip,
+      .visual-showcase {
+        padding: 20px;
+      }
+
+      .choices-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-300 pb-16">
-
-    <!-- Header Navigasi -->
-    <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-            <a href="index.html" class="flex items-center gap-3 min-w-0">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white shadow-sm shrink-0">
-                    <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="8.5" cy="22.5" r="4.2"/>
-                        <circle cx="23.5" cy="22.5" r="4.2"/>
-                        <path d="M8.5 22.5h6.5l4.5-8h4.5"/>
-                        <path d="M15 22.5l-2.5-6.5h6"/>
-                        <path d="M18.5 11h6"/>
-                    </svg>
-                </div>
-                <div class="min-w-0">
-                    <div class="font-extrabold text-base sm:text-lg leading-tight text-slate-900 dark:text-white truncate">
-                        OjolKu <span class="text-emerald-600 dark:text-emerald-400">Finance</span>
-                    </div>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">Pusat Tutorial & Aturan Penggunaan</p>
-                </div>
-            </a>
-
-            <div class="flex items-center gap-2 shrink-0">
-                <button type="button" onclick="toggleDarkMode()" aria-label="Ubah Tema" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
-                    <i data-lucide="moon" id="icon-moon" class="w-4 h-4"></i>
-                    <i data-lucide="sun" id="icon-sun" class="w-4 h-4 hidden text-amber-400"></i>
-                </button>
-                <a href="index.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    <span>Kembali ke Beranda</span>
-                </a>
-            </div>
-        </div>
+<body>
+  <div class="app-shell">
+    <header class="hero-card">
+      <div class="hero-content">
+        <span class="pill-tag">Panduan Visual &amp; Kuis Akses Beranda</span>
+        <h1>Panduan Penggunaan Aplikasi</h1>
+        <p class="hero-desc">
+          Pelajari alur dan seluruh fitur aplikasi selama <strong>5 menit</strong> terlebih dahulu. Setelah waktu baca selesai, kerjakan kuis dan raih <strong>100% benar</strong> untuk membuka akses ke halaman <strong>Beranda</strong>.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <button type="button" id="themeToggleBtn" class="btn btn-ghost" aria-pressed="false">
+          Mode: Night
+        </button>
+        <a href="#kuis-area" id="jumpQuizBtn" class="btn btn-ghost is-locked" aria-disabled="true">
+          Kuis (Terkunci 5 Menit)
+        </a>
+        <a href="index.html" id="topIndexBtn" class="btn btn-success is-locked" aria-disabled="true">
+          Masuk ke Beranda
+        </a>
+      </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 space-y-7">
+    <div id="statusStrip" class="status-strip" role="status" aria-live="polite">
+      <div class="status-copy">
+        <div id="statusHeading" class="status-heading">Tahap 1: Baca Panduan Selama 5 Menit</div>
+        <div id="statusSubtext" class="status-subtext">
+          Kuis dikunci selama masa baca berlangsung. Waktu tetap dihitung berdasarkan timestamp real-time dan langsung diperbarui saat Anda kembali ke browser.
+        </div>
+      </div>
+      <div id="timerBadge" class="timer-badge">05:00</div>
+    </div>
 
-        <!-- Banner Timer Wajib Baca 5 Menit -> Tanya Jawab 100% Benar -->
-        <section id="guide-onboarding-banner" class="hidden rounded-2xl bg-amber-50 dark:bg-amber-950/35 border border-amber-300/80 dark:border-amber-800/70 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-                <div class="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300">
-                    <i data-lucide="timer" class="w-4 h-4"></i>
-                    <span id="guide-timer-status">Wajib Baca & Tanya Jawab 100% Benar Akun Baru</span>
-                </div>
-                <p id="guide-timer-desc" class="text-xs sm:text-sm text-amber-950 dark:text-amber-100">
-                    Sisa waktu baca sebelum sesi tanya jawab: <strong id="guide-timer-countdown" class="font-mono text-base">05:00</strong>
-                </p>
+    <section aria-labelledby="alur-title">
+      <div class="section-head">
+        <h2 id="alur-title">Alur Singkat Penggunaan</h2>
+        <p>Ikuti urutan langkah dari orientasi hingga masuk ke Beranda.</p>
+      </div>
+
+      <div class="flow-grid">
+        <article class="flow-step">
+          <span class="flow-badge">Langkah 1</span>
+          <h3>Baca Panduan (5 Menit)</h3>
+          <p>Pelajari cara memakai fitur input, visualizer lingkaran, pengelolaan catatan, dan transaksi.</p>
+        </article>
+
+        <article class="flow-step">
+          <span class="flow-badge">Langkah 2</span>
+          <h3>Kuis Terbuka</h3>
+          <p>Setelah waktu 5 menit selesai, bagian kuis 10 soal terbuka untuk diuji pemahamannya.</p>
+        </article>
+
+        <article class="flow-step">
+          <span class="flow-badge">Langkah 3</span>
+          <h3>Nilai Wajib 100%</h3>
+          <p>Seluruh 10 pertanyaan harus terjawab benar (10/10) agar akses Beranda dibuka.</p>
+        </article>
+
+        <article class="flow-step">
+          <span class="flow-badge">Langkah 4</span>
+          <h3>Masuk Beranda</h3>
+          <p>Akses ke Beranda aktif dan Anda dapat mencatat serta memantau data secara langsung.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="visual-title">
+      <div class="section-head">
+        <h2 id="visual-title">Gambaran Visual Fitur di Beranda</h2>
+        <p>Contoh struktur pengisian data dan pembacaan visualizer melingkar.</p>
+      </div>
+
+      <div class="visual-showcase">
+        <div class="visual-mock-panel">
+          <span class="mock-label">Contoh Kolom Input Data</span>
+          <div class="mock-inputs">
+            <div class="mock-field income">
+              <span>Pemasukan</span>
+              <strong>Gaji / Hasil Usaha</strong>
             </div>
-            <a href="index.html" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-600 hover:bg-amber-700 text-white shrink-0 transition">
-                <span id="guide-cta-label">Cek Status Timer di Beranda</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
-        </section>
-
-        <!-- Hero & Daftar Isi Cepat -->
-        <section class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 sm:p-7 shadow-sm">
-            <div class="inline-flex items-center gap-2 text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-800/60 mb-3">
-                <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-                <span>Tutorial Resmi Aplikasi</span>
+            <div class="mock-field expense">
+              <span>Pengeluaran / Lain</span>
+              <strong>Kebutuhan &amp; Tagihan</strong>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                Panduan Lengkap & Tata Cara Pakai OjolKu Finance
-            </h1>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed max-w-3xl">
-                Panduan ini menjelaskan cara menggunakan setiap fitur di <strong>OjolKu Finance</strong> secara tepat: mulai dari login, mencatat pemasukan/pengeluaran dengan input manual <kbd class="px-1.5 py-0.5 text-xs rounded bg-slate-100 dark:bg-slate-800">Lainnya</kbd>, memantau target harian, membaca grafik 1 lingkaran, hingga mengelola riwayat harian dan ekspor CSV.
-            </p>
+          </div>
+          <p class="status-subtext">
+            Isi keterangan dan nominal sesuai kolom agar pemasukan serta pengeluaran/kebutuhan lain tidak tercampur.
+          </p>
+        </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mt-5 pt-5 border-t border-slate-200/80 dark:border-slate-800 text-xs font-semibold">
-                <a href="#tut-akun" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">1. Akun & Login</a>
-                <a href="#tut-transaksi" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">2. Input Transaksi</a>
-                <a href="#tut-target" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">3. Target & Alokasi</a>
-                <a href="#tut-grafik" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">4. Grafik & Periode</a>
-                <a href="#tut-riwayat" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 transition">5. Riwayat & CSV</a>
-                <a href="#tut-aturan" class="px-3 py-2 rounded-xl bg-rose-50/80 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-950/50 text-rose-700 dark:text-rose-300 transition">6. Aturan & Bantuan</a>
+        <div class="visual-mock-panel">
+          <span class="mock-label">Contoh Visualizer Lingkaran</span>
+          <div class="visualizer-preview">
+            <div class="donut-sample" aria-hidden="true">
+              <div class="donut-hole">
+                <strong>62% / 38%</strong>
+                <span>Proporsi</span>
+              </div>
             </div>
-        </section>
-
-        <!-- TUTORIAL 1: AKUN & LOGIN -->
-        <section id="tut-akun" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
-            <div class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">1</span>
-                <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Masuk, Daftar Akun & Wajib Baca 5 Menit + Tanya Jawab 100% Benar</h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Setiap transaksi dan target bersih harian tersimpan privat per akun di Supabase</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
-                    <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <i data-lucide="user-plus" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                        <span>Alur Akun Baru (Baca 5m -> Tanya Jawab 100%)</span>
-                    </h3>
-                    <ol class="list-decimal list-inside space-y-1.5 text-slate-600 dark:text-slate-300 leading-relaxed">
-                        <li>Daftar akun dengan <strong>Email</strong> aktif dan <strong>Password</strong> minimal <strong>6 karakter</strong>.</li>
-                        <li>Baca peraturan selama <strong>05:00</strong> (otomatis <strong>freeze</strong> saat keluar dari browser).</li>
-                        <li>Selesaikan <strong>6 soal tanya jawab hingga 100% benar</strong> agar akses ke beranda terbuka.</li>
-                    </ol>
-                </div>
-
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
-                    <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <i data-lucide="log-in" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                        <span>Cara Masuk & Keluar Akun</span>
-                    </h3>
-                    <ol class="list-decimal list-inside space-y-1.5 text-slate-600 dark:text-slate-300 leading-relaxed">
-                        <li>Pada tab <strong>Masuk</strong>, isi Email dan Password lalu klik <strong>Masuk ke Akun</strong>.</li>
-                        <li>Email akun aktif akan tampil di bagian atas header dashboard.</li>
-                        <li>Jika memakai perangkat bersama/umum, klik tombol <strong>Keluar</strong> di pojok kanan atas setelah selesai mencatat.</li>
-                    </ol>
-                </div>
-            </div>
-        </section>
-
-        <!-- TUTORIAL 2: PENCATATAN TRANSAKSI & INPUT MANUAL LAINNYA -->
-        <section id="tut-transaksi" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
-            <div class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">2</span>
-                <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Mencatat Transaksi Cepat & Menulis Manual <span class="text-emerald-600 dark:text-emerald-400">"Lainnya"</span></h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Catat pemasukan orderan maupun biaya operasional dengan cepat dan akurat</p>
-                </div>
-            </div>
-
-            <ol class="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                <li class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
-                    <strong class="text-slate-900 dark:text-white">Langkah A — Pilih Tipe Transaksi:</strong> Klik <strong>Pemasukan</strong> (hijau) untuk pendapatan orderan, tip, atau bonus; atau klik <strong>Pengeluaran</strong> (merah) untuk bensin, makan, parkir, kuota, maupun servis. Saat memilih <em>Pengeluaran</em>, pilihan <em>Aplikasi Mitra</em> otomatis disembunyikan.
-                </li>
-                <li class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
-                    <strong class="text-slate-900 dark:text-white">Langkah B — Isi Nominal:</strong> Ketik nominal rupiah (minimal Rp 500) atau klik tombol cepat <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600">+10rb</kbd>, <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600">+15rb</kbd>, <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600">+25rb</kbd>, atau <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600">+50rb</kbd> (bisa diklik berkali-kali untuk mengakumulasi nominal).
-                </li>
-                <li class="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/25 border border-emerald-200/80 dark:border-emerald-800/60">
-                    <strong class="text-emerald-950 dark:text-emerald-200">Langkah C — Pilih Kategori & Aplikasi Mitra (Termasuk Tulis Manual "Lainnya"):</strong>
-                    <ul class="list-disc list-inside mt-1.5 space-y-1 text-slate-700 dark:text-slate-200">
-                        <li><strong>Aplikasi Mitra (pada Pemasukan):</strong> Pilih <em>Gojek</em>, <em>Grab</em>, <em>Maxim</em>, <em>Shopee</em>, atau klik <strong>Lainnya</strong>. Saat <strong>Lainnya</strong> dipilih, akan muncul kolom <em>Nama Aplikasi Mitra Lainnya (Ketik)</em>—isi nama aplikasi atau sumber orderan secara manual (misalnya: <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">inDrive</code>, <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">Lalamove</code>, atau <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">Orderan Offline</code>).</li>
-                        <li><strong>Kategori:</strong> Pilih kategori yang tersedia. Jika memilih <strong>Pemasukan Lainnya</strong> atau <strong>Pengeluaran Lainnya</strong>, kolom ketik manual akan muncul (misalnya: <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">Cashback</code> atau <code class="px-1 py-0.5 rounded bg-white/80 dark:bg-slate-900">Tambal Ban</code>).</li>
-                    </ul>
-                </li>
-                <li class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
-                    <strong class="text-slate-900 dark:text-white">Langkah D — Tanggal, Catatan & Simpan:</strong> Pastikan <strong>Tanggal</strong> sudah sesuai, isi <strong>Catatan Singkat</strong> (jika dikosongkan, sistem otomatis memakai nama kategori), lalu klik <strong>Simpan Transaksi</strong>.
-                </li>
-            </ol>
-        </section>
-
-        <!-- TUTORIAL 3: TARGET BERSIH HARIAN & SIMULASI PEMBAGIAN -->
-        <section id="tut-target" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
-            <div class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">3</span>
-                <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Target Bersih Harian & Simulasi Pembagian Pendapatan</h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Hitung uang bersih dan rencanakan pos keuangan harian maupun bulanan</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
-                    <h3 class="font-bold text-slate-900 dark:text-white">Rumus & Cara Mengatur Target</h3>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        <strong>Pendapatan Bersih</strong> dihitung dari <em>Pendapatan Kotor − Biaya Operasional</em>. Persentase progres pada kartu <strong>Target Bersih Harian</strong> mengacu pada pendapatan bersih di tanggal yang sedang dipilih.
-                    </p>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Klik tombol <strong>Ubah</strong> pada kartu <em>Target Bersih Harian</em>, masukkan nominal target (minimal Rp 10.000), lalu klik <strong>Simpan Target</strong> agar tersimpan ke akun Anda di Supabase.
-                    </p>
-                </div>
-
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
-                    <h3 class="font-bold text-slate-900 dark:text-white">Simulasi Pembagian Pendapatan Bersih</h3>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Jika pendapatan bersih bernilai positif (<code>&gt; Rp 0</code>), sistem menampilkan simulasi pembagian otomatis:
-                    </p>
-                    <ul class="space-y-1 text-slate-700 dark:text-slate-200 font-medium">
-                        <li>• <strong>Rumah Tangga:</strong> 70%</li>
-                        <li>• <strong>Servis & Ganti Oli:</strong> 15%</li>
-                        <li>• <strong>Dana Darurat:</strong> 10%</li>
-                        <li>• <strong>Sedekah & Sosial:</strong> 5%</li>
-                    </ul>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Jika pendapatan bersih minus/nol, simulasi otomatis menampilkan Rp 0.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- TUTORIAL 4: GRAFIK 1 LINGKARAN & PERIODE -->
-        <section id="tut-grafik" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-3.5">
-            <div class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">4</span>
-                <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Membaca Grafik 1 Lingkaran & Filter Periode</h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Bandingkan arus kas masuk (hijau) dan keluar (merah) dalam satu tampilan</p>
-                </div>
-            </div>
-
-            <ul class="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                <li>• <strong>Hari Ini vs Bulan Ini:</strong> Gunakan tombol di header untuk melihat ringkasan & grafik berdasarkan tanggal terpilih (<em>Hari Ini</em>) atau akumulasi sepanjang bulan dari tanggal tersebut (<em>Bulan Ini</em>).</li>
-                <li>• <strong>Mode Grafik 1 Lingkaran:</strong> Pilih <strong>Gabungan</strong> untuk melihat kategori pemasukan (nuansa hijau) dan pengeluaran (nuansa merah) sekaligus, atau fokuskan ke <strong>Pemasukan</strong> maupun <strong>Pengeluaran</strong>. Arahkan kursor atau sentuh potongan grafik untuk melihat nominal persis tiap kategori.</li>
-                <li>• <strong>Rasio Biaya:</strong> Menunjukkan persentase pengeluaran terhadap pendapatan kotor. Lencana akan berubah menjadi merah apabila rasio biaya melampaui <strong>40%</strong> sebagai peringatan dini agar pengeluaran operasional tetap terkendali.</li>
+            <ul class="legend-list">
+              <li class="legend-item">
+                <span class="dot inc"></span>
+                <span><strong>Pemasukan:</strong> Menambah porsi positif pada ringkasan.</span>
+              </li>
+              <li class="legend-item">
+                <span class="dot exp"></span>
+                <span><strong>Pengeluaran / Lain:</strong> Menunjukkan porsi pemakaian dana.</span>
+              </li>
             </ul>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- TUTORIAL 5: RIWAYAT, RESET JAM 00.00, EDIT, HAPUS & EKSPOR CSV -->
-        <section id="tut-riwayat" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
-            <div class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">5</span>
-                <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Riwayat Transaksi, Reset Jam 00.00, Edit, Hapus & Ekspor CSV</h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Kelola riwayat harian dan unduh laporan dalam format CSV</p>
-                </div>
+    <section aria-labelledby="panduan-title">
+      <div class="section-head">
+        <h2 id="panduan-title">Panduan Detail Seluruh Fitur</h2>
+        <p>Rincian cara menggunakan setiap bagian utama di aplikasi.</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-card-top">
+            <span class="feature-num">01</span>
+            <h3>Beranda &amp; Navigasi Utama</h3>
+          </div>
+          <ul class="feature-points">
+            <li><strong>Pusat Beranda:</strong> Menampilkan ringkasan status utama dan akses cepat ke fitur aplikasi.</li>
+            <li><strong>Navigasi Rapi:</strong> Gunakan tombol atau menu yang tersedia untuk berpindah bagian tanpa kehilangan data.</li>
+            <li><strong>Sinkronisasi Ringkasan:</strong> Setiap data yang ditambah, diubah, atau dihapus langsung memperbarui ringkasan.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card-top">
+            <span class="feature-num">02</span>
+            <h3>Input Pemasukan &amp; Pengeluaran Lain</h3>
+          </div>
+          <ul class="feature-points">
+            <li><strong>Kolom Pemasukan:</strong> Masukkan keterangan/sumber dan nominal pemasukan secara jelas.</li>
+            <li><strong>Kolom Pengeluaran / Kebutuhan Lain:</strong> Catat pengeluaran rutin atau kebutuhan lain pada kolom khusus.</li>
+            <li><strong>Ketelitian Pengisian:</strong> Pastikan angka, label, dan jenis catatan sudah tepat sebelum disimpan.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card-top">
+            <span class="feature-num">03</span>
+            <h3>Visualizer Lingkaran &amp; Ringkasan</h3>
+          </div>
+          <ul class="feature-points">
+            <li><strong>Tampilan Melingkar:</strong> Membantu membaca perbandingan porsi pemasukan dan pengeluaran secara visual.</li>
+            <li><strong>Pembaruan Otomatis:</strong> Porsi visual menyesuaikan otomatis setiap kali ada catatan baru atau perubahan.</li>
+            <li><strong>Pemantauan Cepat:</strong> Memudahkan evaluasi keseimbangan data secara sekilas.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card-top">
+            <span class="feature-num">04</span>
+            <h3>Pengelolaan &amp; Koreksi Catatan</h3>
+          </div>
+          <ul class="feature-points">
+            <li><strong>Perbaikan Data:</strong> Jika ada salah ketik atau salah nominal, perbarui atau hapus sesuai fitur yang tersedia.</li>
+            <li><strong>Hindari Klik Ganda:</strong> Jangan menekan tombol simpan/kirim berulang kali untuk mencegah data ganda.</li>
+            <li><strong>Keterangan Konsisten:</strong> Gunakan teks singkat dan jelas agar riwayat mudah dicari.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card-top">
+            <span class="feature-num">05</span>
+            <h3>Akun, Pembayaran &amp; Transaksi</h3>
+          </div>
+          <ul class="feature-points">
+            <li><strong>Sesi Akun Valid:</strong> Gunakan data akun yang benar agar sesi dan catatan tetap terjaga.</li>
+            <li><strong>Konfirmasi Transaksi:</strong> Periksa nominal, rincian, dan metode pembayaran sebelum mengonfirmasi.</li>
+            <li><strong>Status Akhir:</strong> Pastikan proses konfirmasi selesai sebelum meninggalkan halaman.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card-top">
+            <span class="feature-num">06</span>
+            <h3>Tata Letak Layar &amp; Syarat Masuk</h3>
+          </div>
+          <ul class="feature-points">
+            <li><strong>Ukuran &amp; Orientasi Layar:</strong> Sesuaikan jendela atau orientasi perangkat jika ada elemen yang kurang pas.</li>
+            <li><strong>Baca 5 Menit Dulu:</strong> Kuis baru bisa dikerjakan setelah waktu baca 5 menit selesai.</li>
+            <li><strong>Syarat 100% Benar:</strong> Raih skor 10/10 pada kuis untuk membuka akses ke Beranda.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="kuis-area" class="quiz-panel" aria-labelledby="kuis-title">
+      <div class="quiz-toolbar">
+        <div>
+          <h2 id="kuis-title">Kuis Pemahaman Cara Pakai Fitur (10 Pertanyaan)</h2>
+          <p class="status-subtext">Jawab seluruh soal panduan penggunaan dengan benar (100%) untuk membuka akses ke Beranda.</p>
+        </div>
+
+        <div class="progress-widget">
+          <div class="progress-meta">
+            <span>Progres Jawaban</span>
+            <span id="progressCount">0 / 10</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="quizLockBar" class="quiz-lock-bar">
+        <span><strong>Kuis terkunci.</strong> Selesaikan waktu baca panduan 5 menit terlebih dahulu.</span>
+        <strong id="lockTimerText">05:00</strong>
+      </div>
+
+      <div id="quizContent" class="quiz-content is-locked">
+        <form id="quizForm">
+          <div class="questions-stack" id="questionsStack"></div>
+
+          <div id="resultPanel" class="result-panel" role="status" aria-live="polite">
+            <div id="resultHeading" class="result-heading"></div>
+            <div id="resultDetail" class="result-detail"></div>
+            <a href="index.html" id="bottomIndexBtn" class="btn btn-success" style="display: none;">
+              Buka Beranda
+            </a>
+          </div>
+
+          <div class="quiz-bottom">
+            <span class="status-subtext">Syarat akses Beranda: waktu 5 menit selesai + skor 100% (10/10).</span>
+            <div class="quiz-buttons">
+              <button type="button" id="resetQuizBtn" class="btn btn-ghost">Reset Jawaban</button>
+              <button type="submit" id="checkQuizBtn" class="btn btn-primary">Periksa Jawaban</button>
             </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
-                    <h3 class="font-bold text-slate-900 dark:text-white">Pilih Tanggal & Perilaku Jam 00.00</h3>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Gunakan kolom <strong>Pilih Tanggal</strong> di bagian <em>Riwayat Transaksi</em> untuk mengecek catatan pada tanggal tertentu, atau klik <strong>Hari Ini</strong> untuk kembali ke tanggal hari ini.
-                    </p>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Saat pergantian hari melewati <strong>jam 00.00</strong>, sistem mendeteksi pergantian tanggal dan mengosongkan tampilan riwayat hari baru untuk memulai pencatatan hari tersebut dari awal.
-                    </p>
-                </div>
+  <script>
+    const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+    const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+    const GUIDE_TABLE = "user_guides";
 
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
-                    <h3 class="font-bold text-slate-900 dark:text-white">Edit, Hapus & Ekspor CSV</h3>
-                    <ul class="space-y-1.5 text-slate-600 dark:text-slate-300 leading-relaxed">
-                        <li>• <strong>Edit (ikon pensil):</strong> Ubah tipe, nominal, kategori (termasuk kategori kustom), aplikasi mitra (termasuk input manual <em>Lainnya</em>), tanggal, atau catatan, lalu klik <strong>Simpan Perubahan</strong>.</li>
-                        <li>• <strong>Hapus (ikon tempat sampah):</strong> Menghapus transaksi terpilih dari database akun Anda dan memperbarui statistik secara langsung.</li>
-                        <li>• <strong>Ekspor CSV:</strong> Klik <strong>Ekspor CSV</strong> untuk mengunduh daftar transaksi yang sedang tampil pada tanggal terpilih lengkap dengan ringkasan pemasukan, pengeluaran, dan saldo bersih.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+    const READ_DURATION_MS = 5 * 60 * 1000;
+    const THEME_KEY = "uiGuideTheme_dayNight_v1";
+    const LOCAL_DEADLINE_KEY = "uiGuideReadDeadline_5m";
+    const LOCAL_PASSED_KEY = "uiGuideQuizPassed100";
 
-        <!-- TUTORIAL 6: ATURAN WAJIB DIPATUHI & TROUBLESHOOTING -->
-        <section id="tut-aturan" class="guide-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm space-y-4">
-            <div class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-xl bg-rose-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">6</span>
-                <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Aturan Wajib Dipatuhi & Penyelesaian Kendala</h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Jaga konsistensi catatan dan atasi kendala umum dengan cepat</p>
-                </div>
-            </div>
+    const hasSupabaseConfig =
+      typeof window.supabase !== "undefined" &&
+      !SUPABASE_URL.includes("YOUR_PROJECT_ID") &&
+      !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE_ANON_KEY");
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                <div class="p-4 rounded-xl bg-rose-50/75 dark:bg-rose-950/25 border border-rose-200/80 dark:border-rose-800/50 space-y-2">
-                    <h3 class="font-bold text-rose-950 dark:text-rose-100">Wajib Dipatuhi</h3>
-                    <ul class="space-y-1.5 text-rose-900 dark:text-rose-200 leading-relaxed">
-                        <li>• Catat nominal dan tanggal transaksi secara jujur serta sesuai kondisi sebenarnya.</li>
-                        <li>• Jangan mencampur pemasukan kotor dengan pengeluaran operasional pada satu entri.</li>
-                        <li>• Tuliskan nama aplikasi mitra atau kategori secara jelas saat memilih <strong>Lainnya</strong> agar mudah dicari dan dibaca di riwayat maupun CSV.</li>
-                    </ul>
-                </div>
+    const sbClient = hasSupabaseConfig
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
 
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
-                    <h3 class="font-bold text-slate-900 dark:text-white">Jika Mengalami Kendala</h3>
-                    <ul class="space-y-1.5 text-slate-600 dark:text-slate-300 leading-relaxed">
-                        <li>• <strong>Gagal simpan / muat data:</strong> Periksa koneksi internet Anda, pastikan sudah masuk ke akun yang benar, lalu muat ulang halaman.</li>
-                        <li>• <strong>Tidak bisa masuk setelah daftar:</strong> Pastikan password minimal 6 karakter dan cek email konfirmasi jika diwajibkan oleh pengaturan akun.</li>
-                        <li>• <strong>CSV berantakan di Excel:</strong> File CSV sudah menggunakan pemisah titik koma (<code class="px-1 py-0.5 rounded bg-slate-200/80 dark:bg-slate-700">;</code>) dan encoding UTF-8 agar rapi dibuka di Microsoft Excel maupun spreadsheet lain.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+    let currentUserId = null;
+    let deadlineMs = null;
+    let quizPassed = false;
+    let isSyncingDb = false;
 
-    </main>
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "1. Saat ingin mencatat pemasukan baru di aplikasi, kolom mana yang sebaiknya digunakan?",
+        options: [
+          "Kolom pemasukan dengan keterangan/sumber dan nominal yang jelas",
+          "Kolom pengeluaran/kebutuhan lain agar terhitung pengeluaran",
+          "Kolom catatan lama yang sudah dihapus",
+          "Tidak perlu mengisi kolom apa pun"
+        ],
+        correctIndex: 0,
+        explanation: "Pemasukan dicatat pada kolom pemasukan beserta keterangan/sumber dan nominal yang jelas."
+      },
+      {
+        id: 2,
+        question: "2. Bagaimana cara mencatat pengeluaran rutin atau kebutuhan lain agar pencatatan tetap tertib?",
+        options: [
+          "Memasukkannya di kolom pengeluaran/kebutuhan lain secara terpisah dari pemasukan",
+          "Menggabungkannya ke daftar pemasukan tanpa label",
+          "Mengetikkan angka saja tanpa keterangan atau jenis",
+          "Menunggu akhir bulan baru mengetik semuanya di satu baris"
+        ],
+        correctIndex: 0,
+        explanation: "Pengeluaran atau kebutuhan lain dicatat di kolom khususnya agar terpisah rapi dari pemasukan."
+      },
+      {
+        id: 3,
+        question: "3. Bagaimana cara membaca kondisi pemasukan dan pengeluaran menggunakan visualizer lingkaran?",
+        options: [
+          "Membandingkan porsi visual pada lingkaran untuk melihat gambaran proporsi pemasukan dan pengeluaran",
+          "Menghitung ulang semua angka secara manual di luar aplikasi",
+          "Menekan tombol reset agar lingkaran kosong",
+          "Menyembunyikan grafik agar hanya melihat teks acak"
+        ],
+        correctIndex: 0,
+        explanation: "Visualizer lingkaran membantu membandingkan porsi dan gambaran kondisi data secara cepat."
+      },
+      {
+        id: 4,
+        question: "4. Apa yang terjadi pada tampilan ringkasan dan visualizer lingkaran setelah Anda menambah atau mengubah catatan?",
+        options: [
+          "Tampilan menyesuaikan otomatis mengikuti perubahan data terkini",
+          "Tampilan membeku dan tidak berubah sampai akun dihapus",
+          "Semua catatan lama langsung terhapus otomatis",
+          "Halaman kembali ke menu login"
+        ],
+        correctIndex: 0,
+        explanation: "Setiap penambahan atau perubahan data akan tercermin pada ringkasan dan visualizer lingkaran."
+      },
+      {
+        id: 5,
+        question: "5. Jika Anda salah memasukkan nominal atau salah ketik keterangan pada catatan yang tersimpan, apa langkah yang tepat?",
+        options: [
+          "Memeriksa kembali catatan lalu memperbarui atau menghapusnya sesuai fitur pengelolaan data",
+          "Membiarkannya saja agar tidak repot",
+          "Membuat akun baru setiap kali ada salah ketik",
+          "Menutup browser secara paksa"
+        ],
+        correctIndex: 0,
+        explanation: "Catatan yang keliru perlu ditinjau lalu diperbarui atau dihapus melalui fitur yang tersedia."
+      },
+      {
+        id: 6,
+        question: "6. Apa praktik yang benar saat menyimpan atau mengirim data agar tidak terjadi data ganda?",
+        options: [
+          "Memeriksa isian lalu menekan tombol simpan/kirim secukupnya tanpa klik ganda tidak sengaja",
+          "Menekan tombol simpan/kirim berkali-kali secepat mungkin",
+          "Mengisi dua formulir yang sama persis secara beruntun",
+          "Mengabaikan status setelah tombol ditekan"
+        ],
+        correctIndex: 0,
+        explanation: "Menghindari klik berulang yang tidak disengaja mencegah pencatatan atau pengiriman data ganda."
+      },
+      {
+        id: 7,
+        question: "7. Bagaimana cara menggunakan riwayat catatan agar mudah dicari dan dipahami ke depannya?",
+        options: [
+          "Menuliskan keterangan yang singkat, jelas, dan konsisten pada setiap catatan",
+          "Menggunakan singkatan asal yang tidak jelas maknanya",
+          "Mengosongkan kolom keterangan pada semua transaksi",
+          "Mencampur berbagai keperluan tanpa pembeda"
+        ],
+        correctIndex: 0,
+        explanation: "Keterangan yang singkat, jelas, dan konsisten membuat riwayat lebih mudah ditelusuri."
+      },
+      {
+        id: 8,
+        question: "8. Apa yang harus dicek sebelum menekan tombol konfirmasi saat melakukan transaksi atau pembayaran?",
+        options: [
+          "Nominal, rincian transaksi, dan metode pembayaran yang dipilih",
+          "Hanya warna tombol konfirmasi",
+          "Mengabaikan jumlah nominal dan metode pembayaran",
+          "Memastikan halaman lain tertutup"
+        ],
+        correctIndex: 0,
+        explanation: "Pastikan nominal, rincian, dan metode pembayaran sudah sesuai sebelum konfirmasi."
+      },
+      {
+        id: 9,
+        question: "9. Bagaimana cara berpindah antar bagian atau melihat ringkasan utama saat memakai aplikasi?",
+        options: [
+          "Memanfaatkan Beranda serta tombol atau tautan navigasi yang tersedia",
+          "Menghapus riwayat browser setiap kali pindah menu",
+          "Mengetik ulang seluruh data dari awal setiap pindah halaman",
+          "Mematikan koneksi internet saat navigasi"
+        ],
+        correctIndex: 0,
+        explanation: "Beranda dan navigasi yang tersedia memudahkan pemantauan ringkasan serta perpindahan bagian."
+      },
+      {
+        id: 10,
+        question: "10. Apa yang sebaiknya dilakukan bila kolom atau bagian tampilan di layar terlihat kurang pas atau terpotong?",
+        options: [
+          "Menyesuaikan ukuran jendela atau orientasi perangkat agar tata letak kembali rapi",
+          "Menghapus seluruh data pemasukan dan pengeluaran",
+          "Mengulang registrasi akun baru",
+          "Mengabaikan bagian yang terpotong"
+        ],
+        correctIndex: 0,
+        explanation: "Menyesuaikan ukuran jendela atau orientasi perangkat membantu menjaga tampilan tetap rapi."
+      }
+    ];
 
-    <script>
-        const SUPABASE_URL = 'https://twvmodivxmpyxvsuyhvz.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_9zVqwyMGLZz9ERqNXVoOUg_N5lB-U6L';
-        const THEME_KEY = 'ojolku_finance_theme_v1';
-        const ONBOARDING_REQUIRED_PREFIX = 'ojolku_new_user_guide_req_v1_';
-        const ONBOARDING_STATE_PREFIX = 'ojolku_guide_state_v1_';
-        const ONBOARDING_DURATION_SEC = 5 * 60;
+    const optionLetters = ["A", "B", "C", "D"];
+    const themeToggleBtnEl = document.getElementById("themeToggleBtn");
+    const quizAreaEl = document.getElementById("kuis-area");
+    const questionsStackEl = document.getElementById("questionsStack");
+    const quizFormEl = document.getElementById("quizForm");
+    const quizContentEl = document.getElementById("quizContent");
+    const quizLockBarEl = document.getElementById("quizLockBar");
+    const lockTimerTextEl = document.getElementById("lockTimerText");
+    const jumpQuizBtnEl = document.getElementById("jumpQuizBtn");
+    const topIndexBtnEl = document.getElementById("topIndexBtn");
+    const bottomIndexBtnEl = document.getElementById("bottomIndexBtn");
+    const progressCountEl = document.getElementById("progressCount");
+    const progressBarFillEl = document.getElementById("progressBarFill");
+    const resultPanelEl = document.getElementById("resultPanel");
+    const resultHeadingEl = document.getElementById("resultHeading");
+    const resultDetailEl = document.getElementById("resultDetail");
+    const resetQuizBtnEl = document.getElementById("resetQuizBtn");
+    const statusStripEl = document.getElementById("statusStrip");
+    const statusHeadingEl = document.getElementById("statusHeading");
+    const statusSubtextEl = document.getElementById("statusSubtext");
+    const timerBadgeEl = document.getElementById("timerBadge");
 
-        function updateThemeIcons(isDark) {
-            const moon = document.getElementById('icon-moon');
-            const sun = document.getElementById('icon-sun');
-            if (moon) moon.classList.toggle('hidden', isDark);
-            if (sun) sun.classList.toggle('hidden', !isDark);
+    function applyTheme(mode) {
+      const isDay = mode === "day";
+      if (isDay) {
+        document.body.setAttribute("data-theme", "day");
+        themeToggleBtnEl.textContent = "Mode: Day";
+        themeToggleBtnEl.setAttribute("aria-pressed", "true");
+      } else {
+        document.body.removeAttribute("data-theme");
+        themeToggleBtnEl.textContent = "Mode: Night";
+        themeToggleBtnEl.setAttribute("aria-pressed", "false");
+      }
+      localStorage.setItem(THEME_KEY, isDay ? "day" : "night");
+    }
+
+    themeToggleBtnEl.addEventListener("click", () => {
+      const currentlyDay = document.body.getAttribute("data-theme") === "day";
+      applyTheme(currentlyDay ? "night" : "day");
+    });
+
+    function getFallbackState() {
+      let savedDeadline = Number(localStorage.getItem(LOCAL_DEADLINE_KEY));
+      if (!savedDeadline || Number.isNaN(savedDeadline)) {
+        savedDeadline = Date.now() + READ_DURATION_MS;
+        localStorage.setItem(LOCAL_DEADLINE_KEY, String(savedDeadline));
+      }
+      const savedPassed = localStorage.getItem(LOCAL_PASSED_KEY) === "true";
+      return { deadline: savedDeadline, passed: savedPassed };
+    }
+
+    async function syncUserGuideState(sessionUser) {
+      if (isSyncingDb) return;
+      isSyncingDb = true;
+
+      try {
+        const fallback = getFallbackState();
+        deadlineMs = fallback.deadline;
+        quizPassed = fallback.passed;
+
+        if (!sbClient) {
+          syncInterface();
+          return;
         }
 
-        function toggleDarkMode() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
-            updateThemeIcons(isDark);
+        const user = sessionUser || (await sbClient.auth.getSession()).data?.session?.user || null;
+        if (!user) {
+          currentUserId = null;
+          syncInterface();
+          return;
         }
 
-        function formatMMSS(totalSeconds) {
-            const safeSec = Math.max(0, Math.floor(totalSeconds));
-            const mins = String(Math.floor(safeSec / 60)).padStart(2, '0');
-            const secs = String(safeSec % 60).padStart(2, '0');
-            return `${mins}:${secs}`;
+        currentUserId = user.id;
+
+        const { data, error } = await sbClient
+          .from(GUIDE_TABLE)
+          .select("quiz_passed, read_deadline")
+          .eq("user_id", currentUserId)
+          .maybeSingle();
+
+        if (error) {
+          syncInterface();
+          return;
         }
 
-        async function initOnboardingBannerIfNeeded() {
-            if (!window.supabase) return;
-            const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            const { data: { session } } = await client.auth.getSession();
-            const user = session?.user;
-            if (!user?.id) return;
-
-            const reqFlag = localStorage.getItem(ONBOARDING_REQUIRED_PREFIX + user.id);
-            if (reqFlag !== '1') return;
-
-            const stateKey = ONBOARDING_STATE_PREFIX + user.id;
-            if (!localStorage.getItem(stateKey)) {
-                localStorage.setItem(stateKey, JSON.stringify({
-                    remainingSec: ONBOARDING_DURATION_SEC,
-                    isPaused: Boolean(document.hidden),
-                    lastTickMs: Date.now()
-                }));
-            }
-
-            const banner = document.getElementById('guide-onboarding-banner');
-            const countdownEl = document.getElementById('guide-timer-countdown');
-            const statusEl = document.getElementById('guide-timer-status');
-            const descEl = document.getElementById('guide-timer-desc');
-            const ctaEl = document.getElementById('guide-cta-label');
-            if (!banner || !countdownEl) return;
-
-            banner.classList.remove('hidden');
-            let guideTickerId = null;
-
-            const syncGuideTimer = (forceFreeze = null) => {
-                try {
-                    const nowMs = Date.now();
-                    const parsed = JSON.parse(localStorage.getItem(stateKey) || '{}');
-                    let rem = typeof parsed.remainingSec === 'number' && Number.isFinite(parsed.remainingSec)
-                        ? Math.max(0, Math.min(ONBOARDING_DURATION_SEC, parsed.remainingSec))
-                        : ONBOARDING_DURATION_SEC;
-                    const wasPaused = Boolean(parsed.isPaused);
-                    const lastTickMs = typeof parsed.lastTickMs === 'number' && Number.isFinite(parsed.lastTickMs)
-                        ? parsed.lastTickMs
-                        : nowMs;
-
-                    if (!wasPaused && !document.hidden && rem > 0) {
-                        const elapsedSec = Math.max(0, (nowMs - lastTickMs) / 1000);
-                        rem = Math.max(0, rem - elapsedSec);
-                    }
-
-                    const shouldFreeze = forceFreeze !== null ? Boolean(forceFreeze) : Boolean(document.hidden);
-                    const nextPaused = rem > 0 ? shouldFreeze : false;
-
-                    localStorage.setItem(stateKey, JSON.stringify({
-                        remainingSec: rem,
-                        isPaused: nextPaused,
-                        lastTickMs: nowMs
-                    }));
-
-                    const ceilSec = Math.ceil(rem);
-                    countdownEl.textContent = formatMMSS(ceilSec);
-
-                    if (ceilSec <= 0) {
-                        if (statusEl) statusEl.textContent = 'Wajib Baca Selesai • Siap Tanya Jawab (6 Soal • 100% Benar)';
-                        if (descEl) descEl.innerHTML = 'Waktu baca 5 menit sudah selesai. Kerjakan <strong>6 soal tanya jawab hingga 100% benar</strong> untuk membuka beranda.';
-                        if (ctaEl) ctaEl.textContent = 'Buka Sesi Tanya Jawab';
-                    } else if (statusEl) {
-                        statusEl.textContent = nextPaused
-                            ? 'Wajib Baca Akun Baru • Freeze (Di Luar Browser)'
-                            : 'Wajib Baca Akun Baru (5 Menit -> Tanya Jawab)';
-                    }
-                } catch (_e) {}
-            };
-
-            const startTicker = () => {
-                if (guideTickerId) {
-                    clearInterval(guideTickerId);
-                    guideTickerId = null;
-                }
-                if (!document.hidden) {
-                    guideTickerId = setInterval(() => {
-                        if (!document.hidden) {
-                            syncGuideTimer(false);
-                        }
-                    }, 1000);
-                }
-            };
-
-            const handleVisibilityChange = () => {
-                if (document.hidden) {
-                    syncGuideTimer(true);
-                    if (guideTickerId) {
-                        clearInterval(guideTickerId);
-                        guideTickerId = null;
-                    }
-                } else {
-                    syncGuideTimer(false);
-                    startTicker();
-                }
-            };
-
-            const handleExitBrowser = () => {
-                syncGuideTimer(true);
-                if (guideTickerId) {
-                    clearInterval(guideTickerId);
-                    guideTickerId = null;
-                }
-            };
-
-            syncGuideTimer(Boolean(document.hidden));
-            startTicker();
-
-            document.addEventListener('visibilitychange', handleVisibilityChange);
-            window.addEventListener('pagehide', handleExitBrowser);
-            window.addEventListener('freeze', handleExitBrowser);
-            window.addEventListener('pageshow', () => {
-                if (!document.hidden) {
-                    syncGuideTimer(false);
-                    startTicker();
-                }
-            });
-            window.addEventListener('resume', () => {
-                if (!document.hidden) {
-                    syncGuideTimer(false);
-                    startTicker();
-                }
-            });
+        if (data) {
+          quizPassed = Boolean(data.quiz_passed);
+          if (!quizPassed && data.read_deadline) {
+            deadlineMs = Number(data.read_deadline);
+          } else if (!quizPassed && !deadlineMs) {
+            deadlineMs = Date.now() + READ_DURATION_MS;
+          }
+        } else {
+          if (!deadlineMs) {
+            deadlineMs = Date.now() + READ_DURATION_MS;
+          }
+          quizPassed = false;
+          await sbClient.from(GUIDE_TABLE).upsert(
+            {
+              user_id: currentUserId,
+              quiz_passed: false,
+              read_deadline: deadlineMs
+            },
+            { onConflict: "user_id" }
+          );
         }
 
-        window.addEventListener('DOMContentLoaded', async () => {
-            const savedTheme = localStorage.getItem(THEME_KEY);
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-            if (shouldBeDark) {
-                document.documentElement.classList.add('dark');
-            }
-            updateThemeIcons(shouldBeDark);
-            if (window.lucide) lucide.createIcons();
+        localStorage.setItem(LOCAL_DEADLINE_KEY, String(deadlineMs));
+        localStorage.setItem(LOCAL_PASSED_KEY, String(quizPassed));
+      } catch (_) {
+        // Biarkan state lokal tetap bekerja bila koneksi terputus
+      } finally {
+        isSyncingDb = false;
+        syncInterface();
+      }
+    }
 
-            await initOnboardingBannerIfNeeded();
-        });
-    </script>
+    async function persistQuizPassedToSupabase(passedValue) {
+      quizPassed = passedValue;
+      localStorage.setItem(LOCAL_PASSED_KEY, String(passedValue));
+
+      if (!sbClient || !currentUserId) return;
+
+      await sbClient.from(GUIDE_TABLE).upsert(
+        {
+          user_id: currentUserId,
+          quiz_passed: passedValue,
+          read_deadline: deadlineMs || Date.now()
+        },
+        { onConflict: "user_id" }
+      );
+    }
+
+    function formatClock(ms) {
+      const totalSec = Math.max(0, Math.ceil(ms / 1000));
+      const min = Math.floor(totalSec / 60);
+      const sec = totalSec % 60;
+      return `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+    }
+
+    function setQuizLock(unlocked, passed) {
+      if (passed) {
+        quizAreaEl.classList.add("is-completed");
+        jumpQuizBtnEl.style.display = "none";
+        return;
+      }
+
+      quizAreaEl.classList.remove("is-completed");
+      jumpQuizBtnEl.style.display = "inline-flex";
+
+      if (unlocked) {
+        quizContentEl.classList.remove("is-locked");
+        quizLockBarEl.classList.add("is-hidden");
+        jumpQuizBtnEl.classList.remove("is-locked");
+        jumpQuizBtnEl.removeAttribute("aria-disabled");
+        jumpQuizBtnEl.textContent = "Ke Bagian Kuis";
+      } else {
+        quizContentEl.classList.add("is-locked");
+        quizLockBarEl.classList.remove("is-hidden");
+        jumpQuizBtnEl.classList.add("is-locked");
+        jumpQuizBtnEl.setAttribute("aria-disabled", "true");
+        jumpQuizBtnEl.textContent = "Kuis (Terkunci 5 Menit)";
+      }
+    }
+
+    function setIndexLock(unlocked) {
+      if (unlocked) {
+        topIndexBtnEl.classList.remove("is-locked");
+        topIndexBtnEl.removeAttribute("aria-disabled");
+        bottomIndexBtnEl.style.display = "inline-flex";
+      } else {
+        topIndexBtnEl.classList.add("is-locked");
+        topIndexBtnEl.setAttribute("aria-disabled", "true");
+        bottomIndexBtnEl.style.display = "none";
+      }
+    }
+
+    function syncInterface() {
+      const now = Date.now();
+      const targetDeadline = deadlineMs ?? now + READ_DURATION_MS;
+      const remaining = targetDeadline - now;
+      const quizOpen = remaining <= 0 || quizPassed;
+
+      setQuizLock(quizOpen, quizPassed);
+
+      if (quizPassed) {
+        timerBadgeEl.textContent = "100% LULUS";
+        statusStripEl.classList.add("is-open");
+        statusHeadingEl.textContent = "Kuis Sudah Selesai (100%) — Akses ke Beranda Terbuka";
+        statusSubtextEl.textContent = "Status kelulusan sudah tercatat. Bagian kuis disembunyikan dan Anda bisa langsung masuk ke Beranda.";
+        setIndexLock(true);
+        return;
+      }
+
+      setIndexLock(false);
+
+      if (remaining > 0) {
+        const clock = formatClock(remaining);
+        timerBadgeEl.textContent = clock;
+        lockTimerTextEl.textContent = clock;
+        statusStripEl.classList.remove("is-open");
+        statusHeadingEl.textContent = "Tahap 1: Baca Panduan Selama 5 Menit";
+        statusSubtextEl.textContent = `Kuis dikunci selama masa baca berlangsung. Sisa waktu: ${clock}.`;
+      } else {
+        timerBadgeEl.textContent = "KUIS TERBUKA";
+        statusStripEl.classList.remove("is-open");
+        statusHeadingEl.textContent = "Tahap 2: Waktu Baca Selesai — Kerjakan Kuis (Wajib 100%)";
+        statusSubtextEl.textContent = "Kuis sudah terbuka. Jawab seluruh 10 soal dengan benar untuk membuka tombol ke Beranda.";
+      }
+    }
+
+    function renderQuiz() {
+      questionsStackEl.innerHTML = quizQuestions.map((q) => {
+        const choicesHtml = q.options.map((opt, idx) => `
+          <label class="choice-box">
+            <input type="radio" name="q${q.id}" value="${idx}" />
+            <span class="choice-label"><strong>${optionLetters[idx]}.</strong> ${opt}</span>
+          </label>
+        `).join("");
+
+        return `
+          <article class="q-card" id="qCard-${q.id}">
+            <div class="q-title">${q.question}</div>
+            <div class="choices-grid">${choicesHtml}</div>
+            <div class="q-explain" id="qExplain-${q.id}"></div>
+          </article>
+        `;
+      }).join("");
+
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      let answered = 0;
+      quizQuestions.forEach((q) => {
+        if (document.querySelector(`input[name="q${q.id}"]:checked`)) {
+          answered++;
+        }
+      });
+
+      progressCountEl.textContent = `${answered} / ${quizQuestions.length}`;
+      progressBarFillEl.style.width = `${(answered / quizQuestions.length) * 100}%`;
+    }
+
+    questionsStackEl.addEventListener("change", updateProgressBar);
+
+    quizFormEl.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const remaining = (deadlineMs ?? Date.now() + READ_DURATION_MS) - Date.now();
+      if (remaining > 0 && !quizPassed) {
+        syncInterface();
+        return;
+      }
+
+      let correctCount = 0;
+      let missingCount = 0;
+
+      quizQuestions.forEach((q) => {
+        const card = document.getElementById(`qCard-${q.id}`);
+        const explain = document.getElementById(`qExplain-${q.id}`);
+        const picked = document.querySelector(`input[name="q${q.id}"]:checked`);
+
+        card.classList.remove("is-right", "is-wrong");
+        explain.className = "q-explain is-visible";
+
+        if (!picked) {
+          missingCount++;
+          card.classList.add("is-wrong");
+          explain.classList.add("fail");
+          explain.innerHTML = `<strong>Belum dijawab.</strong> Jawaban benar: <strong>${optionLetters[q.correctIndex]}</strong> — ${q.explanation}`;
+          return;
+        }
+
+        const answerIdx = Number(picked.value);
+        if (answerIdx === q.correctIndex) {
+          correctCount++;
+          card.classList.add("is-right");
+          explain.classList.add("ok");
+          explain.innerHTML = `<strong>Benar!</strong> ${q.explanation}`;
+        } else {
+          card.classList.add("is-wrong");
+          explain.classList.add("fail");
+          explain.innerHTML = `<strong>Kurang tepat.</strong> Jawaban benar: <strong>${optionLetters[q.correctIndex]}</strong> — ${q.explanation}`;
+        }
+      });
+
+      const isPerfectScore = correctCount === quizQuestions.length && missingCount === 0;
+
+      if (isPerfectScore) {
+        await persistQuizPassedToSupabase(true);
+        syncInterface();
+        statusStripEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        return;
+      }
+
+      await persistQuizPassedToSupabase(false);
+      resultPanelEl.classList.add("is-visible");
+      resultHeadingEl.textContent = `Skor Anda: ${correctCount} dari ${quizQuestions.length} (${correctCount * 10}%)`;
+      resultDetailEl.textContent = `Belum 100% benar${missingCount > 0 ? ` (${missingCount} soal belum dijawab)` : ""}. Perbaiki jawaban yang masih salah lalu periksa kembali.`;
+
+      syncInterface();
+      resultPanelEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    resetQuizBtnEl.addEventListener("click", async () => {
+      quizFormEl.reset();
+      resultPanelEl.classList.remove("is-visible");
+
+      quizQuestions.forEach((q) => {
+        const card = document.getElementById(`qCard-${q.id}`);
+        const explain = document.getElementById(`qExplain-${q.id}`);
+        card.classList.remove("is-right", "is-wrong");
+        explain.className = "q-explain";
+        explain.innerHTML = "";
+      });
+
+      updateProgressBar();
+      await persistQuizPassedToSupabase(false);
+      syncInterface();
+    });
+
+    if (sbClient) {
+      sbClient.auth.onAuthStateChange((_event, session) => {
+        syncUserGuideState(session?.user || null);
+      });
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        syncInterface();
+      }
+    });
+
+    window.addEventListener("focus", syncInterface);
+
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    applyTheme(savedTheme === "day" ? "day" : "night");
+    renderQuiz();
+    syncUserGuideState();
+    setInterval(syncInterface, 1000);
+  </script>
 </body>
 </html>
